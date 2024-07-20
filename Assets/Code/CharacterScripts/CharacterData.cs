@@ -13,9 +13,13 @@ public class CharacterData : MonoBehaviour
     public int speed;
     public int turnCoolDown;
     public int team;
+    public int xpReward;
     public List<Skill> skills;
     public Dictionary<string, int> skillCooldowns;
+    public List<StatusEffect> selfStatusEffects;
+    public List<StatusEffect> globalStatusEffects;
 
+    public int bossNumber; //This is for boss death specific events;
 
     private void Start()
     {

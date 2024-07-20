@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatAI : MonoBehaviour
+public class CharacterAI : MonoBehaviour
 {
     public CombatManager combatManager;
     public CombatFunctions combatFunctions;

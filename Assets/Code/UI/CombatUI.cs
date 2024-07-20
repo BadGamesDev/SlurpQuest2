@@ -4,8 +4,11 @@ using TMPro;
 
 public class CombatUI : MonoBehaviour
 {
+    public GameState gameState;
     public CombatManager combatManager;
     public CharacterData target;
+
+    public GameObject combatUI; //parent of all the UI stuff for combat
 
     public GameObject attackButton;
     public GameObject skillButton;
@@ -14,6 +17,11 @@ public class CombatUI : MonoBehaviour
     public GameObject endTurnButton;
     public GameObject backButton;
     public GameObject skillBar;
+    public GameObject itemBar;
+
+    public GameObject continueButton;
+
+    public TMP_Text combatText;
 
     public Button skillButton0;
     public Button skillButton1;
@@ -34,6 +42,8 @@ public class CombatUI : MonoBehaviour
         SkillTargetUI,
         ItemChoiceUI,
         ItemTargetUI,
+        FleeUI,
+        CombatFinishedUI,
     }
 
     public State currentState = State.MainUI;
@@ -48,8 +58,13 @@ public class CombatUI : MonoBehaviour
                 itemButton.SetActive(true);
                 fleeButton.SetActive(true);
                 endTurnButton.SetActive(true);
-                backButton.SetActive(false);
                 skillBar.SetActive(false);
+                itemBar.SetActive(false);
+
+                backButton.SetActive(false);
+                continueButton.SetActive(false);
+                
+                combatText.text = null;
                 break;
             case State.AttackTargetUI:
                 attackButton.SetActive(false);
@@ -57,8 +72,13 @@ public class CombatUI : MonoBehaviour
                 itemButton.SetActive(false);
                 fleeButton.SetActive(false);
                 endTurnButton.SetActive(false);
-                backButton.SetActive(true);
                 skillBar.SetActive(false);
+                itemBar.SetActive(false);
+
+                backButton.SetActive(true);
+                continueButton.SetActive(false);
+                
+                combatText.text = "Choose your Target!";
                 break;
             case State.SkillChoiceUI:
                 attackButton.SetActive(false);
@@ -66,19 +86,74 @@ public class CombatUI : MonoBehaviour
                 itemButton.SetActive(false);
                 fleeButton.SetActive(false);
                 endTurnButton.SetActive(false);
-                backButton.SetActive(true);
                 skillBar.SetActive(true);
+                itemBar.SetActive(false);
 
+                backButton.SetActive(true);
+                continueButton.SetActive(false);
+                
+                combatText.text = "Pick the skill you want to use!";
                 skillButton0.GetComponentInChildren<TMP_Text>().text = combatManager.turnHaver.skills[0].skillName; //this is just for testing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 break;
             case State.SkillTargetUI:
+                
+                combatText.text = "Choose your Target!";
                 break;
             case State.ItemChoiceUI:
+                attackButton.SetActive(false);
+                skillButton.SetActive(false);
+                itemButton.SetActive(false);
+                fleeButton.SetActive(false);
+                endTurnButton.SetActive(false);
+                skillBar.SetActive(false);
+                itemBar.SetActive(true);
+
+                backButton.SetActive(true);
+                continueButton.SetActive(false);
+                
+                combatText.text = "Pick the item you want to use!";
                 break;
             case State.ItemTargetUI:
+                
+                combatText.text = "Choose your Target!";
+                break;
+            
+            case State.FleeUI:
+                attackButton.SetActive(false);
+                skillButton.SetActive(false);
+                itemButton.SetActive(false);
+                fleeButton.SetActive(false);
+                endTurnButton.SetActive(false);
+                skillBar.SetActive(false);
+                itemBar.SetActive(false);
+
+                backButton.SetActive(true);
+                continueButton.SetActive(false);
+                
+                combatText.text = "Hey Slurp! Unfortunately this button doesn't do anything. There are two reasons for this, " +
+                                  "first one is the fact that a disengage mechanic created a fuck ton of bugs and problems that I was too lazy to solve. " +
+                                  "Second (and the most important one) is the fact that fleeing combat is blue pilled cuck behavior, so now please click that back button and GET BACK INTO THE RING! RAAAAAAAARGG!";
+                break;
+
+            case State.CombatFinishedUI:
+                attackButton.SetActive(false);
+                skillButton.SetActive(false);
+                itemButton.SetActive(false);
+                fleeButton.SetActive(false);
+                endTurnButton.SetActive(false);
+                skillBar.SetActive(false);
+                itemBar.SetActive(false);
+
+                backButton.SetActive(false);
+                continueButton.SetActive(true);
                 break;
             default:
                 break;
+        }
+
+        if(gameState.combatFinished == true) //will add deatils like victory loss messages etc. even images maybe?
+        {
+            ChangeState(State.CombatFinishedUI);
         }
     }
 
@@ -164,6 +239,75 @@ public class CombatUI : MonoBehaviour
 
     }
 
+    public void ItemButtonPressed()
+    {
+        ChangeState(State.ItemChoiceUI);
+    }
+
+    public void ItemSlot0Pressed() //HELL YEAH! LET'S DO THE SAME FUCKING THING FOR THE ITEMS. TRULY A 10X CODER RIGHT HERE
+    {
+        ChangeState(State.ItemTargetUI);
+        combatManager.selectedItem = "catFood";
+    }
+
+    public void ItemSlot1Pressed()
+    {
+
+    }
+
+    public void ItemSlot2Pressed()
+    {
+
+    }
+
+    public void ItemSlot3Pressed()
+    {
+
+    }
+    public void ItemSlot4Pressed()
+    {
+
+    }
+    public void ItemSlot5Pressed()
+    {
+
+    }
+    public void ItemSlot6Pressed()
+    {
+
+    }
+    public void ItemSlot7Pressed()
+    {
+
+    }
+
+    public void ItemSlot8Pressed()
+    {
+
+    }
+
+    public void ItemSlot9Pressed()
+    {
+
+    }
+
+    public void FleeButtonPressed()
+    {
+        ChangeState(State.FleeUI);
+    }
+
+    public void EndTurnButtonPressed()
+    {
+        combatManager.turnHaver = null;
+    }
+
+    public void ContinueButtonPressed()
+    {
+        ChangeState(State.MainUI); //Should probably do this in a cleaner way but no problem for now
+        gameState.combatFinished = false;
+        gameState.overworldPaused = false;
+        combatUI.SetActive(false);
+    }
 
     public void BackButtonPressed()
     {
@@ -183,6 +327,9 @@ public class CombatUI : MonoBehaviour
                 break;
             case State.ItemTargetUI:
                 ChangeState(State.ItemChoiceUI);
+                break;
+            case State.FleeUI:
+                ChangeState(State.MainUI);
                 break;
             default:
                 break;

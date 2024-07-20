@@ -5,14 +5,15 @@ using UnityEngine.Tilemaps;
 
 public class EntitySpawner : MonoBehaviour
 {
-    public EntityManager entityManager;
+    public TilemapManager tileManager;
+    public EntityTracker entityTracker;
     public Tilemap tilemap;
     public GameObject npcPartyPrefab;
     public GameObject huskPrefab;
 
     public void Update()
     {
-        if (entityManager.level1Parties < 30)
+        if (entityTracker.partyCounts[0] < 10)
         {
             SpawnHostileParty(1);
         }
@@ -30,28 +31,16 @@ public class EntitySpawner : MonoBehaviour
                                                                            //it might be a good idea to use the same methods everywhere instead of writing again
             TileBase spawntile = tilemap.GetTile(gridPosition);
 
-            if (spawntile != null && spawntile.name == "Tiles_0" && !entityManager.IsTileOccupied(gridPosition))
+            if (spawntile != null && spawntile.name == "Tiles_0" && !tileManager.IsTileOccupied(gridPosition))
             {
                 GameObject newParty = Instantiate(npcPartyPrefab, randomPosition, Quaternion.identity);
                 PartyData newPartyData = newParty.GetComponent<PartyData>();
 
-                int randomInt = Random.Range(0, 2);
+                newPartyData.level = 1;
+                newPartyData.pos1 = huskPrefab;
 
-                if (randomInt == 0)
-                {
-                    newPartyData.pos1 = huskPrefab;
-                    newPartyData.pos2 = huskPrefab;
-                }
-
-                if (randomInt == 1)
-                {
-                    newPartyData.pos1 = huskPrefab;
-                    newPartyData.pos2 = huskPrefab;
-                    newPartyData.pos3 = huskPrefab;
-                }
-
-                entityManager.level1Parties += 1;
-                entityManager.UpdateEntityPosition(newParty, gridPosition);
+                entityTracker.partyCounts[0] += 1;
+                entityTracker.UpdateEntityPosition(newParty, gridPosition);
             }
         }
         

@@ -15,10 +15,33 @@ public class CharacterFunctions : MonoBehaviour
         combatManager = FindObjectOfType<CombatManager>();
     }
 
-    public void TakeDamage(int amount)
+    public void ChangeMaxHealth(int amount)
     {
-        ownData.health -= amount;
+        if(ownData.health > amount)
+        {
+            ownData.health = amount;
+        }
         ownUI.UpdateHealthBar(ownData.health);
+    }
+
+    public void GetHealed(int healAmount)
+    {
+        if(ownData.health + healAmount > ownData.maxHealth) 
+        { 
+            ownData.health = ownData.maxHealth;
+        }
+        else 
+        {
+            ownData.health += healAmount;
+        }
+        ownUI.UpdateHealthBar(ownData.health);
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        ownData.health -= damageAmount;
+        ownUI.UpdateHealthBar(ownData.health);
+        
         if (ownData.health <= 0)
         {
             Die();
@@ -33,6 +56,7 @@ public class CharacterFunctions : MonoBehaviour
 
     public void Die()
     {
+        combatManager.xpReward += ownData.xpReward;
         combatManager.combatants.Remove(ownData);
 
         if (ownData.team == 0)
@@ -49,7 +73,7 @@ public class CharacterFunctions : MonoBehaviour
             combatManager.LoseCombat();
         }
 
-        if(combatManager.teamTwo.Count == 1)
+        if(combatManager.teamTwo.Count == 0)
         {
             combatManager.WinCombat();
         }

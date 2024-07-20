@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PartyData : MonoBehaviour
 {
+    public int level;
+
     public GameObject pos1;
     public GameObject pos2;
     public GameObject pos3;

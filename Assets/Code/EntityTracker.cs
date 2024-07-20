@@ -1,18 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class EntityManager : MonoBehaviour
+public class EntityTracker : MonoBehaviour
 {
     public Tilemap tilemap;
-    private Dictionary<GameObject, Vector3Int> entityPositions;
+    public Dictionary<GameObject, Vector3Int> entityPositions;
 
-    public int level1Parties;
-    public int level2Parties;
-    public int level3Parties;
-    public int level4Parties;
-    public int level5Parties;
+    public int[] partyCounts;
 
     void Start()
     {
@@ -22,7 +17,14 @@ public class EntityManager : MonoBehaviour
 
     void StoreEntityPositions()
     {
-        GameObject[] allEntities = GameObject.FindGameObjectsWithTag("Entity");
+        List<GameObject> allEntities = new List<GameObject>();
+
+        allEntities.AddRange(GameObject.FindGameObjectsWithTag("Player"));
+
+        allEntities.AddRange(GameObject.FindGameObjectsWithTag("Npc"));
+
+        allEntities.AddRange(GameObject.FindGameObjectsWithTag("Object"));
+
 
         foreach (GameObject entity in allEntities)
         {
@@ -53,17 +55,5 @@ public class EntityManager : MonoBehaviour
         {
             entityPositions.Add(entity, newPos);
         }
-    }
-
-    public GameObject IsTileOccupied(Vector3Int gridPosition)
-    {
-        foreach (var pair in entityPositions)
-        {
-            if (pair.Value == gridPosition)
-            {
-                return pair.Key;
-            }
-        }
-        return null;
     }
 }

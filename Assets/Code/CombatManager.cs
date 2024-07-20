@@ -6,15 +6,20 @@ using UnityEngine;
 public class CombatManager : MonoBehaviour
 { 
     public GameState gameState;
+    public PlayerStats playerStats;
     public Camera mainCamera;
 
     public GameObject combatUI;
     public Transform[] spawnSlots;
+    public GameObject partyOne;
+    public GameObject partyTwo;
     public List<CharacterData> combatants;
     public List<CharacterData> teamOne;
     public List<CharacterData> teamTwo;
     public CharacterData turnHaver;
     public Skill selectedSkill; //I guess this is the right place for this variable
+    public string selectedItem;
+    public int xpReward;//whole xp system can be MUCH simpler, but I guess this is fine, it gives me more control at least.
 
     public void FixedUpdate()
     {
@@ -26,11 +31,15 @@ public class CombatManager : MonoBehaviour
 
     public void StartCombat(GameObject sideOne, GameObject sideTwo) //this method can be simplified by directly taking in the data script instead of the GameObject
     {
+        xpReward = 0;
         gameState.overworldPaused = true;
         combatUI.SetActive(true);
 
-        PartyData sideOneData = sideOne.GetComponent<PartyData>();
-        PartyData sideTwoData = sideTwo.GetComponent<PartyData>();
+        partyOne = sideOne;
+        partyTwo = sideTwo;
+
+        PartyData sideOneData = partyOne.GetComponent<PartyData>();
+        PartyData sideTwoData = partyTwo.GetComponent<PartyData>();
 
         GameObject combatant1 = Instantiate(sideOneData.pos1, spawnSlots[0].position, Quaternion.identity);
         combatant1.transform.SetParent(spawnSlots[0]);
@@ -116,28 +125,35 @@ public class CombatManager : MonoBehaviour
 
     public void WinCombat() 
     {
-        gameState.overworldPaused = false;
-        teamOne.Clear();
-        foreach(CharacterData combatant in combatants)
-        {
-            Destroy(combatant.gameObject);
-        }
-        combatants.Clear();
-        combatUI.SetActive(false);
+        partyTwo.GetComponent<PartyFunctions>().Die();
+        playerStats.xp += xpReward;
+        gameState.combatFinished = true;
         Debug.Log("WON CELEBRATE");
+        HoneyDefeatEvent();
     }
 
     public void LoseCombat()
+    {  
+        gameState.combatFinished = true;
+        Debug.Log("LOST GET FUCKED");
+    }
+
+    public void ClearCombat()
     {
-        gameState.overworldPaused = false;
+        teamOne.Clear();
         teamTwo.Clear();
+        combatants.Clear();
         foreach (CharacterData combatant in combatants)
         {
             Destroy(combatant.gameObject);
         }
-        combatants.Clear();
-        combatUI.SetActive(false);
+    }
 
-        Debug.Log("LOST GET FUCKED");
+    public void HoneyDefeatEvent()
+    {
+        CompanionData honey = new CompanionData();
+        honey.maxHealth = 100;
+        honey.health = 100;
+        playerStats.unlockedCompanions.Add(honey);
     }
 }

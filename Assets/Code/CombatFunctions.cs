@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CombatFunctions : MonoBehaviour
 {
+    public CombatManager combatManager;
+
     public void Attack(CharacterData attacker, CharacterData target) //might be a good idea to directly get functions instead of data but I might also need the data so this is fine for now
     {
         target.GetComponent<CharacterFunctions>().TakeDamage(attacker.damage);
@@ -15,17 +17,24 @@ public class CombatFunctions : MonoBehaviour
         {
             foreach(CharacterData character in enemyTeam)
             {
-                character.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage);
+                character.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage);//bug when killing multiple enemies at once
             }
         }
-        //else if (skill == "EMPBlast")
-        //{
+    }
 
-        //}
-        //else if (skill == "oneViolence" )
-        //{
+    public void UseItem(List<CharacterData> userTeam, CharacterData itemUser, List<CharacterData> enemyTeam, CharacterData target, string item)//Once again the if checks are absolutely disgusting
+    {
+        if (item == "catFood")
+        {
+            if(target.characterName == "FeralCat")
+            {
+                Debug.Log("you fed the cat");
+                target.characterName = "Honey";
+                target.GetComponent<CharacterFunctions>().ChangeMaxHealth(100);
 
-        //}
+                combatManager.WinCombat();
+            }
+        }
     }
 
     public void EndTurn(CharacterData turnSpender) //truly amazing name

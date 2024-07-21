@@ -48,9 +48,15 @@ public class CharacterFunctions : MonoBehaviour
         }
     }
 
-    public void reduceTurnCooldown(int amount)
+    public void ReduceTurnCooldown(int amount)
     {
         ownData.turnCoolDown -= amount;
+        ownUI.UpdateCooldownBar(ownData.turnCoolDown);
+    }
+
+    public void ResetTurnCooldown()
+    {
+        ownData.turnCoolDown = 5000; //magic number but it's ok
         ownUI.UpdateCooldownBar(ownData.turnCoolDown);
     }
 

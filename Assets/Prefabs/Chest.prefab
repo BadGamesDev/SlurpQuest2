@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4500605986750676022}
   - component: {fileID: 4628214921200950968}
   - component: {fileID: 409829319452505209}
+  - component: {fileID: -1241125855942102585}
   m_Layer: 0
-  m_Name: NpcParty 1
+  m_Name: Chest
   m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,4 +99,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectName: Chest
+  objectType: chest
   item: 0
+--- !u!114 &-1241125855942102585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426743544785686162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510c69a94a420fe4bb1f64c56955a3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: 0}
+  ownData: {fileID: 409829319452505209}
+  overworldUI: {fileID: 0}

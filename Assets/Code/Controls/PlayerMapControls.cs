@@ -10,7 +10,7 @@ public class PlayerMapControls : MonoBehaviour
 
     void Update()
     {
-        if (!partyFunctions.isMoving && !gameState.overworldPaused)
+        if (!partyFunctions.isMoving && !gameState.overworldPaused && !gameState.globalPaused)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {

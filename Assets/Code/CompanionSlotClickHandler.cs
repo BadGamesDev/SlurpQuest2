@@ -1,28 +1,33 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections.Generic;
 
 public class CompanionSlotClickHandler : MonoBehaviour, IPointerClickHandler
 {
     public PrefabLoader prefabLoader;
     public OverworldUI overWorldUI;
     public PartyData playerParty;
+    public PlayerStats playerStats;
     public int slotIndex;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-
-        if (slotIndex == 1)
+        if (overWorldUI.pickedCompanion != null)
         {
-            playerParty.pos2 = prefabLoader.HoneyPrefab;
-            CharacterData oldData = playerParty.pos2.GetComponent<CharacterData>();
-            CopyCharacterData(oldData, overWorldUI.pickedCompanion);
-        }
-        else if (slotIndex == 2)
-        {
-            playerParty.pos3 = prefabLoader.HoneyPrefab;
-            CharacterData oldData = playerParty.pos3.GetComponent<CharacterData>();
-            CopyCharacterData(oldData, overWorldUI.pickedCompanion);
+            if (slotIndex == 1)
+            {
+                playerParty.pos2 = prefabLoader.HoneyPrefab; //add an  if check for the prefab
+                CharacterData oldData = playerParty.pos2.GetComponent<CharacterData>();
+                CopyCharacterData(oldData, overWorldUI.pickedCompanion);
+            }
+            else if (slotIndex == 2)
+            {
+                playerParty.pos3 = prefabLoader.HoneyPrefab;
+                CharacterData oldData = playerParty.pos3.GetComponent<CharacterData>();
+                CopyCharacterData(oldData, overWorldUI.pickedCompanion);
+            }
+            playerStats.activeCompanions.Add(overWorldUI.pickedCompanion);
+            overWorldUI.pickedCompanion = null;
+            overWorldUI.CheckSelectableCompanions();
         }
     }
 

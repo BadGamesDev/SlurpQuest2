@@ -47,16 +47,7 @@ public class PartyFunctions : MonoBehaviour
                 }
                 else if (entityOnTile.CompareTag("Object"))
                 {
-                    if (entityOnTile.GetComponent<ObjectData>().item == 1) //I wouldn't need these disguting if statements with a proper inventory system but I really don't want to do it for such simple stuff
-                    {
-                        combatManager.playerStats.pizza += 1;
-                        entityOnTile.GetComponent<ObjectData>().item = 0; //should probably have a proper method like "ChestOpened" instead of writing it like this
-                    }
-                    else if (entityOnTile.GetComponent<ObjectData>().item == 2)
-                    {
-                        combatManager.playerStats.catFood += 1;
-                        entityOnTile.GetComponent<ObjectData>().item = 0;
-                    }
+                    entityOnTile.GetComponent<ObjectFunctions>().GetInteracted();
                 }
             }
         }

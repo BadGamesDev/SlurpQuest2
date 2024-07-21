@@ -23,7 +23,7 @@ public class CombatManager : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (turnHaver == null)
+        if (gameState.inCombat == true && turnHaver == null)
         {
             UpdateCombat(); //updating combat based on fixedupdate speed is kinda dumb, using time might be better but this works for now
         }
@@ -97,7 +97,6 @@ public class CombatManager : MonoBehaviour
 
         gameState.inCombat = true;
         RollInitiative();
-        UpdateCombat();
     }
 
     public void RollInitiative() // I will probably add an initiative stat if I have the time
@@ -105,7 +104,7 @@ public class CombatManager : MonoBehaviour
         foreach (CharacterData combatant in combatants)
         {
             int rollResult = Random.Range(0, 2501);
-            combatant.turnCoolDown -= rollResult;
+            combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(rollResult);
         }
     }
 
@@ -113,13 +112,18 @@ public class CombatManager : MonoBehaviour
     {
         foreach (CharacterData combatant in combatants)
         {
-            combatant.turnCoolDown -= combatant.speed;
-            if (combatant.turnCoolDown <= 0)
+            if (turnHaver == null) //band-aid to prevent a bug that skips turns if two characters have really close cooldowns, it seems checking before the function isn't enough
             {
-                turnHaver = combatant;
-                combatant.turnCoolDown = 5000; //harmless magic number but should probably change it to a maxCooldown variable or something
+                if (combatant.turnCoolDown <= 0)
+                {
+                    turnHaver = combatant;
+                    combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
+                }
+                else
+                {
+                    combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(combatant.speed);
+                }
             }
-            combatant.GetComponent<CharacterFunctions>().reduceTurnCooldown(combatant.speed);
         }
     }
 
@@ -128,6 +132,7 @@ public class CombatManager : MonoBehaviour
         partyTwo.GetComponent<PartyFunctions>().Die();
         playerStats.xp += xpReward;
         gameState.combatFinished = true;
+        gameState.inCombat = false;
         Debug.Log("WON CELEBRATE");
         HoneyDefeatEvent();
     }
@@ -135,6 +140,7 @@ public class CombatManager : MonoBehaviour
     public void LoseCombat()
     {  
         gameState.combatFinished = true;
+        gameState.inCombat = false;
         Debug.Log("LOST GET FUCKED");
     }
 
@@ -142,18 +148,27 @@ public class CombatManager : MonoBehaviour
     {
         teamOne.Clear();
         teamTwo.Clear();
-        combatants.Clear();
         foreach (CharacterData combatant in combatants)
         {
             Destroy(combatant.gameObject);
         }
+        combatants.Clear();
     }
 
     public void HoneyDefeatEvent()
     {
-        CompanionData honey = new CompanionData();
-        honey.maxHealth = 100;
-        honey.health = 100;
+        CompanionData honey = new CompanionData
+        {
+            characterName = "Honey",
+            maxHealth = 100,
+            health = 100,
+            defence = 0,
+            accuracy = 100,
+            damage = 10,
+            speed = 10,
+            turnCoolDown = 5000,
+        };
+
         playerStats.unlockedCompanions.Add(honey);
     }
 }

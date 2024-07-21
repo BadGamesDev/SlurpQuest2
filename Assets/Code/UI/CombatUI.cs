@@ -7,6 +7,7 @@ public class CombatUI : MonoBehaviour
     public GameState gameState;
     public CombatManager combatManager;
     public CharacterData target;
+    public PlayerStats playerStats;
 
     public GameObject combatUI; //parent of all the UI stuff for combat
 
@@ -33,6 +34,17 @@ public class CombatUI : MonoBehaviour
     public Button skillButton7;
     public Button skillButton8;
     public Button skillButton9;
+
+    public Button itemButton0;
+    public Button itemButton1;
+    public Button itemButton2;
+    public Button itemButton3;
+    public Button itemButton4;
+    public Button itemButton5;
+    public Button itemButton6;
+    public Button itemButton7;
+    public Button itemButton8;
+    public Button itemButton9;
 
     public enum State
     {
@@ -241,7 +253,28 @@ public class CombatUI : MonoBehaviour
 
     public void ItemButtonPressed()
     {
+        CheckItems();
         ChangeState(State.ItemChoiceUI);
+    }
+
+    public void CheckItems()
+    {
+        itemButton0.interactable = false;
+        itemButton1.interactable = false;
+        itemButton2.interactable = false;
+        itemButton3.interactable = false;
+        itemButton4.interactable = false;
+        itemButton5.interactable = false;
+        itemButton6.interactable = false;
+        itemButton7.interactable = false;
+        itemButton8.interactable = false;
+        itemButton9.interactable = false;
+
+        if (playerStats.catFood != 0)
+        {
+            itemButton0.interactable = true;
+        }
+       
     }
 
     public void ItemSlot0Pressed() //HELL YEAH! LET'S DO THE SAME FUCKING THING FOR THE ITEMS. TRULY A 10X CODER RIGHT HERE
@@ -307,6 +340,7 @@ public class CombatUI : MonoBehaviour
         gameState.combatFinished = false;
         gameState.overworldPaused = false;
         combatUI.SetActive(false);
+        combatManager.ClearCombat();
     }
 
     public void BackButtonPressed()

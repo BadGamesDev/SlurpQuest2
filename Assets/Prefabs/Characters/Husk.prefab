@@ -100,11 +100,14 @@ MonoBehaviour:
   defence: 0
   accuracy: 50
   damage: 10
-  speed: 8
+  speed: 10
   turnCoolDown: 5000
   team: 0
   xpReward: 100
   skills: []
+  selfStatusEffects: []
+  globalStatusEffects: []
+  bossNumber: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0

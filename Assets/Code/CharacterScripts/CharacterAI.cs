@@ -16,7 +16,7 @@ public class CharacterAI : MonoBehaviour
 
     public void FixedUpdate()//horrible for performance
     {
-        if (combatManager.turnHaver == ownData && ownData.team == 1) //checking team like this is really dumb
+        if (combatManager.turnHaver == ownData && ownData.team == 1 && combatManager.teamOne.Count != 0) //checking team like this is really dumb ------Edit: checking if the team is empty to prevent some bugs, some real vodoo shit tbh 
         {
             CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
             combatFunctions.Attack(ownData, target);

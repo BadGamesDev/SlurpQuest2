@@ -7,6 +7,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 {
     public GameState gameState;
     public PlayerStats playerStats;
+    public PartyData playerParty;
     public GameObject dialoguePanel;
     public GameObject partyScreen;
 
@@ -20,6 +21,9 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Button companionsButton3;
     public Button companionsButton4;
     public Button companionsButton5;
+
+    public Button dismissCompanion0;
+    public Button dismissCompanion1;
 
     public Button partyScreenDoneButton;
 
@@ -64,6 +68,26 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public void CompanionsButton5Pressed()
     {
 
+    }
+
+    public void DismissButton0Pressed()
+    {
+        CompanionData companionToRemove = FindActiveCompanionByName(playerParty.pos2.GetComponent<CharacterData>().characterName);
+        playerStats.activeCompanions.Remove(companionToRemove);
+        playerParty.pos2 = null; //I had to add a reference to player party just for this shit
+        pickedCompanion = null; //there is no need for this but lets keep it for now
+        CheckSelectableCompanions();
+        dismissCompanion0.gameObject.SetActive(false);
+    }
+
+    public void DissmissButton1Pressed()
+    {
+        CompanionData companionToRemove = FindActiveCompanionByName(playerParty.pos3.GetComponent<CharacterData>().characterName);
+        playerStats.activeCompanions.Remove(companionToRemove);
+        playerParty.pos3 = null;
+        pickedCompanion = null;
+        CheckSelectableCompanions();
+        dismissCompanion1.gameObject.SetActive(false);
     }
 
     public void CheckSelectableCompanions()
@@ -117,5 +141,18 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
             }
         }
         return null;
+    }
+
+    public void FirstDeathMessage()
+    {
+        DisplayMessage("Hello Slurp! It seems you have died! This is to be expected considering your atrocious performance in the last game, and normally dying would have been a big problem. " +
+                       "But this game is set in the SlurpQuest™ universe and you actually canonically have almost a hundred trillion lives left over from SlurpQuest 1 thanks to Don. " +
+                       "So go ahead and die as much as you want!");
+    }
+
+    public void HoneyUnlockedMessage()
+    {
+        DisplayMessage("You have unlocked Honey as a companion! You can click the party button and assign her to one of your empty companion slots." +
+                       "You will keep unlocking more companions as you play the game and save people from corruption.");
     }
 }

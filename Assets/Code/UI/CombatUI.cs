@@ -23,6 +23,7 @@ public class CombatUI : MonoBehaviour
     public GameObject continueButton;
 
     public TMP_Text combatText;
+    public string combatFinishMessage;
 
     public Button skillButton0;
     public Button skillButton1;
@@ -158,6 +159,7 @@ public class CombatUI : MonoBehaviour
 
                 backButton.SetActive(false);
                 continueButton.SetActive(true);
+                combatText.text = combatFinishMessage;
                 break;
             default:
                 break;
@@ -339,6 +341,7 @@ public class CombatUI : MonoBehaviour
         ChangeState(State.MainUI); //Should probably do this in a cleaner way but no problem for now
         gameState.combatFinished = false;
         gameState.overworldPaused = false;
+        combatFinishMessage = null;
         combatUI.SetActive(false);
         combatManager.ClearCombat();
     }

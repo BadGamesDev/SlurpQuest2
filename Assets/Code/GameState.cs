@@ -9,4 +9,5 @@ public class GameState : MonoBehaviour
     public bool combatPaused;
     public bool inCombat;
     public bool combatFinished;
+    public int deathCount;
 }

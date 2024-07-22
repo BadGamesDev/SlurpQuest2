@@ -104,7 +104,12 @@ MonoBehaviour:
   turnCoolDown: 10000
   team: 0
   xpReward: 500
+  winEvent: honey win event
+  loseEvent: honey lose event
   skills: []
+  selfStatusEffects: []
+  globalStatusEffects: []
+  bossNumber: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0

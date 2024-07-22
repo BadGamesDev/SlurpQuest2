@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Threading;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CombatManager : MonoBehaviour
 { 
@@ -9,6 +8,7 @@ public class CombatManager : MonoBehaviour
     public PlayerStats playerStats;
     public Camera mainCamera;
 
+    public OverworldUI overworldUI; //I hope referencing this shit here doesn't cause the world to end
     public GameObject combatUI;
     public Transform[] spawnSlots;
     public GameObject partyOne;
@@ -20,12 +20,14 @@ public class CombatManager : MonoBehaviour
     public Skill selectedSkill; //I guess this is the right place for this variable
     public string selectedItem;
     public int xpReward;//whole xp system can be MUCH simpler, but I guess this is fine, it gives me more control at least.
+    public List<string> winEvents;
+    public List<string> loseEvents; //dumb names but I want consistency with the win and lose methods
 
     public void FixedUpdate()
     {
         if (gameState.inCombat == true && turnHaver == null)
         {
-            UpdateCombat(); //updating combat based on fixedupdate speed is kinda dumb, using time might be better but this works for now
+            UpdateCombat(); //updating combat based on fixedupdate speed is kinda dumb, using deltatime or something might be better but this works for now
         }
     }
 
@@ -96,9 +98,24 @@ public class CombatManager : MonoBehaviour
         }
 
         gameState.inCombat = true;
+        CollectEvents();
         RollInitiative();
     }
 
+    public void CollectEvents()
+    {
+        foreach (CharacterData combatant in combatants)
+        {
+            if (!string.IsNullOrEmpty(combatant.winEvent))
+            {
+                winEvents.Add(combatant.winEvent);
+            }
+            if (!string.IsNullOrEmpty(combatant.loseEvent))
+            {
+                loseEvents.Add(combatant.loseEvent);
+            }
+        }
+    }
     public void RollInitiative() // I will probably add an initiative stat if I have the time
     {
         foreach (CharacterData combatant in combatants)
@@ -133,15 +150,19 @@ public class CombatManager : MonoBehaviour
         playerStats.xp += xpReward;
         gameState.combatFinished = true;
         gameState.inCombat = false;
-        Debug.Log("WON CELEBRATE");
-        HoneyDefeatEvent();
+        WinEventCheck();
     }
 
     public void LoseCombat()
     {  
         gameState.combatFinished = true;
         gameState.inCombat = false;
-        Debug.Log("LOST GET FUCKED");
+        LoseEventCheck();
+        gameState.deathCount += 1;
+        if (gameState.deathCount == 1)
+        {
+            overworldUI.FirstDeathMessage(); //God forgive me for checking each death to see if it is the first death please. I'll never do something like this again I swear.
+        }
     }
 
     public void ClearCombat()
@@ -154,8 +175,24 @@ public class CombatManager : MonoBehaviour
         }
         combatants.Clear();
     }
+    
+    public void WinEventCheck()
+    {
+        if (winEvents.Contains("honey win event"))
+        { 
+            HoneyWinEvent(); 
+        }
+    }
 
-    public void HoneyDefeatEvent()
+    public void LoseEventCheck()
+    {
+        if (loseEvents.Contains("honey lose event"))
+        {
+            HoneyLoseEvent();
+        }
+    }
+
+    public void HoneyWinEvent()
     {
         CompanionData honey = new CompanionData
         {
@@ -169,6 +206,15 @@ public class CombatManager : MonoBehaviour
             turnCoolDown = 5000,
         };
 
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "The feral cat calms down after eating the cat food and you see a familiar face... IT IS HONEY OH MY FUCKING GOD IT IS HONEY! " +
+                                                              "It is clear that honey doesn't want to fight you anymore. Congratulations you have won!";
+        overworldUI.HoneyUnlockedMessage();
         playerStats.unlockedCompanions.Add(honey);
     }
+
+    public void HoneyLoseEvent()
+    {
+        Debug.Log("IT NEEDS TO WORK WHAT THE FUCK");
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "You just got one shot lmao! Maybe you could look around to see if there is anything that can help you?"; // I am referencing the combatUI like this because I am fucking afraid of circular references.
+    }                                                                                                                                                                   // Of course referencing it like this doesn't change much but it makes me feel safe
 }

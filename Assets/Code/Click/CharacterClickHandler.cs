@@ -35,17 +35,29 @@ public class CharacterClickHandler : MonoBehaviour, IPointerClickHandler
         switch (combatUI.currentState)
         {
             case CombatUI.State.AttackTargetUI:
-                
-                combatFunctions.Attack(combatManager.turnHaver, ownData);
-                combatManager.turnHaver = null;
-                combatUI.ChangeState(CombatUI.State.MainUI);
+
+                if (combatManager.turnHaver.team != ownData.team) //check if it is an enemy
+                {
+                    combatFunctions.Attack(combatManager.turnHaver, ownData);
+                    combatManager.turnHaver = null;
+                    combatUI.ChangeState(CombatUI.State.MainUI);
+                }
                 break;
 
             case CombatUI.State.SkillTargetUI:
 
-                combatFunctions.UseSkill(userTeam, combatManager.turnHaver, enemyTeam, ownData, combatManager.selectedSkill);
-                combatManager.turnHaver = null;
-                combatUI.ChangeState(CombatUI.State.MainUI);
+                if (combatManager.turnHaver.team != ownData.team && combatManager.selectedSkill.hostile) //if enemy and the skill is supposed to be used on enemies
+                {
+                    combatFunctions.UseSkill(userTeam, combatManager.turnHaver, enemyTeam, ownData, combatManager.selectedSkill);
+                    combatManager.turnHaver = null;
+                    combatUI.ChangeState(CombatUI.State.MainUI);
+                }
+                else if (combatManager.turnHaver.team == ownData.team && !combatManager.selectedSkill.hostile) //if ally and skill is supposed to be used on allies
+                {
+                    combatFunctions.UseSkill(userTeam, combatManager.turnHaver, enemyTeam, ownData, combatManager.selectedSkill);
+                    combatManager.turnHaver = null;
+                    combatUI.ChangeState(CombatUI.State.MainUI);
+                }
                 break;
             
             case CombatUI.State.ItemTargetUI:

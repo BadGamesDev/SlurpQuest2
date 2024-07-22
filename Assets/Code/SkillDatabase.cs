@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class SkillDatabase : MonoBehaviour
 {
-    public static Skill swipe = new Skill { skillName = "swipe" };
+    public static Skill swipe = new Skill { skillName = "swipe", hostile = true };
 }

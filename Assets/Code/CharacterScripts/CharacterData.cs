@@ -14,6 +14,8 @@ public class CharacterData : MonoBehaviour
     public int turnCoolDown;
     public int team;
     public int xpReward;
+    public string winEvent; //I will probably need to make a separate "deathEvent" in the future as I might need to fire some shit at the death of the enemy rather than end of combat
+    public string loseEvent;
     public List<Skill> skills;
     public Dictionary<string, int> skillCooldowns;
     public List<StatusEffect> selfStatusEffects;

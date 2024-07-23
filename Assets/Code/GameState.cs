@@ -10,4 +10,10 @@ public class GameState : MonoBehaviour
     public bool inCombat;
     public bool combatFinished;
     public int deathCount;
+    public Vector3Int checkpoint;
+
+    private void Start()
+    {
+        checkpoint = new Vector3Int(-2, -5, 0);
+    }
 }

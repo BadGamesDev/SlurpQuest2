@@ -18,6 +18,7 @@ public class CombatFunctions : MonoBehaviour
             foreach(CharacterData character in enemyTeam)
             {
                 character.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage);//bug when killing multiple enemies at once
+                character.GetComponent<CharacterFunctions>().GetInflicted("bleed", 2);
             }
         }
     }
@@ -39,6 +40,6 @@ public class CombatFunctions : MonoBehaviour
 
     public void EndTurn(CharacterData turnSpender) //truly amazing name
     {
-
+        //what am I supposed to use this method for lmao
     }
 }

@@ -8,7 +8,7 @@ public class PartyFunctions : MonoBehaviour
 
     public PartyData ownData;
     
-    private Vector3Int currentGridPosition;
+    public Vector3Int currentGridPosition;
     private Vector3Int targetGridPosition;
     private Vector3 targetWorldPosition;
 

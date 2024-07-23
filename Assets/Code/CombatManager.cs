@@ -6,7 +6,10 @@ public class CombatManager : MonoBehaviour
 { 
     public GameState gameState;
     public PlayerStats playerStats;
+    public TilemapManager tilemapManager; //all this tilemap and entitytracker stuff really makes the spaghetti worse. The best solution is simply moving the respawn function somewhere else I guess.
+    public EntityTracker entityTracker;
     public Camera mainCamera;
+    public GameObject playerParty;
 
     public OverworldUI overworldUI; //I hope referencing this shit here doesn't cause the world to end
     public GameObject combatUI;
@@ -135,10 +138,37 @@ public class CombatManager : MonoBehaviour
                 {
                     turnHaver = combatant;
                     combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
+                    foreach(StatusEffect status in combatant.selfStatusEffects)
+                    {
+                        combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
+                        status.tickCount -= 1;
+                        if (status.tickCount <= 0)
+                        {
+                            combatant.selfStatusEffects.Remove(status); //I might actually kill myself if I mix up global and self statuses one more time am I retarded? Am I not supposed to do this kind of work?
+                        }
+                    }
                 }
                 else
                 {
                     combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(combatant.speed);
+                    foreach (StatusEffect status in combatant.globalStatusEffects)
+                    {
+                        status.tickCooldown -= 10;
+                        if (status.tickCooldown <= 0)
+                        {
+                            combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
+                            status.tickCount -= 1;
+                            if (status.tickCount <= 0)
+                            {
+                                status.tickCooldown = 5000; //There is normally no need for this as the status is removed anyways, but if I don't do this the status will start with 0 cooldown to the next tick so uhh... I need this
+                                combatant.globalStatusEffects.Remove(status);
+                            }
+                            else
+                            {
+                                status.tickCooldown = 5000;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -163,6 +193,7 @@ public class CombatManager : MonoBehaviour
         {
             overworldUI.FirstDeathMessage(); //God forgive me for checking each death to see if it is the first death please. I'll never do something like this again I swear.
         }
+        RespawnPlayer();
     }
 
     public void ClearCombat()
@@ -217,4 +248,12 @@ public class CombatManager : MonoBehaviour
         Debug.Log("IT NEEDS TO WORK WHAT THE FUCK");
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "You just got one shot lmao! Maybe you could look around to see if there is anything that can help you?"; // I am referencing the combatUI like this because I am fucking afraid of circular references.
     }                                                                                                                                                                   // Of course referencing it like this doesn't change much but it makes me feel safe
+    
+    public void RespawnPlayer()
+    {
+        playerParty.transform.position = gameState.checkpoint;
+        Vector3Int playerGridPos = tilemapManager.tilemap.WorldToCell(gameState.checkpoint);
+        entityTracker.UpdateEntityPosition(playerParty, playerGridPos);
+        playerParty.GetComponent<PartyFunctions>().currentGridPosition = playerGridPos;
+    }
 }

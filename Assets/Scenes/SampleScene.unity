@@ -1858,7 +1858,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: {fileID: 192253108}
   playerStats: {fileID: 192253112}
+  tilemapManager: {fileID: 192253111}
+  entityTracker: {fileID: 192253104}
   mainCamera: {fileID: 519420031}
+  playerParty: {fileID: 1673746848}
   overworldUI: {fileID: 192253113}
   combatUI: {fileID: 110046666}
   spawnSlots:
@@ -1918,6 +1921,7 @@ MonoBehaviour:
   inCombat: 0
   combatFinished: 0
   deathCount: 0
+  checkpoint: {x: 0, y: 0}
 --- !u!114 &192253109
 MonoBehaviour:
   m_ObjectHideFlags: 0

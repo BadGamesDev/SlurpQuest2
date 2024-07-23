@@ -48,6 +48,77 @@ public class CharacterFunctions : MonoBehaviour
         }
     }
 
+    public void GetInflicted(string status, int duration) //You know what? I'm actually kinda proud of this system. Even thought the disgusting trend of a billion if checks continues here too.
+    {
+        StatusEffect existingStatus;
+        if (status == "stun")
+        {
+            existingStatus = CheckStatusSelf(status); //I can improve the method to remove the need for putting it separately for each skill but why fix something that is not broken?
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = StatusEffectDatabase.stun;
+                newEffect.tickCount = duration;
+
+                ownData.selfStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+        
+        else if (status == "bleed")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = StatusEffectDatabase.bleed;
+                newEffect.tickCount = duration;
+
+                ownData.globalStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+    }
+
+    public void StatusTick(string status)
+    {
+        if (status == "stun")
+        {
+            combatManager.turnHaver = null;
+        }
+        else if (status == "bleed")
+        {
+            TakeDamage(7);   
+        }
+    }
+
+    public StatusEffect CheckStatusGlobal(string statusName)
+    {
+        foreach (StatusEffect status in ownData.globalStatusEffects)
+        {
+            if (statusName == status.statusName)
+            {
+                return status;
+            }
+        }
+        return null;
+    }
+    public StatusEffect CheckStatusSelf(string statusName)
+    {
+        foreach (StatusEffect status in ownData.selfStatusEffects)
+        {
+            if (statusName == status.statusName)
+            {
+                return status;
+            }
+        }
+        return null;
+    }
+
     public void ReduceTurnCooldown(int amount)
     {
         ownData.turnCoolDown -= amount;

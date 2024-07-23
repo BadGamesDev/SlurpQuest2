@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PartyFunctions : MonoBehaviour
 {
+    public GameState gameState;
     public EntityTracker entityTracker;
     public TilemapManager tilemapManager;
     public CombatManager combatManager;
@@ -43,7 +44,10 @@ public class PartyFunctions : MonoBehaviour
             {
                 if (entityOnTile.CompareTag("Npc"))
                 {
-                    combatManager.StartCombat(gameObject, entityOnTile);
+                    combatManager.IntroduceCombat(entityOnTile);
+                    gameState.waitingCombat = true;
+                    gameState.partiesWaitingCombat.Add(gameObject);
+                    gameState.partiesWaitingCombat.Add(entityOnTile.gameObject);
                 }
                 else if (entityOnTile.CompareTag("Object"))
                 {

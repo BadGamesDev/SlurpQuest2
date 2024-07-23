@@ -34,6 +34,40 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    public void IntroduceCombat(GameObject enemy)
+    {
+        PartyData enemyData = enemy.GetComponent<PartyData>();
+        if(enemyData.pos1.name == "Husk")
+        {
+            overworldUI.AddMessage("Husk: Pew... die...pie... Boxx... yyyy... Nn... ew... grouuuun... dddsss...");
+            if(gameState.metHusk == false)
+            {
+                overworldUI.AddMessage("This is a husk! An abandoned account left to rot and decay, both alive and dead at the same time. Husks are mostly too weak and slow to become a problem but they might be dangerous in large groups");
+                gameState.metHusk = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "FeralCat")
+        {
+            overworldUI.AddMessage("FeralCat: MEEEOOWWWWWWW RAAAEERGGGGGGG REEEEEEEEEEEEEEEEEEEE!!!!!");
+            if (gameState.metFeralCat == false)
+            {
+                overworldUI.AddMessage("A feral cat, driven mad by the corrupting curse of the dark lord like so many other beings in this realm. For a moment you sense something familiar in it's eyes, but there is no time to think! Get ready for a fight!");
+                gameState.metFeralCat = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "CyborgHunter")
+        {
+            overworldUI.AddMessage("CyborgHunter: Seek and destroy!"); // making this binary could be really fun
+            if (gameState.metCyborgHunter == false)
+            {
+                overworldUI.AddMessage("A half man half machine monstrosity!");
+                gameState.metCyborgHunter = true;
+            }
+        }
+    }
+
     public void StartCombat(GameObject sideOne, GameObject sideTwo) //this method can be simplified by directly taking in the data script instead of the GameObject
     {
         xpReward = 0;

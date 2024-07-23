@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 1357805490268290798}
   - component: {fileID: 8810079466389909678}
   - component: {fileID: 2105138982174830678}
-  - component: {fileID: -6170061101785382873}
   - component: {fileID: -5873562826270867328}
+  - component: {fileID: 1265308831049200161}
   m_Layer: 5
-  m_Name: Slurp
+  m_Name: CyborgHunter
   m_TagString: Entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.39215687, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -94,18 +94,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd327729ae66a9469eb0f316c6673df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Slurp
+  characterName: CyborgHunter
   maxHealth: 100
   health: 100
   defence: 0
-  accuracy: 90
-  damage: 100
+  accuracy: 100
+  damage: 10
   speed: 10
-  turnCoolDown: 5000
+  turnCoolDown: 10000
   team: 0
-  xpReward: 0
-  winEvent: 
-  loseEvent: 
+  xpReward: 500
+  winEvent: digi win event
+  loseEvent: digi lose event
   skills: []
   selfStatusEffects: []
   globalStatusEffects: []
@@ -139,21 +139,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3288426288095730828}
   cooldownBar: {fileID: 7231504259382020654}
---- !u!114 &-6170061101785382873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167442716517662681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2611a01acee092d43bc62480202c1781, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combatManager: {fileID: 0}
-  combatFunctions: {fileID: 0}
-  ownData: {fileID: 1357805490268290798}
 --- !u!114 &-5873562826270867328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +155,23 @@ MonoBehaviour:
   combatFunctions: {fileID: 0}
   combatUI: {fileID: 0}
   ownData: {fileID: 1357805490268290798}
+--- !u!114 &1265308831049200161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167442716517662681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73719835d4da57e4c8fa247b8fe1686b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatManager: {fileID: 0}
+  combatFunctions: {fileID: 0}
+  ownData: {fileID: 1357805490268290798}
+  moves: []
+  turnNumber: 0
 --- !u!1 &6905144335454012016
 GameObject:
   m_ObjectHideFlags: 0

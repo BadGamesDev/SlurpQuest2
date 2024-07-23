@@ -16,17 +16,17 @@ public class ObjectFunctions : MonoBehaviour
         {
             if(ownData.item == 0)
             {
-                overworldUI.DisplayMessage("The chest is empty (Because you know, YOU looted it).");
+                overworldUI.AddMessage("The chest is empty (Because you know, YOU looted it).");
             }
             else if (ownData.item == 1) //I wouldn't need these disguting if statements with a proper inventory system but I really don't want to do it for such simple stuff
             {
                 playerStats.catFood += 1;
-                overworldUI.DisplayMessage("You have opened a chest and found a can of cat food!");
+                overworldUI.AddMessage("You have opened a chest and found a can of cat food!");
             }
             else if (ownData.item == 2)
             {
                 playerStats.pizza += 1;
-                overworldUI.DisplayMessage("You have opened a chest and found pizza 5/5 HOLY SHIT!");
+                overworldUI.AddMessage("You have opened a chest and found pizza 5/5 HOLY SHIT!");
             }
             ownData.item = 0;
         }

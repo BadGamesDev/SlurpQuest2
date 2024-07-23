@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,6 +13,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public GameObject partyScreen;
 
     public TMP_Text dialogueText;
+    public List<string> textQueue;
 
     public Button partyButton;
 
@@ -105,18 +107,45 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         }
     }
 
-    public void DisplayMessage(string message)
+    public void DisplayMessages(string message)
     {
         gameState.globalPaused = true;
         dialoguePanel.SetActive(true);
         dialogueText.text = message;
     }
 
+    public void AddMessage(string message)
+    {
+        if (!dialoguePanel.activeSelf)
+        {
+            DisplayMessages(message);
+        }
+        else
+        {
+            textQueue.Add(message);
+        }
+    }
+
     public void CloseMessageButtonPressed()
     {
-        gameState.globalPaused = false;
-        dialoguePanel.SetActive(false);
-        dialogueText.text = null;
+        if (textQueue.Count <= 0)
+        {
+            gameState.globalPaused = false;
+            dialoguePanel.SetActive(false);
+            dialogueText.text = null;
+
+            if (gameState.waitingCombat == true)
+            {
+                FindAnyObjectByType<CombatManager>().StartCombat(gameState.partiesWaitingCombat[0], gameState.partiesWaitingCombat[1]);
+                gameState.waitingCombat = false;
+                gameState.partiesWaitingCombat.Clear();
+            }
+        }
+        else 
+        {
+            DisplayMessages(textQueue[0]);
+            textQueue.Remove(textQueue[0]); //is this the right way of doing it? Check it once you have internet connection !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        }
     }
 
     private CompanionData FindUnlockedCompanionByName(string companionName) //Having a method like this here feels bad, honestly this whole thing feels retarded.
@@ -145,14 +174,14 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void FirstDeathMessage()
     {
-        DisplayMessage("Hello Slurp! It seems you have died! This is to be expected considering your atrocious performance in the last game, and normally dying would have been a big problem. " +
+        AddMessage("Hello Slurp! It seems you have died! This is to be expected considering your atrocious performance in the last game, and normally dying would have been a big problem. " +
                        "But this game is set in the SlurpQuest™ universe and you actually canonically have almost a hundred trillion lives left over from SlurpQuest 1 thanks to Don. " +
                        "So go ahead and die as much as you want!");
     }
 
     public void HoneyUnlockedMessage()
     {
-        DisplayMessage("You have unlocked Honey as a companion! You can click the party button and assign her to one of your empty companion slots." +
+        AddMessage("You have unlocked Honey as a companion! You can click the party button and assign her to one of your empty companion slots." +
                        "You will keep unlocking more companions as you play the game and save people from corruption.");
     }
 }

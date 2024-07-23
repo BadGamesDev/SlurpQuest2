@@ -9,8 +9,14 @@ public class GameState : MonoBehaviour
     public bool combatPaused;
     public bool inCombat;
     public bool combatFinished;
+    public bool waitingCombat;
+    public List<GameObject> partiesWaitingCombat;
     public int deathCount;
     public Vector3Int checkpoint;
+
+    public bool metHusk;
+    public bool metFeralCat;
+    public bool metCyborgHunter;
 
     private void Start()
     {

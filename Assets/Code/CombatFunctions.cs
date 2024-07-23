@@ -13,13 +13,17 @@ public class CombatFunctions : MonoBehaviour
 
     public void UseSkill(List<CharacterData> userTeam, CharacterData skillUser, List<CharacterData> enemyTeam, CharacterData target, Skill skill) //I will use if checks for each skill, this is quite bad and it also requires me to write hundreds of ugly lines but it is also quite simple. I want to make a finished game not a pretty codebase.
     {
-        if (skill.skillName == "swipe")
+        if (skill.skillName == "Swipe")
         {
             foreach(CharacterData character in enemyTeam)
             {
                 character.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage);//bug when killing multiple enemies at once
                 character.GetComponent<CharacterFunctions>().GetInflicted("bleed", 2);
             }
+        }
+        else if (skill.skillName == "EMP Grenade")
+        {
+            target.GetComponent<CharacterFunctions>().GetInflicted("stun", 2);
         }
     }
 

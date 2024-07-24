@@ -1864,6 +1864,7 @@ MonoBehaviour:
   playerParty: {fileID: 1673746848}
   overworldUI: {fileID: 192253113}
   combatUI: {fileID: 110046666}
+  bigfoot: {fileID: 167442716517662681, guid: 987ecf27993ea7e429c217cba76181f5, type: 3}
   spawnSlots:
   - {fileID: 1391385558}
   - {fileID: 2079030011}
@@ -1876,6 +1877,7 @@ MonoBehaviour:
   combatants: []
   teamOne: []
   teamTwo: []
+  bench: []
   turnHaver: {fileID: 0}
   selectedSkill:
     skillName: 
@@ -2073,6 +2075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HoneyPrefab: {fileID: 167442716517662681, guid: 9292e7108b608c14796306c9dea22300, type: 3}
   AlienPrefab: {fileID: 167442716517662681, guid: f44faf38cb925ec4a9c43ad26d1e345a, type: 3}
+  BigfootPrefab: {fileID: 167442716517662681, guid: 987ecf27993ea7e429c217cba76181f5, type: 3}
 --- !u!1 &216845593
 GameObject:
   m_ObjectHideFlags: 0

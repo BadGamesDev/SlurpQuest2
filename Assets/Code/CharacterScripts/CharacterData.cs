@@ -20,6 +20,8 @@ public class CharacterData : MonoBehaviour
     public Dictionary<string, int> skillCooldowns;
     public List<StatusEffect> selfStatusEffects;
     public List<StatusEffect> globalStatusEffects;
+    public int bigFootTurns; //Having such a specific variable on every character really hurts. It is inefficient and it is ugly. But it doesn't hurt too much and I really want to be done with coding.
+    public Transform bigFootSlot; //same as above
 
     public int bossNumber; //This is for boss death specific events;
 

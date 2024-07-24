@@ -21,7 +21,6 @@ public class CharacterAI : MonoBehaviour
             CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
             combatFunctions.Attack(ownData, target);
             combatManager.turnHaver = null; //doing this manually everywhere is a bad idea, it should be in a proper function
-            Debug.Log(target.maxHealth + target.health);
         }
     }
 }

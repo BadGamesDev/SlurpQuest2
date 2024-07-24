@@ -6,4 +6,5 @@ public class PrefabLoader : MonoBehaviour //This script is just me paying for my
 {
     public GameObject HoneyPrefab;
     public GameObject AlienPrefab;
+    public GameObject BigfootPrefab;
 }

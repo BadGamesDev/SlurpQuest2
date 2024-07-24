@@ -155,6 +155,11 @@ public class CharacterFunctions : MonoBehaviour
             combatManager.WinCombat();
         }
 
+        if(ownData.characterName == "Big Foot")
+        {
+            combatManager.PullFromBench(combatManager.bench[0]); //STEP 1: over engineer a system. STEP 2: make a retarded function like this to completely make the over engineering useless.
+        }
+
         Destroy(gameObject);
     }
 }

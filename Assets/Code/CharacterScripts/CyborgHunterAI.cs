@@ -18,12 +18,16 @@ public class CyborgHunterAI : MonoBehaviour
         combatFunctions = FindObjectOfType<CombatFunctions>();
         prefabLoader = FindObjectOfType<PrefabLoader>();
 
-        moves.Add("summon aliens");
-        moves.Add("attack");
         moves.Add("attack");
         moves.Add("emp grenade");
         moves.Add("attack");
-        moves.Add("Search for bigfoot");
+        moves.Add("attack");
+        moves.Add("summon aliens");
+        moves.Add("find bigfoot");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
 
         alien = prefabLoader.AlienPrefab;
     }
@@ -50,6 +54,7 @@ public class CyborgHunterAI : MonoBehaviour
                 combatManager.combatants.Add(combatant5Data);
                 combatant5Data.team = 1;
                 combatManager.teamTwo.Add(combatant5Data);
+                combatant5Data.turnCoolDown += Random.Range(100, 1001);
 
 
                 GameObject combatant6 = Instantiate(alien, combatManager.spawnSlots[5].position, Quaternion.identity);
@@ -58,7 +63,14 @@ public class CyborgHunterAI : MonoBehaviour
                 combatManager.combatants.Add(combatant6Data);
                 combatant6Data.team = 1;
                 combatManager.teamTwo.Add(combatant6Data);
+                combatant6Data.turnCoolDown += Random.Range(100, 1001);
             }
+            else if (moves[turnNumber] == "find bigfoot")
+            {
+                CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
+                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.findBigfoot);
+            }
+
             combatManager.turnHaver = null;
             turnNumber += 1;
         }

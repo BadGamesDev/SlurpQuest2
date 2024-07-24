@@ -13,12 +13,14 @@ public class CombatManager : MonoBehaviour
 
     public OverworldUI overworldUI; //I hope referencing this shit here doesn't cause the world to end
     public GameObject combatUI;
+    public GameObject bigfoot; //disgusting reference
     public Transform[] spawnSlots;
     public GameObject partyOne;
     public GameObject partyTwo;
     public List<CharacterData> combatants;
     public List<CharacterData> teamOne;
     public List<CharacterData> teamTwo;
+    public List<GameObject> bench;
     public CharacterData turnHaver;
     public Skill selectedSkill; //I guess this is the right place for this variable
     public string selectedItem;
@@ -153,6 +155,59 @@ public class CombatManager : MonoBehaviour
             }
         }
     }
+
+    public void AddToBench(GameObject combatant)
+    {
+        CharacterData combatantData = combatant.GetComponent<CharacterData>();
+        combatantData.bigFootSlot = combatant.transform.parent;
+        combatants.Remove(combatantData);
+
+        if (combatantData.team == 0)
+        {
+            teamOne.Remove(combatantData);
+        }
+        else if (combatantData.team == 1)
+        {
+            teamTwo.Remove(combatantData);
+        }
+
+        if (teamOne.Count == 0)
+        {
+            LoseCombat();
+        }
+
+        if (teamTwo.Count == 0)
+        {
+            WinCombat();
+        }
+
+        bench.Add(combatant);
+
+        Vector2 currentPos = combatant.transform.position;
+        currentPos.y += 10000; //LMAO FUCK YOU! I DON'T NEED A SOPHISTICATED SOLUTION, JUST YEET THE FUCKER AWAY!
+        combatant.transform.position = currentPos;
+    }
+
+    public void PullFromBench(GameObject combatant)
+    {
+        CharacterData combatantData = combatant.GetComponent<CharacterData>();
+        combatants.Add(combatantData);
+
+        if (combatantData.team == 0)
+        {
+            teamOne.Add(combatantData);
+        }
+        else if (combatantData.team == 1)
+        {
+            teamTwo.Add(combatantData);
+        }
+
+        Vector2 currentPos = combatant.transform.position;
+        currentPos.y -= 10000;
+        combatant.transform.position = currentPos;
+        bench.Remove(combatant); //This is the clear way to write this. Visual studio can suck my dick.
+    }
+
     public void RollInitiative() // I will probably add an initiative stat if I have the time
     {
         foreach (CharacterData combatant in combatants)
@@ -203,6 +258,51 @@ public class CombatManager : MonoBehaviour
                             }
                         }
                     }
+                }
+            }
+        }
+
+        foreach (GameObject combatant in bench)
+        {
+            CharacterData data = combatant.GetComponent<CharacterData>();
+
+            if (turnHaver == null)
+            {
+                if (data.turnCoolDown <= 0)
+                {
+                    data.bigFootTurns -= 1;
+                    combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
+                    foreach (StatusEffect status in data.selfStatusEffects)
+                    {
+                        combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
+                        status.tickCount -= 1;
+                        if (status.tickCount <= 0)
+                        {
+                            data.selfStatusEffects.Remove(status); //I might actually kill myself if I mix up global and self statuses one more time am I retarded? Am I not supposed to do this kind of work?
+                        }
+                    }
+
+                    if (data.bigFootTurns <= 0)
+                    {
+                        GameObject newBigfoot = Instantiate(bigfoot, data.bigFootSlot.position, Quaternion.identity);
+                        newBigfoot.transform.SetParent(data.bigFootSlot);
+                        CharacterData bigFootData = newBigfoot.GetComponent<CharacterData>();
+                        combatants.Add(bigFootData);
+                        if (data.team == 0)
+                        {
+                            teamOne.Add(bigFootData);
+                        }
+                        if (data.team == 1)
+                        {
+                            teamTwo.Add(bigFootData);
+                        }
+                        bigFootData.team = data.team;
+                    }
+                }
+                
+                else
+                {
+                    combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(data.speed);
                 }
             }
         }

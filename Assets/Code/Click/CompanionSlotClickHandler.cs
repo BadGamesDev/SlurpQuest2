@@ -13,19 +13,48 @@ public class CompanionSlotClickHandler : MonoBehaviour, IPointerClickHandler
     {
         if (!string.IsNullOrEmpty(overWorldUI.pickedCompanion.characterName)) //checking name rather tha companion itself to prevent some werid bugs, treating the symptom rather than the disease
         {
+            GameObject prefab = new GameObject();
+
+            if (overWorldUI.pickedCompanion.characterName == "Honey")
+            {
+                prefab = prefabLoader.HoneyPrefab;
+            }
+
+            if (overWorldUI.pickedCompanion.characterName == "Digi63")
+            {
+                prefab = prefabLoader.Digi63Prefab;
+            }
+
+            if (overWorldUI.pickedCompanion.characterName == "Jaydizz")
+            {
+                prefab = prefabLoader.JaydizzPrefab;
+            }
+
+            if (overWorldUI.pickedCompanion.characterName == "Cndk99")
+            {
+                prefab = prefabLoader.Cndk99Prefab;
+            }
+
+            if (overWorldUI.pickedCompanion.characterName == "OneViolence")
+            {
+                prefab = prefabLoader.OneViolencePrefab;
+            }
+
             if (slotIndex == 1)
             {
-                playerParty.pos2 = prefabLoader.HoneyPrefab; //add an  if check for the prefab
+                playerParty.pos2 = prefab;
                 CharacterData oldData = playerParty.pos2.GetComponent<CharacterData>();
                 CopyCharacterData(oldData, overWorldUI.pickedCompanion);
                 overWorldUI.dismissCompanion0.gameObject.SetActive(true);
+                overWorldUI.statButton0.gameObject.SetActive(true);
             }
             else if (slotIndex == 2)
             {
-                playerParty.pos3 = prefabLoader.HoneyPrefab;
+                playerParty.pos3 = prefab;
                 CharacterData oldData = playerParty.pos3.GetComponent<CharacterData>();
                 CopyCharacterData(oldData, overWorldUI.pickedCompanion);
                 overWorldUI.dismissCompanion1.gameObject.SetActive(true);
+                overWorldUI.statButton1.gameObject.SetActive(true);
             }
             playerStats.activeCompanions.Add(overWorldUI.pickedCompanion);
             overWorldUI.pickedCompanion = null;

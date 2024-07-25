@@ -74,6 +74,17 @@ public class CombatUI : MonoBehaviour
                 skillBar.SetActive(false);
                 itemBar.SetActive(false);
 
+                skillButton0.interactable = false;
+                skillButton1.interactable = false;
+                skillButton2.interactable = false;
+                skillButton3.interactable = false;
+                skillButton4.interactable = false;
+                skillButton5.interactable = false;
+                skillButton6.interactable = false;
+                skillButton7.interactable = false;
+                skillButton8.interactable = false;
+                skillButton9.interactable = false;
+
                 backButton.SetActive(false);
                 continueButton.SetActive(false);
                 
@@ -101,6 +112,32 @@ public class CombatUI : MonoBehaviour
                 endTurnButton.SetActive(false);
                 skillBar.SetActive(true);
                 itemBar.SetActive(false);
+
+                if (combatManager.turnHaver.skills.Count == 2)
+                {
+                    skillButton0.interactable = true;
+                }
+
+                else if (combatManager.turnHaver.skills.Count == 3)
+                {
+                    skillButton0.interactable = true;
+                    skillButton1.interactable = true;
+                }
+
+                else if (combatManager.turnHaver.skills.Count == 4)
+                {
+                    skillButton0.interactable = true;
+                    skillButton1.interactable = true;
+                    skillButton2.interactable = true;
+                }
+
+                else if (combatManager.turnHaver.skills.Count == 5)
+                {
+                    skillButton0.interactable = true;
+                    skillButton1.interactable = true;
+                    skillButton2.interactable = true;
+                    skillButton3.interactable = true;
+                }
 
                 backButton.SetActive(true);
                 continueButton.SetActive(false);
@@ -209,27 +246,31 @@ public class CombatUI : MonoBehaviour
     public void SkillSlot0Pressed() //this can be done with just one method instead of a separate method for each slot but at this point I really don't care
     {
         ChangeState(State.SkillTargetUI);
-        combatManager.selectedSkill = combatManager.turnHaver.skills[0];
+        combatManager.selectedSkill = combatManager.turnHaver.skills[1];
     }
 
     public void SkillSlot1Pressed()
     {
-
+        ChangeState(State.SkillTargetUI);
+        combatManager.selectedSkill = combatManager.turnHaver.skills[2];
     }
 
     public void SkillSlot2Pressed()
     {
-
+        ChangeState(State.SkillTargetUI);
+        combatManager.selectedSkill = combatManager.turnHaver.skills[3];
     }
 
     public void SkillSlot3Pressed()
     {
-
+        ChangeState(State.SkillTargetUI);
+        combatManager.selectedSkill = combatManager.turnHaver.skills[4];
     }
     public void SkillSlot4Pressed()
     {
 
     }
+
     public void SkillSlot5Pressed()
     {
 

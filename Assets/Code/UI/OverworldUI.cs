@@ -27,8 +27,57 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Button dismissCompanion0;
     public Button dismissCompanion1;
 
+    public TMP_Text nameText;
+    public TMP_Text levelText;
+    public TMP_Text healthText;
+    public TMP_Text defenceText;
+    public TMP_Text dodgeText;
+    public TMP_Text damageText;
+    public TMP_Text accuracyText;
+    public TMP_Text speedText;
+
+    public TMP_Text newLevelText;
+    public TMP_Text newHealthText;
+    public TMP_Text newDefenceText;
+    public TMP_Text newDodgeText;
+    public TMP_Text newDamageText;
+    public TMP_Text newAccuracyText;
+    public TMP_Text newSpeedText;
+
+    public GameObject skill0Panel;
+    public GameObject skill1Panel;
+    public GameObject skill2Panel;
+    public GameObject skill3Panel;
+    public GameObject skill4Panel;
+
+    public Image skill0Icon;
+    public Image skill1Icon;
+    public Image skill2Icon;
+    public Image skill3Icon;
+    public Image skill4Icon;
+
+    public TMP_Text skill0Name;
+    public TMP_Text skill1Name;
+    public TMP_Text skill2Name;
+    public TMP_Text skill3Name;
+    public TMP_Text skill4Name;
+
+    public TMP_Text skill0Desc;
+    public TMP_Text skill1Desc;
+    public TMP_Text skill2Desc;
+    public TMP_Text skill3Desc;
+    public TMP_Text skill4Desc;
+
+    public GameObject statsScreen;
+    public Button LevelUpButton;
+    public Button ExitStatScreenButton;
+    public Button slurpStatButton;
+    public Button statButton0;
+    public Button statButton1;
+
     public Button partyScreenDoneButton;
 
+    public CompanionData statsCompanion; 
     public CompanionData pickedCompanion; //I guess this is the best place to put this? Oh also, I should probably use standardised variable names right? LMAO CHAOS WILL REIGN SUPREME
 
     public void PartyButtonPressed()
@@ -49,27 +98,97 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void CompanionsButton1Pressed()
     {
-
+        pickedCompanion = FindUnlockedCompanionByName("Digi63");
     }
 
     public void CompanionsButton2Pressed()
     {
-
+        pickedCompanion = FindUnlockedCompanionByName("Jaydizz");
     }
 
     public void CompanionsButton3Pressed()
     {
-
+        pickedCompanion = FindUnlockedCompanionByName("Cndk99");
     }
 
     public void CompanionsButton4Pressed()
     {
-
+        pickedCompanion = FindUnlockedCompanionByName("OneViolence");
     }
 
     public void CompanionsButton5Pressed()
     {
 
+    }
+
+    public void StatButtonSlurpPressed()
+    {
+        statsCompanion = FindUnlockedCompanionByName("Slurp");
+        OpenStatScreen();
+    }
+
+    public void StatButton0Pressed()
+    {
+        statsCompanion = FindActiveCompanionByName(playerParty.pos2.GetComponent<CharacterData>().characterName);
+        OpenStatScreen();
+    }
+
+    public void StatButton1Pressed()
+    {
+        statsCompanion = FindActiveCompanionByName(playerParty.pos3.GetComponent<CharacterData>().characterName);
+        OpenStatScreen();
+    }
+
+    public void OpenStatScreen() //I can just make this method take a variable instead of having a variable on the script. But I'm too tired to change it right now.
+    {
+        statsScreen.SetActive(true);
+
+        nameText.text = statsCompanion.characterName;
+        levelText.text = statsCompanion.level.ToString();
+        healthText.text = statsCompanion.health.ToString();
+        defenceText.text = statsCompanion.defence.ToString();
+        dodgeText.text = statsCompanion.dodge.ToString();
+        damageText.text = statsCompanion.damage.ToString();
+        accuracyText.text = statsCompanion.accuracy.ToString();
+        speedText.text = statsCompanion.speed.ToString();
+
+        if (statsCompanion.skills.Count == 2) //I am actually really ashamed of this part
+        {
+            skill0Panel.SetActive(true);
+            skill0Name.text = statsCompanion.skills[0].skillName;
+            skill0Desc.text = statsCompanion.skills[0].skillDesc;
+            
+            skill1Panel.SetActive(true);
+            skill0Name.text = statsCompanion.skills[0].skillName;
+            skill0Desc.text = statsCompanion.skills[0].skillDesc;
+        }
+
+        else if (statsCompanion.skills.Count == 3)
+        {
+            skill0Panel.SetActive(true);
+            skill1Panel.SetActive(true);
+            skill2Panel.SetActive(true);
+            skill3Panel.SetActive(true);
+        }
+
+        else if (statsCompanion.skills.Count == 4)
+        {
+            skill0Panel.SetActive(true);
+            skill1Panel.SetActive(true);
+            skill2Panel.SetActive(true);
+            skill3Panel.SetActive(true);
+            skill4Panel.SetActive(true);
+        }
+    }
+
+    public void LevelUpButtonPressed()
+    {
+
+    }
+
+    public void CloseStatScreenButtonPressed()
+    {
+        statsScreen.SetActive(false);
     }
 
     public void DismissButton0Pressed()
@@ -79,6 +198,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         playerParty.pos2 = null; //I had to add a reference to player party just for this shit
         pickedCompanion = null; //there is no need for this but lets keep it for now
         CheckSelectableCompanions();
+        statButton0.gameObject.SetActive(false);
         dismissCompanion0.gameObject.SetActive(false);
     }
 
@@ -89,6 +209,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         playerParty.pos3 = null;
         pickedCompanion = null;
         CheckSelectableCompanions();
+        statButton1.gameObject.SetActive(false);
         dismissCompanion1.gameObject.SetActive(false);
     }
 
@@ -104,6 +225,26 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         if(FindUnlockedCompanionByName("Honey") != null && FindActiveCompanionByName("Honey") == null)
         {
             companionsButton0.interactable = true;
+        }
+
+        if (FindUnlockedCompanionByName("Digi63") != null && FindActiveCompanionByName("Digi63") == null)
+        {
+            companionsButton1.interactable = true;
+        }
+
+        if (FindUnlockedCompanionByName("Jaydizz") != null && FindActiveCompanionByName("Jaydizz") == null)
+        {
+            companionsButton2.interactable = true;
+        }
+
+        if (FindUnlockedCompanionByName("Cndk99") != null && FindActiveCompanionByName("Cndk99") == null)
+        {
+            companionsButton3.interactable = true;
+        }
+
+        if (FindUnlockedCompanionByName("OneViolence") != null && FindActiveCompanionByName("OneViolence") == null)
+        {
+            companionsButton4.interactable = true;
         }
     }
 
@@ -160,9 +301,9 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         return null;
     }
 
-    private CompanionData FindActiveCompanionByName(string companionName) //Having a method like this here feels bad, honestly this whole thing feels retarded.
-    {                                                       //I should probably do the whole "adding and dismissing companions from your party" thing from scratch but at this point I really can't be bothered.
-        foreach (CompanionData companion in playerStats.activeCompanions) //It has been revealed to me in a dream that this method should be moved to the PlayerStats script.
+    private CompanionData FindActiveCompanionByName(string companionName)
+    {
+        foreach (CompanionData companion in playerStats.activeCompanions)
         {
             if (companion.characterName == companionName)
             {
@@ -175,13 +316,28 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public void FirstDeathMessage()
     {
         AddMessage("Hello Slurp! It seems you have died! This is to be expected considering your atrocious performance in the last game, and normally dying would have been a big problem. " +
-                       "But this game is set in the SlurpQuest™ universe and you actually canonically have almost a hundred trillion lives left over from SlurpQuest 1 thanks to Don. " +
-                       "So go ahead and die as much as you want!");
+                   "But this game is set in the SlurpQuest™ universe and you actually canonically have almost a hundred trillion lives left over from SlurpQuest 1 thanks to Don. " +
+                   "So go ahead and die as much as you want!");
     }
 
     public void HoneyUnlockedMessage()
     {
         AddMessage("You have unlocked Honey as a companion! You can click the party button and assign her to one of your empty companion slots." +
-                       "You will keep unlocking more companions as you play the game and save people from corruption.");
+                   "You will keep unlocking more companions as you play the game and save people from corruption.");
+    }
+
+    public void DigiUnlockedMessage()
+    {
+        AddMessage("It was about damn time you got a mod on your side! Digi63 is here to moderate the fuck out of your enemies once again!");
+    }
+
+    public void JaydizzUnlockedMessage()
+    {
+        AddMessage("Hell yeah! It is the man, the myth, the legend Jaydizz himself! Here to assist you on your quest!");
+    }
+
+    public void OneViolenceUNlockedMessage()
+    {
+        AddMessage("A powerful shaman from Daneland, OneViolence and his magical powers will surely be of great help against the lord of pestilence!");
     }
 }

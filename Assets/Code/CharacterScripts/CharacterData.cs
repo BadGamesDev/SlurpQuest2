@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class CharacterData : MonoBehaviour
 {
+    public PlayerStats playerStats;
     public string characterName;
+    public int level;
     public int maxHealth;
     public int health;
     public int defence;
     public int accuracy;
+    public int dodge;
     public int damage;
     public int speed;
     public int turnCoolDown;
@@ -27,6 +30,34 @@ public class CharacterData : MonoBehaviour
 
     private void Start()
     {
-        skills.Add(SkillDatabase.swipe);
+        playerStats = FindAnyObjectByType<PlayerStats>();
+        foreach (CompanionData companion in playerStats.unlockedCompanions)
+        {
+            if (companion.characterName == characterName)
+            {
+                for (int i = 0; i < companion.skills.Count; i++)
+                {
+                    skills.Add(companion.skills[i]);
+                }
+
+                maxHealth = companion.maxHealth;
+                health = companion.health;
+                defence = companion.defence;
+                dodge = companion.dodge;
+                damage = companion.damage;
+                accuracy = companion.accuracy;
+                speed = companion.speed;
+            }
+        }
+    }
+
+    public void LevelUp()
+    {
+        if (characterName == "Slurp")
+        {
+            maxHealth += 30;
+            defence += 2;
+            damage += 5;
+        }
     }
 }

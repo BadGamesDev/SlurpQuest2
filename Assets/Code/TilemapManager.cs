@@ -10,7 +10,18 @@ public class TilemapManager : MonoBehaviour
     {
         TileBase tile = tilemap.GetTile(gridPosition);
 
-        if (tile != null && (tile.name == "Tiles_0" || tile.name == "Tiles_3")) //not sure if I need the parantheses here
+        if (tile != null && (tile.name == "grass" || tile.name == "sand" || tile.name == "bridge")) //Tiles should have a "isWalkable" bool or something instead of this dumb shit I'm doing
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsTilePortal(Vector3Int gridPosition)
+    {
+        TileBase tile = tilemap.GetTile(gridPosition);
+
+        if (tile != null && (tile.name == "grassPortal" || tile.name == "sandPortal" || tile.name == "snowPortal" || tile.name == "corruptionPortal")) //Tiles should have a "isWalkable" bool or something instead of this dumb shit I'm doing
         {
             return true;
         }

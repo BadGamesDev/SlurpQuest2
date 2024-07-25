@@ -56,6 +56,17 @@ public class PartyFunctions : MonoBehaviour
             }
         }
 
+        else if (tilemapManager.IsTilePortal(targetGridPosition)) //I should probably make sure only the player can enter the portal, but if Slurp manages to fuck the game up so hard that an npc enters... Well I guess she deserved it lmao
+        {
+            gameState.progress += 1;
+            gameState.checkpoint = gameState.checkpointList[gameState.progress];
+
+            transform.position = gameState.checkpoint;
+            Vector3Int playerGridPos = tilemapManager.tilemap.WorldToCell(gameState.checkpoint);
+            entityTracker.UpdateEntityPosition(gameObject, playerGridPos);
+            GetComponent<PartyFunctions>().currentGridPosition = playerGridPos;
+        }
+
         else if (tilemapManager.IsTileWalkable(targetGridPosition))
         {
             StartMovingTo(direction);

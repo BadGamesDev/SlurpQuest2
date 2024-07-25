@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 
 public class CombatManager : MonoBehaviour
-{ 
+{
     public GameState gameState;
     public PlayerStats playerStats;
     public TilemapManager tilemapManager; //all this tilemap and entitytracker stuff really makes the spaghetti worse. The best solution is simply moving the respawn function somewhere else I guess.
@@ -39,10 +39,10 @@ public class CombatManager : MonoBehaviour
     public void IntroduceCombat(GameObject enemy)
     {
         PartyData enemyData = enemy.GetComponent<PartyData>();
-        if(enemyData.pos1.name == "Husk")
+        if (enemyData.pos1.name == "Husk")
         {
             overworldUI.AddMessage("Husk: Pew... die...pie... Boxx... yyyy... Nn... ew... grouuuun... dddsss...");
-            if(gameState.metHusk == false)
+            if (gameState.metHusk == false)
             {
                 overworldUI.AddMessage("This is a husk! An abandoned account left to rot and decay, both alive and dead at the same time. Husks are mostly too weak and slow to become a problem but they might be dangerous in large groups");
                 gameState.metHusk = true;
@@ -88,7 +88,7 @@ public class CombatManager : MonoBehaviour
         combatants.Add(combatant1Data);
         combatant1Data.team = 0;
         teamOne.Add(combatant1Data);
-        
+
         if (sideOneData.pos2 != null) //I'm sure checking if a party position exists can be automated but there is no need to complicate things for now
         {
             GameObject combatant2 = Instantiate(sideOneData.pos2, spawnSlots[1].position, Quaternion.identity);
@@ -98,7 +98,7 @@ public class CombatManager : MonoBehaviour
             combatant2Data.team = 0;
             teamOne.Add(combatant2Data);
         }
-        
+
         if (sideOneData.pos3 != null)
         {
             GameObject combatant3 = Instantiate(sideOneData.pos3, spawnSlots[2].position, Quaternion.identity);
@@ -125,8 +125,8 @@ public class CombatManager : MonoBehaviour
             combatant5Data.team = 1;
             teamTwo.Add(combatant5Data);
         }
-        
-        if(sideTwoData.pos3 != null)
+
+        if (sideTwoData.pos3 != null)
         {
             GameObject combatant6 = Instantiate(sideTwoData.pos3, spawnSlots[5].position, Quaternion.identity);
             combatant6.transform.SetParent(spawnSlots[5]);
@@ -227,7 +227,7 @@ public class CombatManager : MonoBehaviour
                 {
                     turnHaver = combatant;
                     combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
-                    foreach(StatusEffect status in combatant.selfStatusEffects)
+                    foreach (StatusEffect status in combatant.selfStatusEffects)
                     {
                         combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
                         status.tickCount -= 1;
@@ -299,7 +299,7 @@ public class CombatManager : MonoBehaviour
                         bigFootData.team = data.team;
                     }
                 }
-                
+
                 else
                 {
                     combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(data.speed);
@@ -308,17 +308,17 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void WinCombat() 
+    public void WinCombat()
     {
         partyTwo.GetComponent<PartyFunctions>().Die();
-        playerStats.xp += xpReward;
+        playerStats.GainXP(xpReward);
         gameState.combatFinished = true;
         gameState.inCombat = false;
         WinEventCheck();
     }
 
     public void LoseCombat()
-    {  
+    {
         gameState.combatFinished = true;
         gameState.inCombat = false;
         LoseEventCheck();
@@ -340,13 +340,20 @@ public class CombatManager : MonoBehaviour
         }
         combatants.Clear();
     }
-    
+
     public void WinEventCheck()
     {
         if (winEvents.Contains("honey win event"))
-        { 
-            HoneyWinEvent(); 
+        {
+            HoneyWinEvent();
         }
+
+        if (winEvents.Contains("digi win event"))
+        {
+            DigiWinEvent();
+        }
+
+        winEvents.Clear();
     }
 
     public void LoseEventCheck()
@@ -355,6 +362,13 @@ public class CombatManager : MonoBehaviour
         {
             HoneyLoseEvent();
         }
+
+        if (loseEvents.Contains("digi lose event"))
+        {
+            DigiLoseEvent();
+        }
+
+        loseEvents.Clear();
     }
 
     public void HoneyWinEvent()
@@ -362,27 +376,58 @@ public class CombatManager : MonoBehaviour
         CompanionData honey = new CompanionData
         {
             characterName = "Honey",
-            maxHealth = 100,
-            health = 100,
+            maxHealth = 80,
+            health = 80,
             defence = 0,
             accuracy = 100,
-            damage = 10,
-            speed = 10,
+            damage = 15,
+            speed = 12,
             turnCoolDown = 5000,
         };
-
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "The feral cat calms down after eating the cat food and you see a familiar face... IT IS HONEY OH MY FUCKING GOD IT IS HONEY! " +
                                                               "It is clear that honey doesn't want to fight you anymore. Congratulations you have won!";
         overworldUI.HoneyUnlockedMessage();
         playerStats.unlockedCompanions.Add(honey);
+        honey.skills.Add(SkillDatabase.longClaws);
+        honey.skills.Add(SkillDatabase.swipe);
+
+        gameState.progress += 1;
+        gameState.checkpoint = gameState.checkpointList[gameState.progress];
     }
 
     public void HoneyLoseEvent()
     {
-        Debug.Log("IT NEEDS TO WORK WHAT THE FUCK");
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "You just got one shot lmao! Maybe you could look around to see if there is anything that can help you?"; // I am referencing the combatUI like this because I am fucking afraid of circular references.
     }                                                                                                                                                                   // Of course referencing it like this doesn't change much but it makes me feel safe
-    
+
+    public void DigiWinEvent()
+    {
+        CompanionData digi63 = new CompanionData
+        {
+            characterName = "Digi63",
+            maxHealth = 110,
+            health = 110,
+            defence = 5,
+            accuracy = 100,
+            damage = 10,
+            speed = 8,
+            turnCoolDown = 5000,
+        };
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "The cyborg has been defeated! But it isn't long before he starts rising again, as you prepare yourself for another round you realise that " +
+                                                              "he doesn't want to fight. The corruption is gone! Now that everyone has calmed down it is not hard for you to recognise who this is...";
+
+        overworldUI.DigiUnlockedMessage();
+        playerStats.unlockedCompanions.Add(digi63);
+        digi63.skills.Add(SkillDatabase.boomer);
+        digi63.skills.Add(SkillDatabase.empGrenade);
+    }
+
+    public void DigiLoseEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "Well... it seems beating a terminator wasn't as easy as feeding a cat. Who would have guessed? But don't worry, you can just get a level or something and try again! " +
+                                                              "Eventually you can get powerful enough to win no matter how bad you are at the game.";
+    }
+
     public void RespawnPlayer()
     {
         playerParty.transform.position = gameState.checkpoint;

@@ -26,8 +26,16 @@ public class CyborgHunterAI : MonoBehaviour
         moves.Add("find bigfoot");
         moves.Add("attack");
         moves.Add("attack");
+        moves.Add("emp grenade");
         moves.Add("attack");
         moves.Add("attack");
+        moves.Add("emp grenade");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("emp grenade");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("emp grenade");
 
         alien = prefabLoader.AlienPrefab;
     }

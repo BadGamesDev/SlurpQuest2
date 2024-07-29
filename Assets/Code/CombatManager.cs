@@ -28,11 +28,22 @@ public class CombatManager : MonoBehaviour
     public List<string> winEvents;
     public List<string> loseEvents; //dumb names but I want consistency with the win and lose methods
 
+    public int slurpPassive; //I have completely given up, I don't want to write smart code I want to finish the god damn game.
+    
+    public float combatPauseCooldown;
+
     public void FixedUpdate()
     {
-        if (gameState.inCombat == true && turnHaver == null)
+        if (gameState.inCombat == true && turnHaver == null && gameState.combatPaused == false)
         {
-            UpdateCombat(); //updating combat based on fixedupdate speed is kinda dumb, using deltatime or something might be better but this works for now
+            if (combatPauseCooldown <= 0)
+            {
+                UpdateCombat(); //updating combat based on fixedupdate speed is kinda dumb, using deltatime or something might be better but this works for now
+            }
+            else
+            {
+                combatPauseCooldown -= Time.deltaTime;
+            }
         }
     }
 
@@ -41,11 +52,41 @@ public class CombatManager : MonoBehaviour
         PartyData enemyData = enemy.GetComponent<PartyData>();
         if (enemyData.pos1.name == "Husk")
         {
-            overworldUI.AddMessage("Husk: Pew... die...pie... Boxx... yyyy... Nn... ew... grouuuun... dddsss...");
+            overworldUI.AddMessage("Husk: Is... this... Justin... Tv...");
             if (gameState.metHusk == false)
             {
-                overworldUI.AddMessage("This is a husk! An abandoned account left to rot and decay, both alive and dead at the same time. Husks are mostly too weak and slow to become a problem but they might be dangerous in large groups");
+                overworldUI.AddMessage("This is a husk! An abandoned twitch account left to rot and decay, both alive and dead at the same time. Husks are mostly too weak and slow to become a problem but they might be dangerous in large groups");
                 gameState.metHusk = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "Shill")
+        {
+            overworldUI.AddMessage("Shill: Hey guys! Please follow and subscribe to my twitch channel, I have the best content!");
+            if (gameState.metFeralCat == false)
+            {
+                overworldUI.AddMessage("A Shameless shill, you must be very careful! They are known for sucking the life forces of other people.");
+                gameState.metFeralCat = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "Snow Troll")
+        {
+            overworldUI.AddMessage("Snow Troll: Trold ser dig! Trold smadrer dig! Trold dræber dig!");
+            if (gameState.metFeralCat == false)
+            {
+                overworldUI.AddMessage("You might think this is the part where I gave up trying to find funny and thematic enemies and you would be right. But I guess it still kinda works as a southpark reference. Wait until you see the boss.");
+                gameState.metFeralCat = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "Bot")
+        {
+            overworldUI.AddMessage("Bot: Hello real person, I am a real person just like you. ");
+            if (gameState.metFeralCat == false)
+            {
+                overworldUI.AddMessage("A viewbot, created in the darkest pits of this corrupt realm to serve the dark lord. You are getting close!");
+                gameState.metFeralCat = true;
             }
         }
 
@@ -67,6 +108,55 @@ public class CombatManager : MonoBehaviour
                 overworldUI.AddMessage("A half man half machine monstrosity!");
                 gameState.metCyborgHunter = true;
             }
+        }
+
+        else if (enemyData.pos1.name == "MadDizz")
+        {
+            overworldUI.AddMessage("MadDizz: There has been too much violence. Too much pain. None here are without sin. But I have an honorable compromise. Just walk away. " +
+                                   "Give me your nolifepoints, your companions, your hat, and the whole twitch channel, and I'll spare your life. " +
+                                   "Just walk away. I will give you safe passage in the wasteland. Just walk away and there will be an end to the horror." +
+                                   "(I can't believe you have been alive for almost 30 years and still haven't watched the road warrior... But it is my game so I'm putting this reference anyway. Fuck you!)");
+            if (gameState.metMaddizz == false)
+            {
+                overworldUI.AddMessage("A streamer who has been driven mad by the curse. You should be careful, there is no telling what this guy could do!");
+                gameState.metMaddizz = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "TheWarlock")
+        {
+            overworldUI.AddMessage("The Warlock: Tillykke! Du har fuldstændig spildt din tid ved at oversætte dette! Gå nu tilbage til spillet.");
+            if (gameState.metTheWarlock == false)
+            {
+                overworldUI.AddMessage("Yeah I don't have any idea what the fuck is going on this time...");
+                gameState.metTheWarlock = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "Asmongold")
+        {
+            if (gameState.metAsmongold == false)
+            {
+                overworldUI.AddMessage("The Lord of Decay: You have managed to make it all the way to me! But this is where your foolish journey ends. I'm a god. How can you kill a god? What a grand and intoxicating innocence. How could you be so naive? " +
+                                   "Countless insignificant streamers like you tried standing against me and countless streamers like you got defeated, crushed and broken. I am your doom! I am the lord of decay, known by a thousand names in a thousand worlds. But you might call me...");
+                overworldUI.AddMessage("ASMONGOLD");
+                gameState.metAsmongold = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "TheAuditor")
+        {
+            if (gameState.metTheAuditor == false)
+            {
+                overworldUI.AddMessage("The Auditor: So you have managed to kill the lord of decay? I must thank you for getting rid of that filth. Asmongold had his uses of course, but I no longer needed him... and now, it is just you and me. Time to end this.");
+                overworldUI.AddMessage("Looks like this is it Slurp, this is the final fight. The fate of everyone rests on your shoulders now.");
+                gameState.metTheAuditor = true;
+            }
+        }
+
+        else
+        {
+            Debug.Log("who the fuck is this");
         }
     }
 
@@ -212,7 +302,7 @@ public class CombatManager : MonoBehaviour
     {
         foreach (CharacterData combatant in combatants)
         {
-            int rollResult = Random.Range(0, 2501);
+            int rollResult = Random.Range(0, 2001);
             combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(rollResult);
         }
     }
@@ -225,21 +315,58 @@ public class CombatManager : MonoBehaviour
             {
                 if (combatant.turnCoolDown <= 0)
                 {
+                    if (combatant.skill1Cooldown > 0)
+                    {
+                        combatant.skill1Cooldown -= 1;
+                    }
+                    
+                    if (combatant.skill2Cooldown > 0)
+                    {
+                        combatant.skill2Cooldown -= 1;
+                    }
+                    
+                    if (combatant.skill3Cooldown > 0)
+                    {
+                        combatant.skill3Cooldown -= 1;
+                    }
+                    
+                    if (combatant.skill4Cooldown > 0)
+                    {
+                        combatant.skill4Cooldown -= 1;
+                    }
+
                     turnHaver = combatant;
                     combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
+                    
+                    if(combatant.characterName == "Slurp" && slurpPassive < 7) //taking all this space in the main update function because of a shitty passive ability...
+                    {
+                        combatant.defence += 1;
+                        slurpPassive += 1;
+                    }
+
+                    List<StatusEffect> selfStatusToRemove = new();
                     foreach (StatusEffect status in combatant.selfStatusEffects)
                     {
                         combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
                         status.tickCount -= 1;
+                        Debug.Log("tickedStunfor" + combatant.transform.position);
+
                         if (status.tickCount <= 0)
                         {
-                            combatant.selfStatusEffects.Remove(status); //I might actually kill myself if I mix up global and self statuses one more time am I retarded? Am I not supposed to do this kind of work?
+                            selfStatusToRemove.Add(status); //I might actually kill myself if I mix up global and self statuses one more time am I retarded? Am I not supposed to do this kind of work?
                         }
                     }
+
+                    foreach(StatusEffect statusToYeet in selfStatusToRemove)
+                    {
+                        combatant.selfStatusEffects.Remove(statusToYeet);
+                    }
                 }
+                
                 else
                 {
-                    combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(combatant.speed);
+                    List<StatusEffect> globalStatusToRemove = new();
+
                     foreach (StatusEffect status in combatant.globalStatusEffects)
                     {
                         status.tickCooldown -= 10;
@@ -249,15 +376,32 @@ public class CombatManager : MonoBehaviour
                             status.tickCount -= 1;
                             if (status.tickCount <= 0)
                             {
-                                status.tickCooldown = 5000; //There is normally no need for this as the status is removed anyways, but if I don't do this the status will start with 0 cooldown to the next tick so uhh... I need this
-                                combatant.globalStatusEffects.Remove(status);
+                                globalStatusToRemove.Add(status);
+                                status.tickCooldown = 4000; //There is normally no need for this as the status is removed anyways, but if I don't do this the status will start with 0 cooldown to the next tick so uhh... I need this
+                                
+                                if(status.statusName == "engine started")
+                                {
+                                    combatant.speed /= 2;
+                                }
+
+                                if (status.statusName == "burnout smoke")
+                                {
+                                    combatant.dodge -= 60; //who ever you are, I am sorry that you have to read this shit...
+                                }
                             }
                             else
                             {
-                                status.tickCooldown = 5000;
+                                status.tickCooldown = 4000;
                             }
                         }
                     }
+                    
+                    foreach (StatusEffect statusToYeet in globalStatusToRemove)
+                    {
+                        combatant.globalStatusEffects.Remove(statusToYeet);
+                    }
+
+                    combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(combatant.speed);
                 }
             }
         }
@@ -278,7 +422,7 @@ public class CombatManager : MonoBehaviour
                         status.tickCount -= 1;
                         if (status.tickCount <= 0)
                         {
-                            data.selfStatusEffects.Remove(status); //I might actually kill myself if I mix up global and self statuses one more time am I retarded? Am I not supposed to do this kind of work?
+                            data.selfStatusEffects.Remove(status);
                         }
                     }
 
@@ -339,6 +483,9 @@ public class CombatManager : MonoBehaviour
             Destroy(combatant.gameObject);
         }
         combatants.Clear();
+
+        combatPauseCooldown = 0;
+        slurpPassive = 0;
     }
 
     public void WinEventCheck()
@@ -351,6 +498,21 @@ public class CombatManager : MonoBehaviour
         if (winEvents.Contains("digi win event"))
         {
             DigiWinEvent();
+        }
+
+        if (winEvents.Contains("jaydizz win event"))
+        {
+            JaydizzWinEvent();
+        }
+
+        if (winEvents.Contains("oneViolence win event"))
+        {
+            OneViolenceWinEvent();
+        }
+
+        else if (winEvents.Count == 0)
+        {
+            FindAnyObjectByType<CombatUI>().combatFinishMessage = ("Congratulations! You have defeated the enemy and gained " + xpReward + " nolifepoints!"); 
         }
 
         winEvents.Clear();
@@ -366,6 +528,21 @@ public class CombatManager : MonoBehaviour
         if (loseEvents.Contains("digi lose event"))
         {
             DigiLoseEvent();
+        }
+
+        if (loseEvents.Contains("jaydizz lose event"))
+        {
+            JaydizzLoseEvent();
+        }
+
+        if (winEvents.Contains("oneViolence lose event"))
+        {
+            OneViolenceLoseEvent();
+        }
+
+        else if (loseEvents.Count == 0)
+        {
+            FindAnyObjectByType<CombatUI>().combatFinishMessage = ("Congratulations! You have managed to lose the fight!");
         }
 
         loseEvents.Clear();
@@ -426,6 +603,59 @@ public class CombatManager : MonoBehaviour
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "Well... it seems beating a terminator wasn't as easy as feeding a cat. Who would have guessed? But don't worry, you can just get a level or something and try again! " +
                                                               "Eventually you can get powerful enough to win no matter how bad you are at the game.";
+    }
+
+    public void JaydizzWinEvent()
+    {
+        CompanionData jaydizz = new CompanionData
+        {
+            characterName = "Jaydizz",
+            maxHealth = 70,
+            health = 70,
+            defence = 0,
+            accuracy = 100,
+            damage = 10,
+            speed = 15,
+            turnCoolDown = 5000,
+        };
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "Looks like he was not fast enough! Once again, you have beaten the corruption out of someone.";
+
+        overworldUI.JaydizzUnlockedMessage();
+        playerStats.unlockedCompanions.Add(jaydizz);
+        jaydizz.skills.Add(SkillDatabase.polePosition);
+        jaydizz.skills.Add(SkillDatabase.startYourEngines);
+    }
+
+    public void JaydizzLoseEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "You got dizzed by the dizz. Time to try again!";
+    }
+
+    public void OneViolenceWinEvent()
+    {
+        CompanionData oneViolence = new CompanionData
+        {
+            characterName = "OneViolence",
+            maxHealth = 100,
+            health = 100,
+            defence = 5,
+            accuracy = 90,
+            damage = 10,
+            speed = 10,
+            turnCoolDown = 5000,
+        };
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "I guess they should start calling you the lockpicker. Because you know, he was a war-lock and then you beat him so it's like you picked the war-lock." +
+                                                              "Get it? It is a pun and a really funny one. Damn I'm so good at this humor thing!";
+
+        overworldUI.OneViolenceUnlockedMessage();
+        playerStats.unlockedCompanions.Add(oneViolence);
+        oneViolence.skills.Add(SkillDatabase.ghouldMaxxing);
+        oneViolence.skills.Add(SkillDatabase.herbalMedicine);
+    }
+
+    public void OneViolenceLoseEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "The demonic powers of the warlock were simply too much for you to handle!";
     }
 
     public void RespawnPlayer()

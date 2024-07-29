@@ -94,14 +94,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd327729ae66a9469eb0f316c6673df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: 0}
   characterName: FeralCat
+  level: 0
   maxHealth: 9999
   health: 9999
   defence: 0
   accuracy: 100
+  dodge: 0
   damage: 100
   speed: 10
-  turnCoolDown: 10000
+  turnCoolDown: 6000
   team: 0
   xpReward: 500
   winEvent: honey win event
@@ -109,6 +112,8 @@ MonoBehaviour:
   skills: []
   selfStatusEffects: []
   globalStatusEffects: []
+  bigFootTurns: 0
+  bigFootSlot: {fileID: 0}
   bossNumber: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:

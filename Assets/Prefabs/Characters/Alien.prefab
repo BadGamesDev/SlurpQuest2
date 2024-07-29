@@ -94,14 +94,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd327729ae66a9469eb0f316c6673df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: 0}
   characterName: Alien
-  maxHealth: 200
-  health: 200
+  level: 0
+  maxHealth: 120
+  health: 120
   defence: 5
   accuracy: 75
+  dodge: 0
   damage: 10
   speed: 10
-  turnCoolDown: 5000
+  turnCoolDown: 4000
   team: 0
   xpReward: 200
   winEvent: 
@@ -109,6 +112,8 @@ MonoBehaviour:
   skills: []
   selfStatusEffects: []
   globalStatusEffects: []
+  bigFootTurns: 0
+  bigFootSlot: {fileID: 0}
   bossNumber: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:

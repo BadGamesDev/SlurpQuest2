@@ -20,13 +20,18 @@ public class CharacterData : MonoBehaviour
     public string winEvent; //I will probably need to make a separate "deathEvent" in the future as I might need to fire some shit at the death of the enemy rather than end of combat
     public string loseEvent;
     public List<Skill> skills;
-    public Dictionary<string, int> skillCooldowns;
+    
+    public int skill1Cooldown;
+    public int skill2Cooldown;
+    public int skill3Cooldown;
+    public int skill4Cooldown;
+
     public List<StatusEffect> selfStatusEffects;
     public List<StatusEffect> globalStatusEffects;
-    public int bigFootTurns; //Having such a specific variable on every character really hurts. It is inefficient and it is ugly. But it doesn't hurt too much and I really want to be done with coding.
+    public int bigFootTurns; //Having such a specific variable on every character really saddens me. It is inefficient and it is ugly. But it doesn't hurt too much and I really want to be done with coding.
     public Transform bigFootSlot; //same as above
 
-    public int bossNumber; //This is for boss death specific events;
+    public int bossNumber; //This is for boss death specific events; (I don't think I have ever used this lmao. Why is it even a thing?)
 
     private void Start()
     {
@@ -48,16 +53,6 @@ public class CharacterData : MonoBehaviour
                 accuracy = companion.accuracy;
                 speed = companion.speed;
             }
-        }
-    }
-
-    public void LevelUp()
-    {
-        if (characterName == "Slurp")
-        {
-            maxHealth += 30;
-            defence += 2;
-            damage += 5;
         }
     }
 }

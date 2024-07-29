@@ -19,6 +19,10 @@ public class GameState : MonoBehaviour
     public bool metHusk;
     public bool metFeralCat;
     public bool metCyborgHunter;
+    public bool metMaddizz;
+    public bool metTheWarlock;
+    public bool metAsmongold;
+    public bool metTheAuditor;
 
     private void Start()
     {

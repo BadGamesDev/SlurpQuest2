@@ -11,11 +11,15 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public PartyData playerParty;
     public GameObject dialoguePanel;
     public GameObject partyScreen;
+    public GameObject menuScreen;
+    public GameObject itemsScreen;
 
     public TMP_Text dialogueText;
     public List<string> textQueue;
 
+    public Button menuButton;
     public Button partyButton;
+    public Button itemsButton;
 
     public Button companionsButton0;
     public Button companionsButton1;
@@ -69,16 +73,28 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public TMP_Text skill4Desc;
 
     public GameObject statsScreen;
-    public Button LevelUpButton;
-    public Button ExitStatScreenButton;
+    public Button levelUpButton;
+    public Button exitStatScreenButton;
     public Button slurpStatButton;
     public Button statButton0;
     public Button statButton1;
 
+    public Button menuScreenDoneButton;
     public Button partyScreenDoneButton;
+    public Button itemsScreenDoneBUtton;
 
     public CompanionData statsCompanion; 
     public CompanionData pickedCompanion; //I guess this is the best place to put this? Oh also, I should probably use standardised variable names right? LMAO CHAOS WILL REIGN SUPREME
+
+    public void MenuButtonPressed()
+    {
+        menuScreen.SetActive(true);
+    }
+
+    public void CloseMenuButtonPressed()
+    {
+        menuScreen.SetActive(false);
+    }
 
     public void PartyButtonPressed()
     {
@@ -89,6 +105,16 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public void PartyScreenDoneButtonPressed() //what a terrible name lmao
     {
         partyScreen.SetActive(false);
+    }
+
+    public void ItemsButtonPressed()
+    {
+        itemsScreen.SetActive(false);
+    }
+
+    public void CloseItemsButtonPressed()
+    {
+        itemsScreen.SetActive(false);
     }
 
     public void CompanionsButton0Pressed()
@@ -143,14 +169,27 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     {
         statsScreen.SetActive(true);
 
-        nameText.text = statsCompanion.characterName;
-        levelText.text = statsCompanion.level.ToString();
-        healthText.text = statsCompanion.health.ToString();
-        defenceText.text = statsCompanion.defence.ToString();
-        dodgeText.text = statsCompanion.dodge.ToString();
-        damageText.text = statsCompanion.damage.ToString();
-        accuracyText.text = statsCompanion.accuracy.ToString();
-        speedText.text = statsCompanion.speed.ToString();
+        nameText.text = "Name: " + statsCompanion.characterName;
+        levelText.text = "Level: " + (statsCompanion.level + 1).ToString();
+        healthText.text = "Health: " + statsCompanion.health.ToString();
+        defenceText.text = "Defence: " + statsCompanion.defence.ToString();
+        dodgeText.text = "Dodge: " + statsCompanion.dodge.ToString();
+        damageText.text = "Damage: " + statsCompanion.damage.ToString();
+        accuracyText.text = "Accuracy: " + statsCompanion.accuracy.ToString();
+        speedText.text = "Health: " + statsCompanion.speed.ToString();
+
+        newLevelText.text = null;
+        newHealthText.text = null;
+        newDefenceText.text = null;
+        newDodgeText.text = null;
+        newDamageText.text = null;
+        newAccuracyText.text = null;
+        newSpeedText.text = null;
+
+        if (statsCompanion.level < playerStats.level)
+        {
+            levelUpButton.gameObject.SetActive(true);
+        }
 
         if (statsCompanion.skills.Count == 2) //I am actually really ashamed of this part
         {
@@ -183,11 +222,25 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void LevelUpButtonPressed()
     {
+        statsCompanion.LevelUp();
+        
+        if (statsCompanion.level >= playerStats.level)
+        {
+            levelUpButton.gameObject.SetActive(false);
+        }
 
+        newLevelText.text = (statsCompanion.level + 1).ToString();
+        newHealthText.text = statsCompanion.health.ToString();
+        newDefenceText.text = statsCompanion.defence.ToString();
+        newDodgeText.text = statsCompanion.dodge.ToString();
+        newDamageText.text = statsCompanion.damage.ToString();
+        newAccuracyText.text = statsCompanion.accuracy.ToString();
+        newSpeedText.text = statsCompanion.speed.ToString();
     }
 
     public void CloseStatScreenButtonPressed()
     {
+        levelUpButton.gameObject.SetActive(false);
         statsScreen.SetActive(false);
     }
 
@@ -336,7 +389,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         AddMessage("Hell yeah! It is the man, the myth, the legend Jaydizz himself! Here to assist you on your quest!");
     }
 
-    public void OneViolenceUNlockedMessage()
+    public void OneViolenceUnlockedMessage()
     {
         AddMessage("A powerful shaman from Daneland, OneViolence and his magical powers will surely be of great help against the lord of pestilence!");
     }

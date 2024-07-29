@@ -7,11 +7,24 @@ public class CompanionSlotClickHandler : MonoBehaviour, IPointerClickHandler
     public OverworldUI overWorldUI;
     public PartyData playerParty;
     public PlayerStats playerStats;
+    public GameObject slot;
     public int slotIndex;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!string.IsNullOrEmpty(overWorldUI.pickedCompanion.characterName)) //checking name rather tha companion itself to prevent some werid bugs, treating the symptom rather than the disease
+        if (slotIndex == 1)
+        { 
+            slot = playerParty.pos2;
+            Debug.Log(slot);
+        }
+
+        if (slotIndex == 2)
+        {
+            slot = playerParty.pos3;
+            Debug.Log(slot);
+        }
+
+        if (!string.IsNullOrEmpty(overWorldUI.pickedCompanion.characterName) && slot == null) //checking name rather tha companion itself to prevent some werid bugs, treating the symptom rather than the disease
         {
             GameObject prefab = new GameObject();
 

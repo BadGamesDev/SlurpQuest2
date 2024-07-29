@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using TMPro;
 
 public class CombatUI : MonoBehaviour
@@ -25,6 +26,19 @@ public class CombatUI : MonoBehaviour
     public TMP_Text combatText;
     public string combatFinishMessage;
 
+    public Button dizz0;
+    public Button dizz1;
+    public Button dizz2;
+
+    public int dizz0effect;
+    public int dizz1effect;
+    public int dizz2effect;
+
+    public int dizzClicked;
+
+    public List<CharacterData> ownTeam; //this fucking skill was the lethal move for my codebase, it is fucking over, it is beyond spaghetti at this point
+    public List<CharacterData> enemyTeam;
+
     public Button skillButton0;
     public Button skillButton1;
     public Button skillButton2;
@@ -35,6 +49,11 @@ public class CombatUI : MonoBehaviour
     public Button skillButton7;
     public Button skillButton8;
     public Button skillButton9;
+
+    public TMP_Text skillCooldownText1;
+    public TMP_Text skillCooldownText2;
+    public TMP_Text skillCooldownText3;
+    public TMP_Text skillCooldownText4;
 
     public Button itemButton0;
     public Button itemButton1;
@@ -87,8 +106,12 @@ public class CombatUI : MonoBehaviour
 
                 backButton.SetActive(false);
                 continueButton.SetActive(false);
-                
-                combatText.text = null;
+
+                if (combatManager.combatPauseCooldown <= 0 && !gameState.combatPaused) //this check is just another example of me trying to pay the technical debt
+                {
+                    combatText.text = null;
+                }
+
                 break;
             case State.AttackTargetUI:
                 attackButton.SetActive(false);
@@ -113,37 +136,36 @@ public class CombatUI : MonoBehaviour
                 skillBar.SetActive(true);
                 itemBar.SetActive(false);
 
-                if (combatManager.turnHaver.skills.Count == 2)
-                {
-                    skillButton0.interactable = true;
-                }
+                //if (combatManager.turnHaver.skills.Count == 2)
+                //{
+                //    skillButton0.interactable = true;
+                //}
 
-                else if (combatManager.turnHaver.skills.Count == 3)
-                {
-                    skillButton0.interactable = true;
-                    skillButton1.interactable = true;
-                }
+                //else if (combatManager.turnHaver.skills.Count == 3)
+                //{
+                //    skillButton0.interactable = true;
+                //    skillButton1.interactable = true;
+                //}
 
-                else if (combatManager.turnHaver.skills.Count == 4)
-                {
-                    skillButton0.interactable = true;
-                    skillButton1.interactable = true;
-                    skillButton2.interactable = true;
-                }
+                //else if (combatManager.turnHaver.skills.Count == 4)
+                //{
+                //    skillButton0.interactable = true;
+                //    skillButton1.interactable = true;
+                //    skillButton2.interactable = true;
+                //}
 
-                else if (combatManager.turnHaver.skills.Count == 5)
-                {
-                    skillButton0.interactable = true;
-                    skillButton1.interactable = true;
-                    skillButton2.interactable = true;
-                    skillButton3.interactable = true;
-                }
+                //else if (combatManager.turnHaver.skills.Count == 5)
+                //{
+                //    skillButton0.interactable = true;
+                //    skillButton1.interactable = true;
+                //    skillButton2.interactable = true;
+                //    skillButton3.interactable = true;
+                //}
 
                 backButton.SetActive(true);
                 continueButton.SetActive(false);
                 
                 combatText.text = "Pick the skill you want to use!";
-                skillButton0.GetComponentInChildren<TMP_Text>().text = combatManager.turnHaver.skills[0].skillName; //this is just for testing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 break;
             case State.SkillTargetUI:
                 
@@ -240,7 +262,14 @@ public class CombatUI : MonoBehaviour
 
     public void SkillButtonPressed()
     {
+        CheckSkills();
         ChangeState(State.SkillChoiceUI);
+    }
+
+    public void ItemButtonPressed()
+    {
+        CheckItems();
+        ChangeState(State.ItemChoiceUI);
     }
 
     public void SkillSlot0Pressed() //this can be done with just one method instead of a separate method for each slot but at this point I really don't care
@@ -294,10 +323,185 @@ public class CombatUI : MonoBehaviour
 
     }
 
-    public void ItemButtonPressed()
+    public void Dizz0ButtonPressed()
     {
-        CheckItems();
-        ChangeState(State.ItemChoiceUI);
+        dizzClicked += 1;
+        
+        if(dizzClicked == 3)
+        {
+            dizzClicked = 0;
+            FireDizzEffect(dizz0effect);
+        }
+    }
+
+    public void Dizz1ButtonPressed()
+    {
+        dizzClicked += 1;
+
+        if (dizzClicked == 3)
+        {
+            dizzClicked = 0;
+            FireDizzEffect(dizz1effect);
+        }
+    }
+
+    public void Dizz2ButtonPressed()
+    {
+        dizzClicked += 1;
+
+        if (dizzClicked == 3)
+        {
+            dizzClicked = 0;
+            FireDizzEffect(dizz2effect);
+        }
+    }
+
+    public void FireDizzEffect(int effect)
+    {
+        if (effect == 1)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(100);
+        }
+
+        else if (effect == 2)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(200);
+        }
+
+        else if (effect == 3)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(400);
+        }
+
+        else if (effect == 4)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(100);
+        }
+
+        else if (effect == 5)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(100);
+        }
+
+        else if (effect == 6)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(100);
+        }
+
+        else if (effect == 7)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(100);
+        }
+
+        else if (effect == 8)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(100);
+        }
+
+        else if (effect == 9)
+        {
+            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
+            dizzTarget.TakeDamage(100);
+        }
+    }
+
+    public void CheckSkills()
+    {
+        skillButton0.interactable = false;
+        skillButton1.interactable = false;
+        skillButton2.interactable = false;
+        skillButton3.interactable = false;
+        skillButton4.interactable = false;
+        skillButton5.interactable = false;
+        skillButton6.interactable = false;
+        skillButton7.interactable = false;
+        skillButton8.interactable = false;
+        skillButton9.interactable = false;
+
+        skillCooldownText1.text = combatManager.turnHaver.skill1Cooldown.ToString();
+        skillCooldownText2.text = combatManager.turnHaver.skill2Cooldown.ToString();
+        skillCooldownText3.text = combatManager.turnHaver.skill3Cooldown.ToString();
+        skillCooldownText4.text = combatManager.turnHaver.skill4Cooldown.ToString();
+
+        if (combatManager.turnHaver.skills.Count == 2)
+        {
+            if (combatManager.turnHaver.skill1Cooldown == 0)
+            {
+                skillButton0.interactable = true;
+                skillCooldownText1.text = "";
+            }
+            skillCooldownText2.text = "";
+            skillCooldownText3.text = "";
+            skillCooldownText4.text = "";
+        }
+        
+        else if (combatManager.turnHaver.skills.Count == 3)
+        {
+            if (combatManager.turnHaver.skill1Cooldown == 0)
+            {
+                skillButton0.interactable = true;
+                skillCooldownText1.text = "";
+            }
+            if (combatManager.turnHaver.skill2Cooldown == 0)
+            {
+                skillButton1.interactable = true;
+                skillCooldownText2.text = "";
+            }
+            skillCooldownText3.text = "";
+            skillCooldownText4.text = "";
+        }
+
+        else if (combatManager.turnHaver.skills.Count == 4)
+        {
+            if (combatManager.turnHaver.skill1Cooldown == 0)
+            {
+                skillButton0.interactable = true;
+                skillCooldownText1.text = "";
+            }
+            if (combatManager.turnHaver.skill2Cooldown == 0)
+            {
+                skillButton1.interactable = true;
+                skillCooldownText2.text = "";
+            }
+            if (combatManager.turnHaver.skill3Cooldown == 0)
+            {
+                skillButton2.interactable = true;
+                skillCooldownText3.text = "";
+            }
+            skillCooldownText4.text = "";
+        }
+
+        else if (combatManager.turnHaver.skills.Count == 5)
+        {
+            if (combatManager.turnHaver.skill1Cooldown == 0)
+            {
+                skillButton0.interactable = true;
+                skillCooldownText1.text = "";
+            }
+            if (combatManager.turnHaver.skill2Cooldown == 0)
+            {
+                skillButton1.interactable = true;
+                skillCooldownText2.text = "";
+            }
+            if (combatManager.turnHaver.skill3Cooldown == 0)
+            {
+                skillButton2.interactable = true;
+                skillCooldownText3.text = "";
+            }
+            if (combatManager.turnHaver.skill4Cooldown == 0)
+            {
+                skillButton3.interactable = true;
+                skillCooldownText4.text = "";
+            }
+        }
     }
 
     public void CheckItems()

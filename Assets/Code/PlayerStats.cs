@@ -16,6 +16,8 @@ public class PlayerStats : MonoBehaviour //I feel like "PlayerData" would have b
 
     private void Start()
     {
+        xpTreshold = 300;
+
         CompanionData slurp = new () //Yes... Slurp is Slurp's companion...
         {
             characterName = "Slurp",
@@ -38,6 +40,7 @@ public class PlayerStats : MonoBehaviour //I feel like "PlayerData" would have b
         if (xp >= xpTreshold)
         {
             xp -= xpTreshold;
+            xpTreshold *= 2;
             level += 1;
         }
     }

@@ -56,8 +56,11 @@ public class CharacterFunctions : MonoBehaviour
             existingStatus = CheckStatusSelf(status); //I can improve the method to remove the need for putting it separately for each skill but why fix something that is not broken?
             if (existingStatus == null)
             {
-                StatusEffect newEffect = StatusEffectDatabase.stun;
-                newEffect.tickCount = duration;
+                StatusEffect newEffect = new StatusEffect //REMINDER TO ALWAYS MAKE SURE YOU ARE CREATING A NEW INSTANCE.... HOLY FUCKING SHIT I HAVE NEVER WANTED TO KILL MYSELF SO FUCKING MUCH, LITERALLY ALMOST GAVE UP ON MAKING THE GAME BECAUSE OF SUCH A SMALL ERROR, Ideally I also need to to a consturctor or copy method or some shit like this but this solution works
+                {
+                    statusName = StatusEffectDatabase.stun.statusName,
+                    tickCount = duration
+                }; 
 
                 ownData.selfStatusEffects.Add(newEffect);
             }
@@ -72,10 +75,54 @@ public class CharacterFunctions : MonoBehaviour
             existingStatus = CheckStatusGlobal(status);
             if (existingStatus == null)
             {
-                StatusEffect newEffect = StatusEffectDatabase.bleed;
-                newEffect.tickCount = duration;
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.bleed.statusName, //oh also, yes, I am writing this shit instead of just writing the name as a string which would be way shorter. Why? because fuck you that's why.
+                    tickCooldown = StatusEffectDatabase.bleed.tickCooldown,
+                    tickCount = duration
+                };
 
                 ownData.globalStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "engine started")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.engineStarted.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect); //not sure if this buff should be self or global tbh, I guess global makes more sense in terms of realism but self feels more balanced (decided on global, I think it is cool that you get even more turns from the buff as your character gets faster by leveling up) 
+                ownData.speed *= 2;
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "burnout smoke")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.burnoutSmoke.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+                ownData.dodge += 60;
             }
             else
             {
@@ -127,7 +174,7 @@ public class CharacterFunctions : MonoBehaviour
 
     public void ResetTurnCooldown()
     {
-        ownData.turnCoolDown = 5000; //magic number but it's ok
+        ownData.turnCoolDown = 4000; //magic number but it's ok
         ownUI.UpdateCooldownBar(ownData.turnCoolDown);
     }
 
@@ -157,7 +204,7 @@ public class CharacterFunctions : MonoBehaviour
 
         if(ownData.characterName == "Big Foot")
         {
-            combatManager.PullFromBench(combatManager.bench[0]); //STEP 1: over engineer a system. STEP 2: make a retarded function like this to completely make the over engineering useless.
+            combatManager.PullFromBench(combatManager.bench[0]); //STEP 1: over engineer a system. STEP 2: make a retarded function like this to completely make the over engineering obsolete.
         }
 
         Destroy(gameObject);

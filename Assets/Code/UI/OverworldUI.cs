@@ -14,6 +14,19 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public GameObject menuScreen;
     public GameObject itemsScreen;
 
+    public TMP_Text catFoodCount;
+    public TMP_Text pizzaCount;
+    public TMP_Text gamblingChipCount;
+    public TMP_Text noLifePoints;
+
+    public TMP_Text catFoodPrice;
+    public TMP_Text pizzaPrice;
+    public TMP_Text gamblingPrice;
+
+    public Button buyCatFoodButton;
+    public Button buyPizzaButton;
+    public Button buyGamblingButton;
+
     public TMP_Text dialogueText;
     public List<string> textQueue;
 
@@ -105,16 +118,6 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public void PartyScreenDoneButtonPressed() //what a terrible name lmao
     {
         partyScreen.SetActive(false);
-    }
-
-    public void ItemsButtonPressed()
-    {
-        itemsScreen.SetActive(false);
-    }
-
-    public void CloseItemsButtonPressed()
-    {
-        itemsScreen.SetActive(false);
     }
 
     public void CompanionsButton0Pressed()
@@ -218,6 +221,75 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
             skill3Panel.SetActive(true);
             skill4Panel.SetActive(true);
         }
+    }
+
+    public void OpenInventoryScreen() //I can just make this method take a variable instead of having a variable on the script. But I'm too tired to change it right now.
+    {
+        itemsScreen.SetActive(true);
+        CheckMoney();
+
+        catFoodCount.text = "Cat Food: " + playerStats.catFood.ToString();
+        pizzaCount.text = "5/5 Pizza: " + playerStats.pizza.ToString();
+        gamblingChipCount.text = "Gambling Chips: " + playerStats.gamblingChip.ToString();
+        noLifePoints.text = "Nolifepoints: " + playerStats.noLifePoints.ToString();
+
+        catFoodPrice.text = "Buy(" + (100 + (50 * gameState.progress)).ToString() + " NLP)";
+        pizzaPrice.text = "Buy(" + (200 + (100 * gameState.progress)).ToString() + " NLP)";
+        gamblingPrice.text = "Buy(" + (200 + (100 * gameState.progress)).ToString() + " NLP)";
+    }
+
+    public void BuyCatFoodPressed()
+    {
+        playerStats.catFood += 1;
+        playerStats.noLifePoints -= 100 + (gameState.progress * 50); //HELL YEAH! HARD CODE THAT BITCH! THIS IS HOW REAL MEN DO IT! NO GAY ASS VARIABLES!
+        CheckMoney();
+    }
+
+    public void BuyPizzaPressed()
+    {
+        playerStats.pizza += 1;
+        playerStats.noLifePoints -= 200 + (gameState.progress * 100);
+        CheckMoney();
+    }
+
+    public void BuyChipPressed()
+    {
+        playerStats.gamblingChip += 1;
+        playerStats.noLifePoints -= 200 + (gameState.progress * 100);
+        CheckMoney();
+    }
+
+    public void CheckMoney()
+    {
+        catFoodCount.text = "Cat Food: " + playerStats.catFood.ToString();
+        pizzaCount.text = "5/5 Pizza: " + playerStats.pizza.ToString();
+        gamblingChipCount.text = "Gambling Chips: " + playerStats.gamblingChip.ToString();
+        noLifePoints.text = "Nolifepoints: " + playerStats.noLifePoints.ToString();
+
+        buyCatFoodButton.interactable = true;
+        buyPizzaButton.interactable = true;
+        buyGamblingButton.interactable = true;
+
+        catFoodPrice.text = "Buy(" + (100 + (50 * gameState.progress)).ToString() + " NLP)";
+        pizzaPrice.text = "Buy(" + (200 + (100 * gameState.progress)).ToString() + " NLP)";
+        gamblingPrice.text = "Buy(" + (200 + (100 * gameState.progress)).ToString() + " NLP)";
+
+        if (playerStats.noLifePoints < 100 + (gameState.progress * 50))
+        {
+            buyCatFoodButton.interactable = false;
+            buyPizzaButton.interactable = false;
+            buyGamblingButton.interactable = false;
+        }
+        else if(playerStats.noLifePoints < 200 + (gameState.progress * 100))
+        {
+            buyPizzaButton.interactable = false;
+            buyGamblingButton.interactable = false;
+        }
+    }
+
+    public void CloseInventoryScreen()
+    {
+        itemsScreen.SetActive(false);
     }
 
     public void LevelUpButtonPressed()

@@ -5,6 +5,7 @@ using TMPro;
 
 public class CombatUI : MonoBehaviour
 {
+    public ImageLoader imageLoader;
     public GameState gameState;
     public CombatManager combatManager;
     public CharacterData target;
@@ -26,17 +27,23 @@ public class CombatUI : MonoBehaviour
     public TMP_Text combatText;
     public string combatFinishMessage;
 
+    public Button slurp0;
+    public Button slurp1;
+    public Button slurp2;
+    
     public Button dizz0;
     public Button dizz1;
     public Button dizz2;
 
-    public int dizz0effect;
+    public int dizz0effect; //this fucking skill was the finishing move for my codebase, it is fucking over, it is beyond spaghetti at this point
     public int dizz1effect;
     public int dizz2effect;
 
+    public string[] dizzEffectDescriptions; // it gets even worse here lmao, I have hit rock bottom and now I'm finding ways to dig deeper
+
     public int dizzClicked;
 
-    public List<CharacterData> ownTeam; //this fucking skill was the lethal move for my codebase, it is fucking over, it is beyond spaghetti at this point
+    public List<CharacterData> ownTeam;
     public List<CharacterData> enemyTeam;
 
     public Button skillButton0;
@@ -136,32 +143,6 @@ public class CombatUI : MonoBehaviour
                 skillBar.SetActive(true);
                 itemBar.SetActive(false);
 
-                //if (combatManager.turnHaver.skills.Count == 2)
-                //{
-                //    skillButton0.interactable = true;
-                //}
-
-                //else if (combatManager.turnHaver.skills.Count == 3)
-                //{
-                //    skillButton0.interactable = true;
-                //    skillButton1.interactable = true;
-                //}
-
-                //else if (combatManager.turnHaver.skills.Count == 4)
-                //{
-                //    skillButton0.interactable = true;
-                //    skillButton1.interactable = true;
-                //    skillButton2.interactable = true;
-                //}
-
-                //else if (combatManager.turnHaver.skills.Count == 5)
-                //{
-                //    skillButton0.interactable = true;
-                //    skillButton1.interactable = true;
-                //    skillButton2.interactable = true;
-                //    skillButton3.interactable = true;
-                //}
-
                 backButton.SetActive(true);
                 continueButton.SetActive(false);
                 
@@ -235,7 +216,7 @@ public class CombatUI : MonoBehaviour
         currentState = newState;
     }
 
-    public void FixedUpdate()
+    public void FixedUpdate() //???? this part feels kinda weird and I don't remember why I did it like this. Why do I have separate update functions?
     {
         if (combatManager.turnHaver != null && combatManager.turnHaver.team == 0) 
         {
@@ -295,32 +276,29 @@ public class CombatUI : MonoBehaviour
         ChangeState(State.SkillTargetUI);
         combatManager.selectedSkill = combatManager.turnHaver.skills[4];
     }
-    public void SkillSlot4Pressed()
-    {
 
+    public void ThotwisButtonPressed()
+    {
+        combatManager.turnHaver.GetComponent<CharacterFunctions>().GetInflicted("thottery",999); //there is a fucking bug here, I don't know why there is a fucking bug here, I want to kill myself
+        slurp0.gameObject.SetActive(false);
+        slurp1.gameObject.SetActive(false);
+        slurp2.gameObject.SetActive(false);
     }
 
-    public void SkillSlot5Pressed()
+    public void ClownwisButtonPressed()
     {
-
-    }
-    public void SkillSlot6Pressed()
-    {
-
-    }
-    public void SkillSlot7Pressed()
-    {
-
+        combatManager.turnHaver.GetComponent<CharacterFunctions>().GetInflicted("clownmaxxing", 999);
+        slurp0.gameObject.SetActive(false);
+        slurp1.gameObject.SetActive(false);
+        slurp2.gameObject.SetActive(false);
     }
 
-    public void SkillSlot8Pressed()
+    public void TradwisButtonPressed()
     {
-
-    }
-
-    public void SkillSlot9Pressed()
-    {
-
+        combatManager.turnHaver.GetComponent<CharacterFunctions>().GetInflicted("return to trad", 999);
+        slurp0.gameObject.SetActive(false);
+        slurp1.gameObject.SetActive(false);
+        slurp2.gameObject.SetActive(false);
     }
 
     public void Dizz0ButtonPressed()
@@ -331,7 +309,15 @@ public class CombatUI : MonoBehaviour
         {
             dizzClicked = 0;
             FireDizzEffect(dizz0effect);
+
+            combatText.text = "Your reward: " + dizzEffectDescriptions[dizz0effect - 1];
         }
+        else
+        {
+            combatText.text = "This box had: " + dizzEffectDescriptions[dizz0effect - 1];
+        }
+
+        dizz0.gameObject.SetActive(false);
     }
 
     public void Dizz1ButtonPressed()
@@ -342,7 +328,15 @@ public class CombatUI : MonoBehaviour
         {
             dizzClicked = 0;
             FireDizzEffect(dizz1effect);
+
+            combatText.text = "Your reward: " + dizzEffectDescriptions[dizz1effect - 1];
         }
+        else
+        {
+            combatText.text = "This box had: " + dizzEffectDescriptions[dizz1effect - 1];
+        }
+
+        dizz1.gameObject.SetActive(false);
     }
 
     public void Dizz2ButtonPressed()
@@ -353,7 +347,15 @@ public class CombatUI : MonoBehaviour
         {
             dizzClicked = 0;
             FireDizzEffect(dizz2effect);
+
+            combatText.text = "Your reward: " + dizzEffectDescriptions[dizz2effect - 1];
         }
+        else
+        {
+            combatText.text = "This box had: " + dizzEffectDescriptions[dizz2effect - 1];
+        }
+
+        dizz2.gameObject.SetActive(false);
     }
 
     public void FireDizzEffect(int effect)
@@ -361,19 +363,19 @@ public class CombatUI : MonoBehaviour
         if (effect == 1)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100);
+            dizzTarget.TakeDamage(80);
         }
 
         else if (effect == 2)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(200);
+            dizzTarget.TakeDamage(160);
         }
 
         else if (effect == 3)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(400);
+            dizzTarget.TakeDamage(320);
         }
 
         else if (effect == 4)
@@ -411,6 +413,8 @@ public class CombatUI : MonoBehaviour
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
             dizzTarget.TakeDamage(100);
         }
+
+        gameState.combatPaused = false;
     }
 
     public void CheckSkills()
@@ -419,12 +423,12 @@ public class CombatUI : MonoBehaviour
         skillButton1.interactable = false;
         skillButton2.interactable = false;
         skillButton3.interactable = false;
-        skillButton4.interactable = false;
-        skillButton5.interactable = false;
-        skillButton6.interactable = false;
-        skillButton7.interactable = false;
-        skillButton8.interactable = false;
-        skillButton9.interactable = false;
+        skillButton4.gameObject.SetActive(false); //retarded problems require retarded solutions
+        skillButton5.gameObject.SetActive(false);
+        skillButton6.gameObject.SetActive(false);
+        skillButton7.gameObject.SetActive(false);
+        skillButton8.gameObject.SetActive(false);
+        skillButton9.gameObject.SetActive(false);
 
         skillCooldownText1.text = combatManager.turnHaver.skill1Cooldown.ToString();
         skillCooldownText2.text = combatManager.turnHaver.skill2Cooldown.ToString();
@@ -436,6 +440,7 @@ public class CombatUI : MonoBehaviour
             if (combatManager.turnHaver.skill1Cooldown == 0)
             {
                 skillButton0.interactable = true;
+                skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
                 skillCooldownText1.text = "";
             }
             skillCooldownText2.text = "";
@@ -448,11 +453,13 @@ public class CombatUI : MonoBehaviour
             if (combatManager.turnHaver.skill1Cooldown == 0)
             {
                 skillButton0.interactable = true;
+                skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
                 skillCooldownText1.text = "";
             }
             if (combatManager.turnHaver.skill2Cooldown == 0)
             {
                 skillButton1.interactable = true;
+                skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
                 skillCooldownText2.text = "";
             }
             skillCooldownText3.text = "";
@@ -464,16 +471,19 @@ public class CombatUI : MonoBehaviour
             if (combatManager.turnHaver.skill1Cooldown == 0)
             {
                 skillButton0.interactable = true;
+                skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
                 skillCooldownText1.text = "";
             }
             if (combatManager.turnHaver.skill2Cooldown == 0)
             {
                 skillButton1.interactable = true;
+                skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
                 skillCooldownText2.text = "";
             }
             if (combatManager.turnHaver.skill3Cooldown == 0)
             {
                 skillButton2.interactable = true;
+                skillButton2.image.sprite = combatManager.turnHaver.skills[3].skillIcon;
                 skillCooldownText3.text = "";
             }
             skillCooldownText4.text = "";
@@ -484,21 +494,25 @@ public class CombatUI : MonoBehaviour
             if (combatManager.turnHaver.skill1Cooldown == 0)
             {
                 skillButton0.interactable = true;
+                skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
                 skillCooldownText1.text = "";
             }
             if (combatManager.turnHaver.skill2Cooldown == 0)
             {
                 skillButton1.interactable = true;
+                skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
                 skillCooldownText2.text = "";
             }
             if (combatManager.turnHaver.skill3Cooldown == 0)
             {
                 skillButton2.interactable = true;
+                skillButton2.image.sprite = combatManager.turnHaver.skills[3].skillIcon;
                 skillCooldownText3.text = "";
             }
             if (combatManager.turnHaver.skill4Cooldown == 0)
             {
                 skillButton3.interactable = true;
+                skillButton3.image.sprite = combatManager.turnHaver.skills[4].skillIcon;
                 skillCooldownText4.text = "";
             }
         }

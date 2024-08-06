@@ -17,6 +17,9 @@ public class GameState : MonoBehaviour
     public List<Vector3Int> checkpointList;
 
     public bool metHusk;
+    public bool metShill;
+    public bool metTroll;
+    public bool metBot;
     public bool metFeralCat;
     public bool metCyborgHunter;
     public bool metMaddizz;

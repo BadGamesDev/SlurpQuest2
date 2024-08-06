@@ -26,7 +26,7 @@ public class ShillAI : MonoBehaviour
             }
             else
             {
-                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.empGrenade);
+                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.suckLifeForce);
                 turnSinceSucc = 0;
             }
             combatManager.turnHaver = null;

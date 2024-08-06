@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CharacterFunctions : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class CharacterFunctions : MonoBehaviour
 
     private void Start()
     {
-        ownUI.healthBar.text = ownData.health.ToString();
-        ownUI.cooldownBar.text = ownData.turnCoolDown.ToString();
+        ownUI.healthBar.maxValue = ownData.maxHealth;
+        ownUI.healthBar.value = ownData.health;
+        ownUI.cooldownBar.maxValue = ownData.turnCoolDown;
+        ownUI.healthText.text = ownData.health.ToString();
         combatManager = FindObjectOfType<CombatManager>();
     }
 
@@ -21,6 +24,7 @@ public class CharacterFunctions : MonoBehaviour
         {
             ownData.health = amount;
         }
+        ownUI.healthBar.maxValue = amount;
         ownUI.UpdateHealthBar(ownData.health);
     }
 
@@ -39,9 +43,22 @@ public class CharacterFunctions : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
+        foreach (StatusEffect status in ownData.globalStatusEffects) //I give up...
+        {
+            if (status.statusName == "ted audience")
+            {
+                damageAmount += Convert.ToInt32(ownData.defence / 2);
+            }
+        }
+
+        if (damageAmount < 0)
+        {
+            damageAmount = 0;
+        }
+
         ownData.health -= damageAmount;
         ownUI.UpdateHealthBar(ownData.health);
-        
+
         if (ownData.health <= 0)
         {
             Die();
@@ -79,6 +96,46 @@ public class CharacterFunctions : MonoBehaviour
                 {
                     statusName = StatusEffectDatabase.bleed.statusName, //oh also, yes, I am writing this shit instead of just writing the name as a string which would be way shorter. Why? because fuck you that's why.
                     tickCooldown = StatusEffectDatabase.bleed.tickCooldown,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "ted audience")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.tedAudience.statusName,
+                    tickCooldown = StatusEffectDatabase.tedAudience.tickCooldown,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "raid target")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.raidTarget.statusName,
+                    tickCooldown = StatusEffectDatabase.raidTarget.tickCooldown,
                     tickCount = duration
                 };
 
@@ -129,6 +186,68 @@ public class CharacterFunctions : MonoBehaviour
                 existingStatus.tickCount = duration;
             }
         }
+
+        else if (status == "thottery")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.burnoutSmoke.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+                ownData.dodge += 60;
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "clownmaxxing")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.burnoutSmoke.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+                ownData.dodge += 60;
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "return to trad")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.burnoutSmoke.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+                ownData.dodge += 60;
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        ownUI.UpdateStatusIcons();
     }
 
     public void StatusTick(string status)
@@ -174,7 +293,7 @@ public class CharacterFunctions : MonoBehaviour
 
     public void ResetTurnCooldown()
     {
-        ownData.turnCoolDown = 4000; //magic number but it's ok
+        ownData.turnCoolDown = 3000; //magic number but it's ok
         ownUI.UpdateCooldownBar(ownData.turnCoolDown);
     }
 

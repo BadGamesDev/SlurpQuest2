@@ -26,21 +26,21 @@ public class CompanionData
             health += 40;
             defence += 0;
             dodge += 5;
-            damage += 8;
-            accuracy += 0;
+            damage += 6;
+            accuracy += 5;
             speed += 1;
 
-            if (level == 1)
+            if (level == 0)
             {
                 skills.Add(SkillDatabase.tedTalk); 
             }
 
-            if (level == 2)
+            if (level == 1)
             {
                 skills.Add(SkillDatabase.raid);
             }
 
-            if (level == 3)
+            if (level == 2)
             {
                 skills.Add(SkillDatabase.finalForm);
             }
@@ -54,51 +54,53 @@ public class CompanionData
             health += 30;
             defence += 0;
             dodge += 5;
-            damage += 5;
+            damage += 8;
             accuracy += 5;
             speed += 2;
 
-            if (level == 1)
+            if (level == 0)
             {
                 skills.Add(SkillDatabase.justBeCute);
             }
 
+            if (level == 1)
+            {
+                skills.Add(SkillDatabase.snuggle);
+            }
+
             if (level == 2)
             {
-                skills.Add(SkillDatabase.Snuggle);
+                skills.Add(SkillDatabase.ultraInstinct);
+            }
+
+            level += 1;
+        }
+
+        else if (characterName == "Digi63")
+        {
+            maxHealth += 35;
+            health += 35;
+            defence += 2;
+            dodge += 0;
+            damage += 5;
+            accuracy += 5;
+            speed += 0;
+
+            if (level == 1)
+            {
+                skills.Add(SkillDatabase.silence);
+            }
+
+            if (level == 2)
+            {
+                skills.Add(SkillDatabase.banHammer);
             }
 
             if (level == 3)
             {
-                skills.Add(SkillDatabase.ultraInstinct);
+                skills.Add(SkillDatabase.findBigfoot);
             }
         }
-
-        //else if (characterName == "Digi63")
-        //{
-        //    maxHealth += 30;
-        //    health += 30;
-        //    defence += 0;
-        //    dodge += 0;
-        //    damage += 0;
-        //    accuracy += 0;
-        //    speed += 0;
-
-        //    if (level == 1)
-        //    {
-        //        skills.Add();
-        //    }
-
-        //    if (level == 2)
-        //    {
-        //        skills.Add();
-        //    }
-
-        //    if (level == 3)
-        //    {
-        //        skills.Add();
-        //    }
-        //}
 
         //else if (characterName == "Jaydizz")
         //{

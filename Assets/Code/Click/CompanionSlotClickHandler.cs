@@ -78,6 +78,7 @@ public class CompanionSlotClickHandler : MonoBehaviour, IPointerClickHandler
     public void CopyCharacterData(CharacterData oldData, CompanionData newData)
     {
         oldData.characterName = newData.characterName;
+        oldData.level = newData.level;
         oldData.maxHealth = newData.maxHealth;
         oldData.health = newData.health;
         oldData.defence = newData.defence;

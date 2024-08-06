@@ -63,30 +63,30 @@ public class CombatManager : MonoBehaviour
         else if (enemyData.pos1.name == "Shill")
         {
             overworldUI.AddMessage("Shill: Hey guys! Please follow and subscribe to my twitch channel, I have the best content!");
-            if (gameState.metFeralCat == false)
+            if (gameState.metShill == false)
             {
                 overworldUI.AddMessage("A Shameless shill, you must be very careful! They are known for sucking the life forces of other people.");
-                gameState.metFeralCat = true;
+                gameState.metShill = true;
             }
         }
 
         else if (enemyData.pos1.name == "Snow Troll")
         {
             overworldUI.AddMessage("Snow Troll: Trold ser dig! Trold smadrer dig! Trold dræber dig!");
-            if (gameState.metFeralCat == false)
+            if (gameState.metTroll == false)
             {
                 overworldUI.AddMessage("You might think this is the part where I gave up trying to find funny and thematic enemies and you would be right. But I guess it still kinda works as a southpark reference. Wait until you see the boss.");
-                gameState.metFeralCat = true;
+                gameState.metTroll = true;
             }
         }
 
         else if (enemyData.pos1.name == "Bot")
         {
             overworldUI.AddMessage("Bot: Hello real person, I am a real person just like you. ");
-            if (gameState.metFeralCat == false)
+            if (gameState.metBot == false)
             {
                 overworldUI.AddMessage("A viewbot, created in the darkest pits of this corrupt realm to serve the dark lord. You are getting close!");
-                gameState.metFeralCat = true;
+                gameState.metBot = true;
             }
         }
 
@@ -302,7 +302,7 @@ public class CombatManager : MonoBehaviour
     {
         foreach (CharacterData combatant in combatants)
         {
-            int rollResult = Random.Range(0, 2001);
+            int rollResult = Random.Range(0, 1501);
             combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(rollResult);
         }
     }
@@ -360,6 +360,7 @@ public class CombatManager : MonoBehaviour
                     foreach(StatusEffect statusToYeet in selfStatusToRemove)
                     {
                         combatant.selfStatusEffects.Remove(statusToYeet);
+                        combatant.GetComponent<CharacterUI>().UpdateStatusIcons();
                     }
                 }
                 
@@ -377,7 +378,7 @@ public class CombatManager : MonoBehaviour
                             if (status.tickCount <= 0)
                             {
                                 globalStatusToRemove.Add(status);
-                                status.tickCooldown = 4000; //There is normally no need for this as the status is removed anyways, but if I don't do this the status will start with 0 cooldown to the next tick so uhh... I need this
+                                status.tickCooldown = 3000; //There is normally no need for this as the status is removed anyways, but if I don't do this the status will start with 0 cooldown to the next tick so uhh... I need this
                                 
                                 if(status.statusName == "engine started")
                                 {
@@ -391,14 +392,18 @@ public class CombatManager : MonoBehaviour
                             }
                             else
                             {
-                                status.tickCooldown = 4000;
+                                status.tickCooldown = 3000;
                             }
                         }
                     }
-                    
-                    foreach (StatusEffect statusToYeet in globalStatusToRemove)
+
+                    if (globalStatusToRemove.Count > 0)
                     {
-                        combatant.globalStatusEffects.Remove(statusToYeet);
+                        foreach (StatusEffect statusToYeet in globalStatusToRemove)
+                        {
+                            combatant.globalStatusEffects.Remove(statusToYeet);
+                            combatant.GetComponent<CharacterUI>().UpdateStatusIcons();
+                        }
                     }
 
                     combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(combatant.speed);
@@ -416,15 +421,15 @@ public class CombatManager : MonoBehaviour
                 {
                     data.bigFootTurns -= 1;
                     combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
-                    foreach (StatusEffect status in data.selfStatusEffects)
-                    {
-                        combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
-                        status.tickCount -= 1;
-                        if (status.tickCount <= 0)
-                        {
-                            data.selfStatusEffects.Remove(status);
-                        }
-                    }
+                    //foreach (StatusEffect status in data.selfStatusEffects) NOT TICKING ANY STATUS EFFECTS WHILE THE CHARACTER IS BENCHED BECAUSE OF THE IMMENSE POTENTIAL FOR BUGS. FUCK YOUR REALISM
+                    //{
+                    //    combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
+                    //    status.tickCount -= 1;
+                    //    if (status.tickCount <= 0)
+                    //    {
+                    //        data.selfStatusEffects.Remove(status);
+                    //    }
+                    //}
 
                     if (data.bigFootTurns <= 0)
                     {
@@ -444,7 +449,7 @@ public class CombatManager : MonoBehaviour
                     }
                 }
 
-                else
+                else if (data.bigFootTurns > 0)
                 {
                     combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(data.speed);
                 }
@@ -456,6 +461,7 @@ public class CombatManager : MonoBehaviour
     {
         partyTwo.GetComponent<PartyFunctions>().Die();
         playerStats.GainXP(xpReward);
+        playerStats.noLifePoints += xpReward; //you see the difference between the beautiful xp method and the disgusting nolifepoints line? This is my journey. I have started with noble intentions...
         gameState.combatFinished = true;
         gameState.inCombat = false;
         WinEventCheck();
@@ -482,8 +488,17 @@ public class CombatManager : MonoBehaviour
         {
             Destroy(combatant.gameObject);
         }
-        combatants.Clear();
 
+        if (bench.Count != 0)
+        {
+            foreach (GameObject combatant in bench)
+            {
+                Destroy(combatant);
+            }
+        }
+
+        combatants.Clear();
+        bench.Clear();
         combatPauseCooldown = 0;
         slurpPassive = 0;
     }
@@ -516,6 +531,7 @@ public class CombatManager : MonoBehaviour
         }
 
         winEvents.Clear();
+        loseEvents.Clear();
     }
 
     public void LoseEventCheck()
@@ -545,6 +561,7 @@ public class CombatManager : MonoBehaviour
             FindAnyObjectByType<CombatUI>().combatFinishMessage = ("Congratulations! You have managed to lose the fight!");
         }
 
+        winEvents.Clear();
         loseEvents.Clear();
     }
 
@@ -559,7 +576,7 @@ public class CombatManager : MonoBehaviour
             accuracy = 100,
             damage = 15,
             speed = 12,
-            turnCoolDown = 5000,
+            turnCoolDown = 3000,
         };
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "The feral cat calms down after eating the cat food and you see a familiar face... IT IS HONEY OH MY FUCKING GOD IT IS HONEY! " +
                                                               "It is clear that honey doesn't want to fight you anymore. Congratulations you have won!";
@@ -588,7 +605,7 @@ public class CombatManager : MonoBehaviour
             accuracy = 100,
             damage = 10,
             speed = 8,
-            turnCoolDown = 5000,
+            turnCoolDown = 3000,
         };
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "The cyborg has been defeated! But it isn't long before he starts rising again, as you prepare yourself for another round you realise that " +
                                                               "he doesn't want to fight. The corruption is gone! Now that everyone has calmed down it is not hard for you to recognise who this is...";
@@ -616,7 +633,7 @@ public class CombatManager : MonoBehaviour
             accuracy = 100,
             damage = 10,
             speed = 15,
-            turnCoolDown = 5000,
+            turnCoolDown = 3000,
         };
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "Looks like he was not fast enough! Once again, you have beaten the corruption out of someone.";
 
@@ -642,7 +659,7 @@ public class CombatManager : MonoBehaviour
             accuracy = 90,
             damage = 10,
             speed = 10,
-            turnCoolDown = 5000,
+            turnCoolDown = 3000,
         };
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "I guess they should start calling you the lockpicker. Because you know, he was a war-lock and then you beat him so it's like you picked the war-lock." +
                                                               "Get it? It is a pun and a really funny one. Damn I'm so good at this humor thing!";

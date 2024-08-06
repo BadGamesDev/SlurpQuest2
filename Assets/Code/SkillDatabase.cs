@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class SkillDatabase : MonoBehaviour
+public class SkillDatabase : MonoBehaviour //got forced me to put this shit in the editor to humble me for not learning all the global shit properly
 {
+    public ImageLoader imageLoader;
+
     public static Skill sevenYears = new() { skillName = "7 Fucking Years", hostile = false };
     public static Skill dancingMaster = new() { skillName = "Dancing Master", hostile = true };
     public static Skill tedTalk = new() { skillName = "Ted Talk", hostile = true };
@@ -11,11 +13,13 @@ public class SkillDatabase : MonoBehaviour
     public static Skill longClaws = new() { skillName = "Long Claws", hostile = false };
     public static Skill swipe = new() { skillName = "Swipe", hostile = true };
     public static Skill justBeCute = new() { skillName = "Just Be Cute", hostile = false };
-    public static Skill Snuggle = new() { skillName = "Snuggle", hostile = false };
+    public static Skill snuggle = new() { skillName = "Snuggle", hostile = false };
     public static Skill ultraInstinct = new() { skillName = "Ultra Instinct", hostile = false };
 
     public static Skill boomer = new() { skillName = "Boomer", hostile = false };
     public static Skill empGrenade = new() { skillName = "EMP Grenade", hostile = true };
+    public static Skill silence = new() { skillName = "Silence", hostile = true };
+    public static Skill banHammer = new() { skillName = "Ban Hammer", hostile = true };
     public static Skill findBigfoot = new() { skillName = "Find Bigfoot", hostile = false };
 
     public static Skill polePosition = new() { skillName = "Pole Position", hostile = false };
@@ -32,4 +36,24 @@ public class SkillDatabase : MonoBehaviour
 
     public static Skill suckLifeForce = new() { skillName = "Suck Life", hostile = true };
 
+    void Start()
+    {
+        imageLoader = FindAnyObjectByType<ImageLoader>();
+        AssignSkillIcons();
+    }
+
+    void AssignSkillIcons()
+    {
+        sevenYears.skillIcon = imageLoader.sevenYearsIcon;
+        dancingMaster.skillIcon = imageLoader.dancingMasterIcon;
+        tedTalk.skillIcon = imageLoader.tedTalkIcon;
+        raid.skillIcon = imageLoader.raidIcon;
+        finalForm.skillIcon = imageLoader.finalFormIcon;
+
+        longClaws.skillIcon = imageLoader.longClawsIcon;
+        swipe.skillIcon = imageLoader.swipeIcon;
+        justBeCute.skillIcon = imageLoader.justBeCuteIcon;
+        snuggle.skillIcon = imageLoader.snuggleIcon;
+        ultraInstinct.skillIcon = imageLoader.ultraInstinctIcon;
+    }
 }

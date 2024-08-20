@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-
+//everything should have a separate pause lenght as sometimes it is hard to read shit in time
 public class CombatFunctions : MonoBehaviour
 {
     public PlayerStats playerStats;
@@ -17,8 +17,9 @@ public class CombatFunctions : MonoBehaviour
 
         if (attackRoll <= chance)
         {
-            target.GetComponent<CharacterFunctions>().TakeDamage(attacker.damage - target.defence);
+            target.GetComponent<CharacterFunctions>().TakeDamage(attacker.damage, false);
             combatUI.combatText.text = (attacker.characterName + " attacked " + target.characterName + ".");
+            
             if(attacker.characterName == "Honey")
             {
                 target.GetComponent<CharacterFunctions>().GetInflicted("bleed", 2);
@@ -39,13 +40,13 @@ public class CombatFunctions : MonoBehaviour
 
             if (roll == 0)
             {
-                skillUser.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage * 2 - skillUser.defence);
+                skillUser.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage * 2, false);
                 combatUI.combatText.text = "Slurp tried doing some dance moves... and hit herself.";
             }
 
             else
             { 
-                target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage * 2 - target.defence);
+                target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage * 2, false);
                 combatUI.combatText.text = "Slurp did some amazing dance moves and hit the " + target.characterName;
             }
 
@@ -65,12 +66,12 @@ public class CombatFunctions : MonoBehaviour
                 }
                 else
                 {
-                    character.GetComponent<CharacterFunctions>().TakeDamage(Convert.ToInt32((skillUser.damage / 2) - target.defence));
+                    character.GetComponent<CharacterFunctions>().TakeDamage(Convert.ToInt32(skillUser.damage / 2), false);
                     character.GetComponent<CharacterFunctions>().GetInflicted("ted audience", 2);
                 }
             }
 
-            int roll = UnityEngine.Random.Range(0, 6);
+            int roll = UnityEngine.Random.Range(0, 6); //roll to see if ted talk friendly fire happens
 
             if (roll == 0)
             {
@@ -83,7 +84,7 @@ public class CombatFunctions : MonoBehaviour
                     }
                     else
                     {
-                        character.GetComponent<CharacterFunctions>().TakeDamage(Convert.ToInt32((skillUser.damage/2) - target.defence));
+                        character.GetComponent<CharacterFunctions>().TakeDamage(Convert.ToInt32(skillUser.damage / 2), false);
                         character.GetComponent<CharacterFunctions>().GetInflicted("ted audience", 2);
                     }
                 }
@@ -99,34 +100,34 @@ public class CombatFunctions : MonoBehaviour
             skillUser.skill2Cooldown = 5;
         }
         
-        else if(skill.skillName == "Raid")
+        else if(skill.skillName == "Raid") //DONE
         {
             target.GetComponent<CharacterFunctions>().GetInflicted("raid target", 1);
             combatUI.combatText.text = "Slurp told everyone to go and raid " + target.characterName;
             skillUser.skill3Cooldown = 4;
         }
         
-        else if(skill.skillName == "Final Form")
+        else if(skill.skillName == "Final Form") //dear god give me the strenght to exorcise the bugs from this skill
         {
+            combatManager.gameState.combatPaused = true;
             combatUI.slurp0.gameObject.SetActive(true);
             combatUI.slurp1.gameObject.SetActive(true);
             combatUI.slurp2.gameObject.SetActive(true);
             skillUser.skill4Cooldown = 999; //bruuuuuh
         }
 
-        else if (skill.skillName == "Swipe")
+        else if (skill.skillName == "Swipe") //DONE
         {
             List<CharacterData> charactersToKill = new ();
             foreach(CharacterData character in enemyTeam)
             {
-
                 if (character.health <= skillUser.damage - target.defence)
                 {
                     charactersToKill.Add(character);
                 }
                 else
                 {
-                    character.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage - target.defence);
+                    character.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage, false);
                 }
             }
             if (charactersToKill.Count > 0)
@@ -150,14 +151,16 @@ public class CombatFunctions : MonoBehaviour
         {
             target.GetComponent<CharacterFunctions>().GetHealed(20 + (10 * (skillUser.level + 1)));
             combatUI.combatText.text = skillUser.characterName + " snuggled " + target.characterName + " helping them heal";
+            skillUser.skill3Cooldown = 6;
         }
 
         else if (skill.skillName == "Ultra Instinct")
         {
-            skillUser.damage *= 2;
+            skillUser.damage += 15 + 8 * skillUser.level; //might be the worst case of hardcoding in this whole game
             skillUser.speed += 5 + skillUser.level * 2;
-            skillUser.GetComponent<CharacterFunctions>().GetInflicted("Ultra Instinct", 2);
+            skillUser.GetComponent<CharacterFunctions>().GetInflicted("ultra instinct", 2);
             combatUI.combatText.text = skillUser.characterName + " activated Ultra Instinct mode! Gods have mercy on her enemies";
+            skillUser.skill4Cooldown = 999;
         }
         
         else if (skill.skillName == "EMP Grenade")
@@ -214,8 +217,8 @@ public class CombatFunctions : MonoBehaviour
         
         else if (skill.skillName == "Suck Life")
         {
-            target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage - target.defence);
-            skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.damage - target.defence);
+            target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage, true);
+            skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.damage);
             combatUI.combatText.text = "Shill sucked the life force of " + target.characterName;
         }
 
@@ -257,20 +260,25 @@ public class CombatFunctions : MonoBehaviour
 
         else if (item == "gamblingChip") //gambling chip was supposed to be a much more complicated (and hopefully fun) item but I really didn't want to complicate things further.
         {
-            int roll = UnityEngine.Random.Range(0, 3);
+            int roll = UnityEngine.Random.Range(0, 4);
             if (roll == 0)
             {
-                itemUser.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage);
+                itemUser.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage, false);
                 combatUI.combatText.text = "Bad luck! You damaged yourself.";
             }
             else if (roll == 1)
             {
-                target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage * 3);
-                combatUI.combatText.text = "Nice! You did 2x damage.";
+                target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage, false);
+                combatUI.combatText.text = "You deal normal damage. Not too good but it could have been worse.";
             }
             else if (roll == 2)
             {
-                target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage * 3);
+                target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage * 2, false);
+                combatUI.combatText.text = "Nice! You did 2x damage.";
+            }
+            else if (roll == 3)
+            {
+                target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage * 4, false);
                 combatUI.combatText.text = "Jackpot! You did 4x damage.";
             }
             playerStats.gamblingChip -= 1;

@@ -283,6 +283,10 @@ public class CombatUI : MonoBehaviour
         slurp0.gameObject.SetActive(false);
         slurp1.gameObject.SetActive(false);
         slurp2.gameObject.SetActive(false);
+
+        combatManager.turnHaver = null;
+        combatManager.gameState.combatPaused = false;
+        combatText.text = "Is that Thotwis? Oh god... I'm gonna... I'M GONNA COOOOOOOOOM!";
     }
 
     public void ClownwisButtonPressed()
@@ -291,6 +295,10 @@ public class CombatUI : MonoBehaviour
         slurp0.gameObject.SetActive(false);
         slurp1.gameObject.SetActive(false);
         slurp2.gameObject.SetActive(false);
+
+        combatManager.turnHaver = null;
+        combatManager.gameState.combatPaused = false;
+        combatText.text = "SLURP HAS ASCENDED INTO THE CLOWN FORM!";
     }
 
     public void TradwisButtonPressed()
@@ -299,6 +307,10 @@ public class CombatUI : MonoBehaviour
         slurp0.gameObject.SetActive(false);
         slurp1.gameObject.SetActive(false);
         slurp2.gameObject.SetActive(false);
+
+        combatManager.turnHaver = null;
+        combatManager.gameState.combatPaused = false;
+        combatText.text = "Slurp finally learned her place and started making some fucking sandwiches!";
     }
 
     public void Dizz0ButtonPressed()
@@ -363,55 +375,109 @@ public class CombatUI : MonoBehaviour
         if (effect == 1)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(80);
+            dizzTarget.TakeDamage(80, true);
         }
 
         else if (effect == 2)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(160);
+            dizzTarget.TakeDamage(160, true);
         }
 
         else if (effect == 3)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(320);
+            dizzTarget.TakeDamage(320, true);
         }
 
         else if (effect == 4)
         {
-            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100);
+            List<CharacterData> charactersToKill = new();
+            foreach (CharacterData character in enemyTeam)
+            {
+                if (character.health <= 40)
+                {
+                    charactersToKill.Add(character);
+                }
+
+                else
+                {
+                    character.GetComponent<CharacterFunctions>().TakeDamage(40, true);
+                }
+            }
+            if (charactersToKill.Count > 0)
+            {
+                foreach (CharacterData yeetCandidate in charactersToKill)
+                {
+                    yeetCandidate.GetComponent<CharacterFunctions>().Die();
+                }
+            }
         }
 
         else if (effect == 5)
         {
-            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100);
+            List<CharacterData> charactersToKill = new();
+            foreach (CharacterData character in enemyTeam)
+            {
+                if (character.health <= 80)
+                {
+                    charactersToKill.Add(character);
+                }
+
+                else
+                {
+                    character.GetComponent<CharacterFunctions>().TakeDamage(80, true);
+                }
+            }
+            if (charactersToKill.Count > 0)
+            {
+                foreach (CharacterData yeetCandidate in charactersToKill)
+                {
+                    yeetCandidate.GetComponent<CharacterFunctions>().Die();
+                }
+            }
         }
 
         else if (effect == 6)
         {
-            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100);
+            List<CharacterData> charactersToKill = new();
+            foreach (CharacterData character in enemyTeam)
+            {
+                if (character.health <= 160)
+                {
+                    charactersToKill.Add(character);
+                }
+
+                else
+                {
+                    character.GetComponent<CharacterFunctions>().TakeDamage(160, true);
+                }
+            }
+            if (charactersToKill.Count > 0)
+            {
+                foreach (CharacterData yeetCandidate in charactersToKill)
+                {
+                    yeetCandidate.GetComponent<CharacterFunctions>().Die();
+                }
+            }
         }
 
         else if (effect == 7)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100);
+            dizzTarget.TakeDamage(100, true);
         }
 
         else if (effect == 8)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100);
+            dizzTarget.TakeDamage(100, true);
         }
 
         else if (effect == 9)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100);
+            dizzTarget.TakeDamage(100, true);
         }
 
         gameState.combatPaused = false;
@@ -437,12 +503,15 @@ public class CombatUI : MonoBehaviour
 
         if (combatManager.turnHaver.skills.Count == 2)
         {
+            skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
+            skillCooldownText1.text = combatManager.turnHaver.skill1Cooldown.ToString();
+            
             if (combatManager.turnHaver.skill1Cooldown == 0)
             {
                 skillButton0.interactable = true;
-                skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
                 skillCooldownText1.text = "";
             }
+            
             skillCooldownText2.text = "";
             skillCooldownText3.text = "";
             skillCooldownText4.text = "";
@@ -450,70 +519,94 @@ public class CombatUI : MonoBehaviour
         
         else if (combatManager.turnHaver.skills.Count == 3)
         {
+            skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
+            skillCooldownText1.text = combatManager.turnHaver.skill1Cooldown.ToString();
+
+            skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
+            skillCooldownText2.text = combatManager.turnHaver.skill2Cooldown.ToString();
+
             if (combatManager.turnHaver.skill1Cooldown == 0)
             {
                 skillButton0.interactable = true;
-                skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
                 skillCooldownText1.text = "";
             }
             if (combatManager.turnHaver.skill2Cooldown == 0)
             {
                 skillButton1.interactable = true;
-                skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
                 skillCooldownText2.text = "";
             }
+            
             skillCooldownText3.text = "";
             skillCooldownText4.text = "";
         }
 
         else if (combatManager.turnHaver.skills.Count == 4)
         {
+            skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
+            skillCooldownText1.text = combatManager.turnHaver.skill1Cooldown.ToString();
+
+            skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
+            skillCooldownText2.text = combatManager.turnHaver.skill2Cooldown.ToString();
+
+            skillButton2.image.sprite = combatManager.turnHaver.skills[3].skillIcon;
+            skillCooldownText3.text = combatManager.turnHaver.skill3Cooldown.ToString();
+
             if (combatManager.turnHaver.skill1Cooldown == 0)
             {
                 skillButton0.interactable = true;
-                skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
                 skillCooldownText1.text = "";
             }
             if (combatManager.turnHaver.skill2Cooldown == 0)
             {
                 skillButton1.interactable = true;
-                skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
                 skillCooldownText2.text = "";
             }
             if (combatManager.turnHaver.skill3Cooldown == 0)
             {
                 skillButton2.interactable = true;
-                skillButton2.image.sprite = combatManager.turnHaver.skills[3].skillIcon;
                 skillCooldownText3.text = "";
             }
+            
             skillCooldownText4.text = "";
         }
 
         else if (combatManager.turnHaver.skills.Count == 5)
         {
+            skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
+            skillCooldownText1.text = combatManager.turnHaver.skill1Cooldown.ToString();
+
+            skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
+            skillCooldownText2.text = combatManager.turnHaver.skill2Cooldown.ToString();
+
+            skillButton2.image.sprite = combatManager.turnHaver.skills[3].skillIcon;
+            skillCooldownText3.text = combatManager.turnHaver.skill3Cooldown.ToString();
+
+            skillButton3.image.sprite = combatManager.turnHaver.skills[4].skillIcon;
+            skillCooldownText4.text = combatManager.turnHaver.skill4Cooldown.ToString();
+
             if (combatManager.turnHaver.skill1Cooldown == 0)
             {
                 skillButton0.interactable = true;
-                skillButton0.image.sprite = combatManager.turnHaver.skills[1].skillIcon;
                 skillCooldownText1.text = "";
             }
             if (combatManager.turnHaver.skill2Cooldown == 0)
             {
                 skillButton1.interactable = true;
-                skillButton1.image.sprite = combatManager.turnHaver.skills[2].skillIcon;
                 skillCooldownText2.text = "";
             }
             if (combatManager.turnHaver.skill3Cooldown == 0)
             {
                 skillButton2.interactable = true;
-                skillButton2.image.sprite = combatManager.turnHaver.skills[3].skillIcon;
                 skillCooldownText3.text = "";
             }
             if (combatManager.turnHaver.skill4Cooldown == 0)
             {
                 skillButton3.interactable = true;
-                skillButton3.image.sprite = combatManager.turnHaver.skills[4].skillIcon;
                 skillCooldownText4.text = "";
+            }
+            if (combatManager.turnHaver.skill4Cooldown >= 100)
+            {
+                skillCooldownText4.text = "X";
             }
         }
     }
@@ -558,18 +651,22 @@ public class CombatUI : MonoBehaviour
     {
 
     }
+    
     public void ItemSlot4Pressed()
     {
 
     }
+    
     public void ItemSlot5Pressed()
     {
 
     }
+    
     public void ItemSlot6Pressed()
     {
 
     }
+    
     public void ItemSlot7Pressed()
     {
 

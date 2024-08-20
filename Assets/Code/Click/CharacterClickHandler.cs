@@ -55,7 +55,10 @@ public class CharacterClickHandler : MonoBehaviour, IPointerClickHandler
                 else if (combatManager.turnHaver.team == ownData.team && !combatManager.selectedSkill.hostile) //if ally and skill is supposed to be used on allies
                 {
                     combatFunctions.UseSkill(userTeam, combatManager.turnHaver, enemyTeam, ownData, combatManager.selectedSkill);
-                    combatManager.turnHaver = null;
+                    if (!(combatManager.selectedSkill.skillName == "Final Form"))
+                    {
+                        combatManager.turnHaver = null;
+                    }
                     combatUI.ChangeState(CombatUI.State.MainUI);
                 }
                 break;

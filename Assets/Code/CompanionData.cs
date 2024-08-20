@@ -100,6 +100,8 @@ public class CompanionData
             {
                 skills.Add(SkillDatabase.findBigfoot);
             }
+
+            level += 1;
         }
 
         //else if (characterName == "Jaydizz")

@@ -41,13 +41,26 @@ public class CharacterFunctions : MonoBehaviour
         ownUI.UpdateHealthBar(ownData.health);
     }
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount, bool trueDamage) //The fact that I don't substract the defence here causes a FUCKTON of problems, I don't even remember why I did it like this but god do I fucking hate that I did it like this.
     {
-        foreach (StatusEffect status in ownData.globalStatusEffects) //I give up...
+        foreach (StatusEffect status in ownData.globalStatusEffects)
         {
-            if (status.statusName == "ted audience")
+            if (status.statusName == "raid target")
             {
-                damageAmount += Convert.ToInt32(ownData.defence / 2);
+                damageAmount *= 2;
+            }
+        }
+
+        if (!trueDamage)
+        {
+            damageAmount -= ownData.defence;
+
+            foreach (StatusEffect status in ownData.globalStatusEffects)
+            {
+                if (status.statusName == "ted audience")
+                {
+                    damageAmount += Convert.ToInt32(ownData.defence / 2);
+                }
             }
         }
 
@@ -189,17 +202,16 @@ public class CharacterFunctions : MonoBehaviour
 
         else if (status == "thottery")
         {
-            existingStatus = CheckStatusGlobal(status);
+            existingStatus = CheckStatusSelf(status);
             if (existingStatus == null)
             {
                 StatusEffect newEffect = new StatusEffect
                 {
-                    statusName = StatusEffectDatabase.burnoutSmoke.statusName,
+                    statusName = StatusEffectDatabase.thottery.statusName,
                     tickCount = duration
                 };
 
-                ownData.globalStatusEffects.Add(newEffect);
-                ownData.dodge += 60;
+                ownData.selfStatusEffects.Add(newEffect);
             }
             else
             {
@@ -209,17 +221,16 @@ public class CharacterFunctions : MonoBehaviour
 
         else if (status == "clownmaxxing")
         {
-            existingStatus = CheckStatusGlobal(status);
+            existingStatus = CheckStatusSelf(status);
             if (existingStatus == null)
             {
                 StatusEffect newEffect = new StatusEffect
                 {
-                    statusName = StatusEffectDatabase.burnoutSmoke.statusName,
+                    statusName = StatusEffectDatabase.clownmaxxing.statusName,
                     tickCount = duration
                 };
 
-                ownData.globalStatusEffects.Add(newEffect);
-                ownData.dodge += 60;
+                ownData.selfStatusEffects.Add(newEffect);
             }
             else
             {
@@ -229,17 +240,16 @@ public class CharacterFunctions : MonoBehaviour
 
         else if (status == "return to trad")
         {
-            existingStatus = CheckStatusGlobal(status);
+            existingStatus = CheckStatusSelf(status);
             if (existingStatus == null)
             {
                 StatusEffect newEffect = new StatusEffect
                 {
-                    statusName = StatusEffectDatabase.burnoutSmoke.statusName,
+                    statusName = StatusEffectDatabase.tradwis.statusName,
                     tickCount = duration
                 };
 
-                ownData.globalStatusEffects.Add(newEffect);
-                ownData.dodge += 60;
+                ownData.selfStatusEffects.Add(newEffect);
             }
             else
             {
@@ -258,7 +268,7 @@ public class CharacterFunctions : MonoBehaviour
         }
         else if (status == "bleed")
         {
-            TakeDamage(7);   
+            TakeDamage(Convert.ToInt32(ownData.maxHealth / 20), true);
         }
     }
 

@@ -347,9 +347,25 @@ public class CombatManager : MonoBehaviour
                     List<StatusEffect> selfStatusToRemove = new();
                     foreach (StatusEffect status in combatant.selfStatusEffects)
                     {
+                        if (status.statusName == "return to trad")
+                        {
+                            if(combatant.team == 0) //no one on the enemy team will evet use this skill so there is no need to check it like this but who knpws what the future brings
+                            {
+                                foreach(CharacterData member in teamOne)
+                                {
+                                    member.GetComponent<CharacterFunctions>().GetHealed(combatant.level * 5);
+                                }
+                            }
+                            else if(combatant.team == 1)
+                            {
+                                foreach (CharacterData member in teamTwo)
+                                {
+                                    member.GetComponent<CharacterFunctions>().GetHealed(combatant.level * 5);
+                                }
+                            }
+                        }
                         combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
                         status.tickCount -= 1;
-                        Debug.Log("tickedStunfor" + combatant.transform.position);
 
                         if (status.tickCount <= 0)
                         {
@@ -388,6 +404,12 @@ public class CombatManager : MonoBehaviour
                                 if (status.statusName == "burnout smoke")
                                 {
                                     combatant.dodge -= 60; //who ever you are, I am sorry that you have to read this shit...
+                                }
+
+                                if (status.statusName == "ultra instinct")
+                                {
+                                    combatant.damage -= 15 + 8 * combatant.level;
+                                    combatant.speed -= 5 + combatant.level * 2;
                                 }
                             }
                             else

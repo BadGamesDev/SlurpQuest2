@@ -2,29 +2,50 @@ using UnityEngine;
 
 public class BotAI : MonoBehaviour
 {
+    public GameObject bot;
+    public PrefabLoader prefabLoader;
     public CombatManager combatManager;
     public CombatFunctions combatFunctions;
     public CharacterData ownData;
-
-    public int turnSinceSucc;
 
     void Start()
     {
         combatManager = FindObjectOfType<CombatManager>();
         combatFunctions = FindObjectOfType<CombatFunctions>();
+        prefabLoader = FindObjectOfType<PrefabLoader>();
+
+        bot = prefabLoader.BotPrefab;
     }
 
     public void FixedUpdate()
     {
         if (combatManager.turnHaver == ownData && !ownData.selfStatusEffects.Contains(StatusEffectDatabase.stun) && ownData.team == 1 && combatManager.teamOne.Count != 0)
         {
-            CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
-            if (turnSinceSucc < 3)
+            if (combatManager.teamTwo.Count < 3)
             {
-                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.empGrenade);
+                int slotToSpawn = 0;
+
+                if (combatManager.spawnSlots[4].childCount == 0)
+                {
+                    slotToSpawn = 4;
+                }
+
+                else if (combatManager.spawnSlots[5].childCount == 0) //I can just make this an else statement but better safe than sorry
+                {
+                    slotToSpawn = 5;
+                }
+                
+                GameObject newBot = Instantiate(bot, combatManager.spawnSlots[slotToSpawn].position, Quaternion.identity);
+                newBot.transform.SetParent(combatManager.spawnSlots[slotToSpawn]);
+                CharacterData newBotData = newBot.GetComponent<CharacterData>();
+                combatManager.combatants.Add(newBotData);
+                newBotData.team = 1;
+                combatManager.teamTwo.Add(newBotData);
+                newBotData.turnCoolDown = 3000;
             }
             else
             {
+                CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
                 combatFunctions.Attack(ownData, target);
             }
             combatManager.turnHaver = null;

@@ -157,15 +157,15 @@ public class EntitySpawner : MonoBehaviour
                     newPartyData.pos3 = trollPrefab;
                 }
 
-                entityTracker.partyCounts[0] += 1;
+                entityTracker.partyCounts[2] += 1;
                 entityTracker.UpdateEntityPosition(newParty, gridPosition);
             }
         }
         
         else if (level == 4)
         {
-            int randomX = Random.Range(-9, 9);
-            int randomY = Random.Range(-2, 8);
+            int randomX = Random.Range(300, 330);
+            int randomY = Random.Range(-2, 20);
             Vector2 randomPosition = new Vector2(randomX + 0.5f, randomY + 0.5f); //maybe change some stuff so that you don't have to add 0.5 to everything?
 
             Vector3Int gridPosition = tilemap.WorldToCell(randomPosition); //player map controls already have a method for checking if a tile is walkable and if there is someone at the tile
@@ -180,7 +180,7 @@ public class EntitySpawner : MonoBehaviour
                 newPartyData.level = 4;
                 newPartyData.pos1 = botPrefab;
 
-                entityTracker.partyCounts[0] += 1;
+                entityTracker.partyCounts[3] += 1;
                 entityTracker.UpdateEntityPosition(newParty, gridPosition);
             }
         }

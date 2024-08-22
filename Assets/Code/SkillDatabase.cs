@@ -36,6 +36,8 @@ public class SkillDatabase : MonoBehaviour //got forced me to put this shit in t
 
     public static Skill suckLifeForce = new() { skillName = "Suck Life", hostile = true };
 
+    public static Skill summonBot = new() { skillName = "Summon Bot", hostile = false };
+
     void Start()
     {
         imageLoader = FindAnyObjectByType<ImageLoader>();

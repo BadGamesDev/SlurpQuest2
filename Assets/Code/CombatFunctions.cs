@@ -107,7 +107,7 @@ public class CombatFunctions : MonoBehaviour
             skillUser.skill3Cooldown = 4;
         }
         
-        else if(skill.skillName == "Final Form") //dear god give me the strenght to exorcise the bugs from this skill
+        else if(skill.skillName == "Final Form") //dear god give me the strenght to exorcise the bugs from this skill EDIT: Done I guess?
         {
             combatManager.gameState.combatPaused = true;
             combatUI.slurp0.gameObject.SetActive(true);
@@ -220,6 +220,11 @@ public class CombatFunctions : MonoBehaviour
             target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage, true);
             skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.damage);
             combatUI.combatText.text = "Shill sucked the life force of " + target.characterName;
+        }
+
+        else if (skill.skillName == "Summon Bot")
+        {
+
         }
 
         combatManager.combatPauseCooldown = 2f;

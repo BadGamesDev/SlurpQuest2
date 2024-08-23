@@ -13,5 +13,8 @@ public class StatusEffectDatabase : MonoBehaviour
     public static StatusEffect thottery = new() { statusName = "thottery" };
     public static StatusEffect clownmaxxing = new() { statusName = "clownmaxxing" };
     public static StatusEffect tradwis = new() { statusName = "return to trad" };
+    public static StatusEffect corpsePaint = new() { statusName = "corpse paint" };
+    public static StatusEffect onePeace = new() { statusName = "one peace" };
+
 }
 

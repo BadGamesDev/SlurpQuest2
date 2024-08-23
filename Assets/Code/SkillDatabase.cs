@@ -31,8 +31,11 @@ public class SkillDatabase : MonoBehaviour //got forced me to put this shit in t
     public static Skill washedUpBoyfriend = new() { skillName = "Washed Up Boyfriend", hostile = false };
     public static Skill rap = new() { skillName = "Rap", hostile = true };
 
-    public static Skill herbalMedicine = new() { skillName = "Herbal Medicine", hostile = true };
     public static Skill ghouldMaxxing = new() { skillName = "GhoulMaxxing", hostile = false };
+    public static Skill herbalMedicine = new() { skillName = "Herbal Medicine", hostile = false };
+    public static Skill corpsePaint = new() { skillName = "Corpse Paint", hostile = false };
+    public static Skill onePeace = new() { skillName = "One Peace", hostile = false };
+    public static Skill oneViolence = new() { skillName = "One Violence", hostile = true };
 
     public static Skill suckLifeForce = new() { skillName = "Suck Life", hostile = true };
 

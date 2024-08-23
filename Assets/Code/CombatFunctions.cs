@@ -214,7 +214,81 @@ public class CombatFunctions : MonoBehaviour
 
             combatUI.combatText.text = skillUser.characterName + " used dizz or not dizz! Click the boxes one by one. Last one will be your reward!";
         }
-        
+
+        else if (skill.skillName == "Herbal Medicine")
+        {
+            target.GetComponent<CharacterFunctions>().GetHealed(20 + skillUser.level * 10);
+            if (skillUser == target)
+            {
+                combatUI.combatText.text = skillUser.characterName + " used herbal medicine to heal himself.";
+            }
+            else
+            {
+                combatUI.combatText.text = skillUser.characterName + " used herbal medicine to heal " + target.characterName;
+            }
+        }
+
+        else if (skill.skillName == "Corpse Paint")
+        {
+            target.GetComponent<CharacterFunctions>().GetInflicted("corpse paint", 999);
+            target.damage += 5 + skillUser.level * 2; //When I'm adding the buff I'm looking at the level of skill user, when I'm removing the buff I'm looking at the level of the character with the buff. This is not a problem since everyone in the same party will have the same level BUT it will be a problem if slurps forgets to level up a character. (Oh also, corpse paint will never be removed anyway but I'm probably going to do this for some other skills too)
+            target.speed += skillUser.level * 1;
+
+            if (skillUser == target)
+            {
+                combatUI.combatText.text = skillUser.characterName + " applied corpse paint on himself. It looks fucking sick!";
+            }
+            else
+            {
+                combatUI.combatText.text = skillUser.characterName + " applied corpse paint on " + target.characterName + ". It looks fucking sick!";
+            }
+        }
+
+        else if (skill.skillName == "One Peace")
+        {
+            skillUser.GetComponent<CharacterFunctions>().GetInflicted("one peace", 2);
+            combatManager.peace = true;
+
+            combatUI.combatText.text = skillUser.characterName + " used ONE PEACE! No one can attack or use any harmful abilities for 2 turns!";
+        }
+
+        else if (skill.skillName == "One Violence")
+        {
+            int roll = UnityEngine.Random.Range(0, 4);
+            string damageText = 0.ToString();
+
+            if (skillUser.characterName == "The Warlock")
+            {
+                roll = 3;
+            }
+
+            if (roll == 0)
+            {
+                target.GetComponent<CharacterFunctions>().TakeDamage(1, true);
+                damageText = 1.ToString();
+            }
+
+            else if (roll == 1)
+            {
+                target.GetComponent<CharacterFunctions>().TakeDamage(11, true);
+                damageText = 11.ToString();
+            }
+
+            else if (roll == 2)
+            {
+                target.GetComponent<CharacterFunctions>().TakeDamage(111, true);
+                damageText = 111.ToString();
+            }
+
+            else if (roll == 3)
+            {
+                target.GetComponent<CharacterFunctions>().TakeDamage(1111, true);
+                damageText = 1111.ToString();
+            }
+
+            combatUI.combatText.text = skillUser.characterName + " used ONE VIOLENCE to deal " + damageText + " damage!";
+        }
+
         else if (skill.skillName == "Suck Life")
         {
             target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage, true);

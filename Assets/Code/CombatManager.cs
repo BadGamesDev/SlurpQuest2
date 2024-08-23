@@ -11,6 +11,8 @@ public class CombatManager : MonoBehaviour
     public Camera mainCamera;
     public GameObject playerParty;
 
+    public bool peace;
+
     public OverworldUI overworldUI; //I hope referencing this shit here doesn't cause the world to end
     public GameObject combatUI;
     public GameObject bigfoot; //disgusting reference
@@ -364,6 +366,12 @@ public class CombatManager : MonoBehaviour
                                 }
                             }
                         }
+
+                        if (status.statusName == "one piece")
+                        {
+                            peace = false;
+                        }
+
                         combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
                         status.tickCount -= 1;
 
@@ -410,6 +418,12 @@ public class CombatManager : MonoBehaviour
                                 {
                                     combatant.damage -= 15 + 8 * combatant.level;
                                     combatant.speed -= 5 + combatant.level * 2;
+                                }
+
+                                if (status.statusName == "corpse paint")
+                                {
+                                    combatant.damage += 5 + combatant.level * 2;
+                                    combatant.speed += combatant.level * 1;
                                 }
                             }
                             else
@@ -547,6 +561,11 @@ public class CombatManager : MonoBehaviour
             OneViolenceWinEvent();
         }
 
+        if (winEvents.Contains("asmongold win event"))
+        {
+            OneViolenceWinEvent();
+        }
+
         else if (winEvents.Count == 0)
         {
             FindAnyObjectByType<CombatUI>().combatFinishMessage = ("Congratulations! You have defeated the enemy and gained " + xpReward + " nolifepoints!"); 
@@ -573,9 +592,14 @@ public class CombatManager : MonoBehaviour
             JaydizzLoseEvent();
         }
 
-        if (winEvents.Contains("oneViolence lose event"))
+        if (loseEvents.Contains("oneViolence lose event"))
         {
             OneViolenceLoseEvent();
+        }
+
+        if (loseEvents.Contains("asmongold lose event"))
+        {
+            OneViolenceWinEvent();
         }
 
         else if (loseEvents.Count == 0)
@@ -684,7 +708,7 @@ public class CombatManager : MonoBehaviour
             turnCoolDown = 3000,
         };
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "I guess they should start calling you the lockpicker. Because you know, he was a war-lock and then you beat him so it's like you picked the war-lock." +
-                                                              "Get it? It is a pun and a really funny one. Damn I'm so good at this humor thing!";
+                                                              "Get it? It is a pun and a really funny one. I'm so fucking good at this humor thing!";
 
         overworldUI.OneViolenceUnlockedMessage();
         playerStats.unlockedCompanions.Add(oneViolence);

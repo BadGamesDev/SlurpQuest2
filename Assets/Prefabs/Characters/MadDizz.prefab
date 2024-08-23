@@ -104,7 +104,7 @@ MonoBehaviour:
   accuracy: 100
   dodge: 0
   damage: 10
-  speed: 10
+  speed: 30
   turnCoolDown: 3000
   team: 0
   xpReward: 500
@@ -119,7 +119,7 @@ MonoBehaviour:
   globalStatusEffects: []
   bigFootTurns: 0
   bigFootSlot: {fileID: 0}
-  bossNumber: 0
+  isBoss: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312922933664cb042995cc61d17a487a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alien: {fileID: 0}
   prefabLoader: {fileID: 0}
   combatManager: {fileID: 0}
   combatFunctions: {fileID: 0}

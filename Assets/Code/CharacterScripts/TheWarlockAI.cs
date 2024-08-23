@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class TheWarlockAI : MonoBehaviour
 {
-    public GameObject alien;
-    public PrefabLoader prefabLoader;
     public CombatManager combatManager;
     public CombatFunctions combatFunctions;
     public CharacterData ownData;
@@ -16,28 +14,16 @@ public class TheWarlockAI : MonoBehaviour
     {
         combatManager = FindObjectOfType<CombatManager>();
         combatFunctions = FindObjectOfType<CombatFunctions>();
-        prefabLoader = FindObjectOfType<PrefabLoader>();
 
         moves.Add("attack");
-        moves.Add("emp grenade");
+        moves.Add("corpse paint");
         moves.Add("attack");
         moves.Add("attack");
-        moves.Add("summon aliens");
-        moves.Add("find bigfoot");
         moves.Add("attack");
+        moves.Add("one peace");
+        moves.Add("herbal medicine");
         moves.Add("attack");
-        moves.Add("emp grenade");
-        moves.Add("attack");
-        moves.Add("attack");
-        moves.Add("emp grenade");
-        moves.Add("attack");
-        moves.Add("attack");
-        moves.Add("emp grenade");
-        moves.Add("attack");
-        moves.Add("attack");
-        moves.Add("emp grenade");
-
-        alien = prefabLoader.AlienPrefab;
+        moves.Add("one violence");
     }
 
     public void FixedUpdate()//horrible for performance
@@ -49,34 +35,29 @@ public class TheWarlockAI : MonoBehaviour
                 CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
                 combatFunctions.Attack(ownData, target);
             }
-            else if (moves[turnNumber] == "emp grenade")
+            
+            else if (moves[turnNumber] == "herbal medicine")
+            {
+                CharacterData target = ownData;
+                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.herbalMedicine);
+            }
+            
+            else if (moves[turnNumber] == "corpse paint")
+            {
+                CharacterData target = ownData;
+                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.corpsePaint);
+            }
+
+            else if (moves[turnNumber] == "one peace")
+            {
+                CharacterData target = ownData;
+                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.onePeace);
+            }
+
+            else if (moves[turnNumber] == "one violence")
             {
                 CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
-                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.empGrenade);
-            }
-            else if (moves[turnNumber] == "summon aliens")
-            {
-                GameObject combatant5 = Instantiate(alien, combatManager.spawnSlots[4].position, Quaternion.identity);
-                combatant5.transform.SetParent(combatManager.spawnSlots[4]);
-                CharacterData combatant5Data = combatant5.GetComponent<CharacterData>();
-                combatManager.combatants.Add(combatant5Data);
-                combatant5Data.team = 1;
-                combatManager.teamTwo.Add(combatant5Data);
-                combatant5Data.turnCoolDown += Random.Range(100, 1001);
-
-
-                GameObject combatant6 = Instantiate(alien, combatManager.spawnSlots[5].position, Quaternion.identity);
-                combatant6.transform.SetParent(combatManager.spawnSlots[5]);
-                CharacterData combatant6Data = combatant6.GetComponent<CharacterData>();
-                combatManager.combatants.Add(combatant6Data);
-                combatant6Data.team = 1;
-                combatManager.teamTwo.Add(combatant6Data);
-                combatant6Data.turnCoolDown += Random.Range(100, 1001);
-            }
-            else if (moves[turnNumber] == "find bigfoot")
-            {
-                CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
-                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.findBigfoot);
+                combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.oneViolence);
             }
 
             combatManager.turnHaver = null;

@@ -257,6 +257,45 @@ public class CharacterFunctions : MonoBehaviour
             }
         }
 
+        else if (status == "corpse paint")
+        {
+            existingStatus = CheckStatusGlobal(status); //It reallt doesn't matter whether this one is global or self
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.corpsePaint.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "one peace")
+        {
+            existingStatus = CheckStatusSelf(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.onePeace.statusName,
+                    tickCount = duration
+                };
+
+                ownData.selfStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+
+        }
+
         ownUI.UpdateStatusIcons();
     }
 

@@ -15,6 +15,10 @@ public class PrefabLoader : MonoBehaviour //This script is just me paying for my
     public GameObject BigfootPrefab;
     public GameObject BotPrefab;
     public GameObject RoachPrefab;
+    public GameObject TrickyPrefab;
+
+    public GameObject HankPrefab;
+    public GameObject PostalGuyPrefab;
 
     public Image statusIcon; //I can do this shit in code, don't know why I decided there should be a fucking prefab but at this point nothing really matters
 }

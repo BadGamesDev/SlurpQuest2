@@ -34,6 +34,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Button partyButton;
     public Button itemsButton;
 
+    public Button continueButton;
+
     public Button companionsButton0;
     public Button companionsButton1;
     public Button companionsButton2;
@@ -43,6 +45,9 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public Button dismissCompanion0;
     public Button dismissCompanion1;
+
+    public Button hankChoice1;
+    public Button hankChoice2;
 
     public TMP_Text nameText;
     public TMP_Text levelText;
@@ -98,6 +103,24 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public CompanionData statsCompanion; 
     public CompanionData pickedCompanion; //I guess this is the best place to put this? Oh also, I should probably use standardised variable names right? LMAO CHAOS WILL REIGN SUPREME
+
+    public bool hankChoice;
+
+    public float cooldown;
+
+    public void Update()
+    {
+        if (cooldown <= 0)
+        {
+            dialogueText.gameObject.SetActive(true);
+            continueButton.gameObject.SetActive(true);
+        }
+
+        else
+        {
+            cooldown -= Time.deltaTime;
+        }
+    }
 
     public void MenuButtonPressed()
     {
@@ -194,32 +217,41 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
             levelUpButton.gameObject.SetActive(true);
         }
 
-        if (statsCompanion.skills.Count == 2) //I am actually really ashamed of this part
+        if (statsCompanion.skills.Count > 1)
         {
             skill0Panel.SetActive(true);
             skill0Name.text = statsCompanion.skills[0].skillName;
             skill0Desc.text = statsCompanion.skills[0].skillDesc;
-            
+            skill0Icon.sprite = statsCompanion.skills[0].skillIcon;
+
             skill1Panel.SetActive(true);
-            skill0Name.text = statsCompanion.skills[0].skillName;
-            skill0Desc.text = statsCompanion.skills[0].skillDesc;
+            skill1Name.text = statsCompanion.skills[1].skillName;
+            skill1Desc.text = statsCompanion.skills[1].skillDesc;
+            skill1Icon.sprite = statsCompanion.skills[1].skillIcon;
         }
 
-        else if (statsCompanion.skills.Count == 3)
+        if (statsCompanion.skills.Count > 2)
         {
-            skill0Panel.SetActive(true);
-            skill1Panel.SetActive(true);
             skill2Panel.SetActive(true);
-            skill3Panel.SetActive(true);
+            skill2Name.text = statsCompanion.skills[2].skillName;
+            skill2Desc.text = statsCompanion.skills[2].skillDesc;
+            skill2Icon.sprite = statsCompanion.skills[2].skillIcon;
         }
 
-        else if (statsCompanion.skills.Count == 4)
+        if (statsCompanion.skills.Count > 3)
         {
-            skill0Panel.SetActive(true);
-            skill1Panel.SetActive(true);
-            skill2Panel.SetActive(true);
             skill3Panel.SetActive(true);
+            skill3Name.text = statsCompanion.skills[3].skillName;
+            skill3Desc.text = statsCompanion.skills[3].skillDesc;
+            skill3Icon.sprite = statsCompanion.skills[3].skillIcon;
+        }
+
+        if (statsCompanion.skills.Count > 4)
+        {
             skill4Panel.SetActive(true);
+            skill4Name.text = statsCompanion.skills[4].skillName;
+            skill4Desc.text = statsCompanion.skills[4].skillDesc;
+            skill4Icon.sprite = statsCompanion.skills[4].skillIcon;
         }
     }
 
@@ -308,6 +340,48 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         newDamageText.text = statsCompanion.damage.ToString();
         newAccuracyText.text = statsCompanion.accuracy.ToString();
         newSpeedText.text = statsCompanion.speed.ToString();
+
+        if (statsCompanion.level < playerStats.level) // I am kinda ashamed of this shit but it does no harm other than just taking up a lot of space
+        {
+            levelUpButton.gameObject.SetActive(true);
+        }
+
+        if (statsCompanion.skills.Count > 1)
+        {
+            skill0Panel.SetActive(true);
+            skill0Name.text = statsCompanion.skills[0].skillName;
+            skill0Desc.text = statsCompanion.skills[0].skillDesc;
+            skill0Icon.sprite = statsCompanion.skills[0].skillIcon;
+
+            skill1Panel.SetActive(true);
+            skill1Name.text = statsCompanion.skills[1].skillName;
+            skill1Desc.text = statsCompanion.skills[1].skillDesc;
+            skill1Icon.sprite = statsCompanion.skills[1].skillIcon;
+        }
+
+        if (statsCompanion.skills.Count > 2)
+        {
+            skill2Panel.SetActive(true);
+            skill2Name.text = statsCompanion.skills[2].skillName;
+            skill2Desc.text = statsCompanion.skills[2].skillDesc;
+            skill2Icon.sprite = statsCompanion.skills[2].skillIcon;
+        }
+
+        if (statsCompanion.skills.Count > 3)
+        {
+            skill3Panel.SetActive(true);
+            skill3Name.text = statsCompanion.skills[3].skillName;
+            skill3Desc.text = statsCompanion.skills[3].skillDesc;
+            skill3Icon.sprite = statsCompanion.skills[3].skillIcon;
+        }
+
+        if (statsCompanion.skills.Count > 4)
+        {
+            skill4Panel.SetActive(true);
+            skill4Name.text = statsCompanion.skills[4].skillName;
+            skill4Desc.text = statsCompanion.skills[4].skillDesc;
+            skill4Icon.sprite = statsCompanion.skills[4].skillIcon;
+        }
     }
 
     public void CloseStatScreenButtonPressed()
@@ -336,6 +410,25 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         CheckSelectableCompanions();
         statButton1.gameObject.SetActive(false);
         dismissCompanion1.gameObject.SetActive(false);
+    }
+
+    public void HankChoice1Pressed()
+    {
+        dialogueText.text = null;
+        hankChoice = false;
+        hankChoice1.gameObject.SetActive(false);
+        hankChoice2.gameObject.SetActive(false);
+        cooldown = 10;
+        dialogueText.text = "You can see that Hank has already made up his mind. He simply starts walking away without saying anything.";
+        continueButton.gameObject.SetActive(false);
+        dialogueText.gameObject.SetActive(false);
+    }
+
+    public void HankChoice2Pressed()
+    {
+        dialogueText.text = "I am sorry Slurp but the other choice is the funny one so I'm gonna need you to go back and pick the correct option.";
+        hankChoice1.gameObject.SetActive(false);
+        hankChoice2.gameObject.SetActive(false);
     }
 
     public void CheckSelectableCompanions()
@@ -396,15 +489,26 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     {
         if (textQueue.Count <= 0)
         {
-            gameState.globalPaused = false;
-            dialoguePanel.SetActive(false);
-            dialogueText.text = null;
-
-            if (gameState.waitingCombat == true)
+            if (!hankChoice)
             {
-                FindAnyObjectByType<CombatManager>().StartCombat(gameState.partiesWaitingCombat[0], gameState.partiesWaitingCombat[1]);
-                gameState.waitingCombat = false;
-                gameState.partiesWaitingCombat.Clear();
+                gameState.globalPaused = false;
+                dialoguePanel.SetActive(false);
+                dialogueText.text = null;
+
+                if (gameState.waitingCombat == true)
+                {
+                    FindAnyObjectByType<CombatManager>().StartCombat(gameState.partiesWaitingCombat[0], gameState.partiesWaitingCombat[1]);
+                    gameState.waitingCombat = false;
+                    gameState.partiesWaitingCombat.Clear();
+                }
+            }
+
+            else
+            {
+                dialogueText.text = null;
+
+                hankChoice1.gameObject.SetActive(true);
+                hankChoice2.gameObject.SetActive(true);
             }
         }
         else 

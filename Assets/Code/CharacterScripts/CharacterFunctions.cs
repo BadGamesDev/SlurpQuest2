@@ -293,7 +293,63 @@ public class CharacterFunctions : MonoBehaviour
             {
                 existingStatus.tickCount = duration;
             }
+        }
 
+        else if (status == "permacloud")
+        {
+            existingStatus = CheckStatusSelf(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.permacloud.statusName,
+                    tickCount = duration
+                };
+
+                ownData.selfStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "cute")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.cute.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
+        else if (status == "ultra instinct")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.ultraInstinct.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
         }
 
         ownUI.UpdateStatusIcons();
@@ -348,33 +404,46 @@ public class CharacterFunctions : MonoBehaviour
 
     public void Die()
     {
-        combatManager.xpReward += ownData.xpReward;
-        combatManager.combatants.Remove(ownData);
+        if (ownData.characterName == "Asmongold" && ownData.secondPhase == false)
+        {
+            ownData.secondPhase = true;
 
-        if (ownData.team == 0)
-        {
-            combatManager.teamOne.Remove(ownData);
-        }
-        else if(ownData.team == 1)
-        {
-            combatManager.teamTwo.Remove(ownData);
+            GetHealed(99999);
+            GetInflicted("permacloud", 999);
+            //change sprite
+            //activate permanent cloud
         }
 
-        if(combatManager.teamOne.Count == 0)
+        else
         {
-            combatManager.LoseCombat();
-        }
+            combatManager.xpReward += ownData.xpReward;
+            combatManager.combatants.Remove(ownData);
 
-        if(combatManager.teamTwo.Count == 0)
-        {
-            combatManager.WinCombat();
-        }
+            if (ownData.team == 0)
+            {
+                combatManager.teamOne.Remove(ownData);
+            }
+            else if (ownData.team == 1)
+            {
+                combatManager.teamTwo.Remove(ownData);
+            }
 
-        if(ownData.characterName == "Big Foot")
-        {
-            combatManager.PullFromBench(combatManager.bench[0]); //STEP 1: over engineer a system. STEP 2: make a retarded function like this to completely make the over engineering obsolete.
-        }
+            if (combatManager.teamOne.Count == 0)
+            {
+                combatManager.LoseCombat();
+            }
 
-        Destroy(gameObject);
+            if (combatManager.teamTwo.Count == 0)
+            {
+                combatManager.WinCombat();
+            }
+
+            if (ownData.characterName == "Big Foot")
+            {
+                combatManager.PullFromBench(combatManager.bench[0]); //STEP 1: over engineer a system. STEP 2: make a retarded function like this to completely make the over engineering obsolete.
+            }
+
+            Destroy(gameObject);
+        }
     }
 }

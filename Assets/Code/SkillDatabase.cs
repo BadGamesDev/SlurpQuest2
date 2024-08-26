@@ -4,11 +4,11 @@ public class SkillDatabase : MonoBehaviour //got forced me to put this shit in t
 {
     public ImageLoader imageLoader;
 
-    public static Skill sevenYears = new() { skillName = "7 Fucking Years", hostile = false };
-    public static Skill dancingMaster = new() { skillName = "Dancing Master", hostile = true };
-    public static Skill tedTalk = new() { skillName = "Ted Talk", hostile = true };
-    public static Skill raid = new() { skillName = "Raid", hostile = true };
-    public static Skill finalForm = new() { skillName = "Final Form", hostile = false };
+    public static Skill sevenYears = new() { skillName = "7 Fucking Years", skillDesc = "Slurp gets more resilient with time! She gainst 1 defence each turn. At turn 7 she stops gaining defence but unlocks her ultimate ability if she is at least level 4.",hostile = false };
+    public static Skill dancingMaster = new() { skillName = "Dancing Master", skillDesc = "Slurp starts doing some wild dance moves. This ability deals double damage but has a chance to injure Slurp instead of hitting the enemy.", hostile = true };
+    public static Skill tedTalk = new() { skillName = "Ted Talk", skillDesc = "Slurp starts giving a long ass Ted talk. This skill reduces the defence of the whole enemy team out of sheer boredom and also deals a small amount of true damage. But it has a chance of effecting your own team too!", hostile = true };
+    public static Skill raid = new() { skillName = "Raid", skillDesc = "Slurp picks an enemy as the raid target! Until her next turn all attacks and abilities against the target deal double damage.", hostile = true };
+    public static Skill finalForm = new() { skillName = "Final Form", skillDesc = "Slurp ascends into her final form! She can pick one of her three alter egos: Thoswis, Clownwis, or Tradwis. Thotwis charms a random enemy each turn, Tradwis heals her whole team each turn, Clownwis just doesn't fucking care and gives everyone random status effects each turn." , hostile = false };
 
     public static Skill longClaws = new() { skillName = "Long Claws", hostile = false };
     public static Skill swipe = new() { skillName = "Swipe", hostile = true };
@@ -29,7 +29,10 @@ public class SkillDatabase : MonoBehaviour //got forced me to put this shit in t
     public static Skill dizzOrNoDizz = new() { skillName = "Dizz Or No Dizz", hostile = true };
     
     public static Skill washedUpBoyfriend = new() { skillName = "Washed Up Boyfriend", hostile = false };
-    public static Skill rap = new() { skillName = "Rap", hostile = true };
+    public static Skill rap = new() { skillName = "Rapper", hostile = true };
+    public static Skill clownmaxxing = new() { skillName = "Clownmaxxing", hostile = true };
+    public static Skill godComplex = new() { skillName = "God Complex", hostile = false };
+    public static Skill extremeLaziness = new() { skillName = "Extreme Laziness", hostile = true };
 
     public static Skill ghouldMaxxing = new() { skillName = "GhoulMaxxing", hostile = false };
     public static Skill herbalMedicine = new() { skillName = "Herbal Medicine", hostile = false };

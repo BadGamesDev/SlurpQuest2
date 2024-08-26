@@ -15,6 +15,9 @@ public class StatusEffectDatabase : MonoBehaviour
     public static StatusEffect tradwis = new() { statusName = "return to trad" };
     public static StatusEffect corpsePaint = new() { statusName = "corpse paint" };
     public static StatusEffect onePeace = new() { statusName = "one peace" };
-
+    public static StatusEffect permacloud = new() { statusName = "permacloud" };
+    public static StatusEffect cute = new() { statusName = "cute" };
+    public static StatusEffect ultraInstinct = new() { statusName = "ultra instinct" };
+    public static StatusEffect silence = new() { statusName = "silence" };
 }
 

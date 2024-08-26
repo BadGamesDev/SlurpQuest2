@@ -94,7 +94,7 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "FeralCat")
         {
-            overworldUI.AddMessage("FeralCat: MEEEOOWWWWWWW RAAAEERGGGGGGG REEEEEEEEEEEEEEEEEEEE!!!!!");
+            overworldUI.AddMessage("Feral Cat: REEEEEEEEEEEEEEEEEEEEEE!!!!!");
             if (gameState.metFeralCat == false)
             {
                 overworldUI.AddMessage("A feral cat, driven mad by the corrupting curse of the dark lord like so many other beings in this realm. For a moment you sense something familiar in it's eyes, but there is no time to think! Get ready for a fight!");
@@ -143,6 +143,16 @@ public class CombatManager : MonoBehaviour
                                    "Countless insignificant streamers like you tried standing against me and countless streamers like you got defeated, crushed and broken. I am your doom! I am the lord of decay, known by a thousand names in a thousand worlds. But you might call me...");
                 overworldUI.AddMessage("ASMONGOLD");
                 gameState.metAsmongold = true;
+            }
+        }
+
+        else if (enemyData.pos1.name == "Heado")
+        {
+            if (gameState.metHeado == false)
+            {
+                overworldUI.AddMessage("The Trickster: You fool! You have fallen into my trap, I am more powerful than ever in this realm, and you don't have any of your friends or mods to save you this time! I was Heado all along!");
+                overworldUI.AddMessage("Damn, looks like the trickster was just another alt of Heado...");
+                gameState.metHeado = true;
             }
         }
 
@@ -306,6 +316,7 @@ public class CombatManager : MonoBehaviour
         {
             int rollResult = Random.Range(0, 1501);
             combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(rollResult);
+            Debug.Log(rollResult + combatant.characterName);
         }
     }
 
@@ -367,9 +378,35 @@ public class CombatManager : MonoBehaviour
                             }
                         }
 
-                        if (status.statusName == "one piece")
+                        if (status.statusName == "permacloud")
                         {
-                            peace = false;
+                            List<CharacterData> charactersToKill = new();
+
+                            foreach (CharacterData character in teamOne)
+                            {
+
+                                if (character.health <= 30)
+                                {
+                                    charactersToKill.Add(character);
+                                }
+                                else
+                                {
+                                    character.GetComponent<CharacterFunctions>().TakeDamage(30, true);
+                                }
+                            }
+
+                            foreach (CharacterData character in teamTwo)
+                            {
+                                character.GetComponent<CharacterFunctions>().GetHealed(30);
+                            }
+
+                            if (charactersToKill.Count > 0)
+                            {
+                                foreach (CharacterData yeetCandidate in charactersToKill)
+                                {
+                                    yeetCandidate.GetComponent<CharacterFunctions>().Die();
+                                }
+                            }
                         }
 
                         combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
@@ -383,6 +420,11 @@ public class CombatManager : MonoBehaviour
 
                     foreach(StatusEffect statusToYeet in selfStatusToRemove)
                     {
+                        if (statusToYeet.statusName == "one piece")
+                        {
+                            peace = false;
+                        }
+
                         combatant.selfStatusEffects.Remove(statusToYeet);
                         combatant.GetComponent<CharacterUI>().UpdateStatusIcons();
                     }
@@ -412,6 +454,11 @@ public class CombatManager : MonoBehaviour
                                 if (status.statusName == "burnout smoke")
                                 {
                                     combatant.dodge -= 60; //who ever you are, I am sorry that you have to read this shit...
+                                }
+
+                                if (status.statusName == "cute")
+                                {
+                                    combatant.defence -= 5 * (combatant.level + 1);
                                 }
 
                                 if (status.statusName == "ultra instinct")
@@ -563,7 +610,17 @@ public class CombatManager : MonoBehaviour
 
         if (winEvents.Contains("asmongold win event"))
         {
-            OneViolenceWinEvent();
+            AsmongoldWinEvent();
+        }
+
+        if (winEvents.Contains("heado win event"))
+        {
+            HeadoWinEvent();
+        }
+
+        if (winEvents.Contains("auditor win event"))
+        {
+            AuditorWinEvent();
         }
 
         else if (winEvents.Count == 0)
@@ -599,7 +656,17 @@ public class CombatManager : MonoBehaviour
 
         if (loseEvents.Contains("asmongold lose event"))
         {
-            OneViolenceWinEvent();
+            AsmongoldLoseEvent();
+        }
+
+        if (winEvents.Contains("heado lose event"))
+        {
+            HeadoLoseEvent();
+        }
+
+        if (winEvents.Contains("auditor lose event"))
+        {
+            AuditorLoseEvent();
         }
 
         else if (loseEvents.Count == 0)
@@ -719,6 +786,36 @@ public class CombatManager : MonoBehaviour
     public void OneViolenceLoseEvent()
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "The demonic powers of the warlock were simply too much for you to handle!";
+    }
+
+    public void AsmongoldWinEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "You did it! Asmongold is no more! You have avenged everyone!";
+    }
+
+    public void AsmongoldLoseEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "Damn... maybe you really are just wasting your life huh?";
+    }
+
+    public void HeadoWinEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "Looks like Tricky permanently banned Heado. He seems friendly for now but you should probably start running away before he changes his mind.";
+    }
+
+    public void HeadoLoseEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "Yeah I really don't know what the fuck happened, this fight was supposed to be a guaranteed win. Try again please and don't do whatever the fuck you just did.";
+    }
+
+    public void AuditorWinEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "YOU DID IT! YOU BEAT THE ACTUAL FINAL BOSS! IT IS DONE! YOU GOT HANK BACK! YOU DESTROYED THE CURSE AND SAVED EVERYONE! WE ARE SO FUCKING BACK!";
+    }
+
+    public void AuditorLoseEvent()
+    {
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "Hey Slurp! I know the fight looks impossible but believe me you can win it. Just focus on surviving until [REDACTED FOR SPOILERS]. Stock up on pizza slices or something.";
     }
 
     public void RespawnPlayer()

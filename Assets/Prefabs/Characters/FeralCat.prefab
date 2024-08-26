@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 0}
-  characterName: FeralCat
+  characterName: Feral Cat
   level: 0
   maxHealth: 9999
   health: 9999
@@ -119,7 +119,8 @@ MonoBehaviour:
   globalStatusEffects: []
   bigFootTurns: 0
   bigFootSlot: {fileID: 0}
-  bossNumber: 0
+  isBoss: 0
+  secondPhase: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0

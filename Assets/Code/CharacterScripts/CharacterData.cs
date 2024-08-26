@@ -32,6 +32,7 @@ public class CharacterData : MonoBehaviour
     public Transform bigFootSlot; //same as above
 
     public bool isBoss;
+    public bool secondPhase; //this shit is just for the asmon fight
 
     private void Start()
     {

@@ -322,7 +322,7 @@ public class CombatUI : MonoBehaviour
             dizzClicked = 0;
             FireDizzEffect(dizz0effect);
 
-            combatText.text = "Your reward: " + dizzEffectDescriptions[dizz0effect - 1];
+            combatText.text = "Congratulations! Your reward is: " + dizzEffectDescriptions[dizz0effect - 1];
         }
         else
         {
@@ -341,7 +341,7 @@ public class CombatUI : MonoBehaviour
             dizzClicked = 0;
             FireDizzEffect(dizz1effect);
 
-            combatText.text = "Your reward: " + dizzEffectDescriptions[dizz1effect - 1];
+            combatText.text = "Congratulations! Your reward is: " + dizzEffectDescriptions[dizz1effect - 1];
         }
         else
         {
@@ -360,7 +360,7 @@ public class CombatUI : MonoBehaviour
             dizzClicked = 0;
             FireDizzEffect(dizz2effect);
 
-            combatText.text = "Your reward: " + dizzEffectDescriptions[dizz2effect - 1];
+            combatText.text = "Congratulations! Your reward is: " + dizzEffectDescriptions[dizz2effect - 1];
         }
         else
         {
@@ -465,19 +465,20 @@ public class CombatUI : MonoBehaviour
         else if (effect == 7)
         {
             CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100, true);
+            dizzTarget.GetInflicted("stun", 4);
         }
 
         else if (effect == 8)
         {
-            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100, true);
+            foreach (CharacterData character in enemyTeam)
+            {
+                character.GetComponent<CharacterFunctions>().GetInflicted("stun", 2);
+            }
         }
 
         else if (effect == 9)
         {
-            CharacterFunctions dizzTarget = enemyTeam[Random.Range(0, enemyTeam.Count)].GetComponent<CharacterFunctions>();
-            dizzTarget.TakeDamage(100, true);
+            
         }
 
         gameState.combatPaused = false;

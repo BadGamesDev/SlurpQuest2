@@ -32,7 +32,7 @@ public class CompanionData
 
             if (level == 0)
             {
-                skills.Add(SkillDatabase.tedTalk); 
+                skills.Add(SkillDatabase.tedTalk);
             }
 
             if (level == 1)
@@ -104,82 +104,82 @@ public class CompanionData
             level += 1;
         }
 
-        //else if (characterName == "Jaydizz")
-        //{
-        //    maxHealth += 30;
-        //    health += 30;
-        //    defence += 0;
-        //    dodge += 0;
-        //    damage += 0;
-        //    accuracy += 0;
-        //    speed += 0;
+        else if (characterName == "Jaydizz")
+        {
+            maxHealth += 30;
+            health += 30;
+            defence += 0;
+            dodge += 0;
+            damage += 0;
+            accuracy += 0;
+            speed += 0;
 
-        //    if (level == 1)
-        //    {
-        //        skills.Add();
-        //    }
+            if (level == 1)
+            {
+                skills.Add(SkillDatabase.burnout);
+            }
 
-        //    if (level == 2)
-        //    {
-        //        skills.Add();
-        //    }
+            if (level == 2)
+            {
+                skills.Add(SkillDatabase.pitStop);
+            }
 
-        //    if (level == 3)
-        //    {
-        //        skills.Add();
-        //    }
-        //}
+            if (level == 3)
+            {
+                skills.Add(SkillDatabase.dizzOrNoDizz);
+            }
+        }
 
-        //else if (characterName == "Cndk99")
-        //{
-        //    maxHealth += 30;
-        //    health += 30;
-        //    defence += 0;
-        //    dodge += 0;
-        //    damage += 0;
-        //    accuracy += 0;
-        //    speed += 0;
+        else if (characterName == "Cndk99")
+        {
+            maxHealth += 35;
+            health += 35;
+            defence += 1;
+            dodge += 1;
+            damage += 5;
+            accuracy += 5;
+            speed += 1;
 
-        //    if (level == 1)
-        //    {
-        //        skills.Add();
-        //    }
+            if (level == 1)
+            {
+                skills.Add(SkillDatabase.clownmaxxing);
+            }
 
-        //    if (level == 2)
-        //    {
-        //        skills.Add();
-        //    }
+            if (level == 2)
+            {
+                skills.Add(SkillDatabase.godComplex);
+            }
 
-        //    if (level == 3)
-        //    {
-        //        skills.Add();
-        //    }
-        //}
+            if (level == 3)
+            {
+                skills.Add(SkillDatabase.extremeLaziness);
+            }
+        }
 
-        //else if (characterName == "OneViolence")
-        //{
-        //    maxHealth += 30;
-        //    health += 30;
-        //    defence += 0;
-        //    dodge += 0;
-        //    damage += 0;
-        //    accuracy += 0;
-        //    speed += 0;
+        else if (characterName == "OneViolence")
+        {
+            maxHealth += 30;
+            health += 30;
+            defence += 0;
+            dodge += 0;
+            damage += 0;
+            accuracy += 0;
+            speed += 0;
 
-        //    if (level == 1)
-        //    {
-        //        skills.Add();
-        //    }
+            if (level == 1)
+            {
+                skills.Add(SkillDatabase.corpsePaint);
+            }
 
-        //    if (level == 2)
-        //    {
-        //        skills.Add();
-        //    }
+            if (level == 2)
+            {
+                skills.Add(SkillDatabase.onePeace);
+            }
 
-        //    if (level == 3)
-        //    {
-        //        skills.Add();
-        //    }
-
+            if (level == 3)
+            {
+                skills.Add(SkillDatabase.oneViolence);
+            }
+        }
     }
 }

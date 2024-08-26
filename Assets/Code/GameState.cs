@@ -25,6 +25,7 @@ public class GameState : MonoBehaviour
     public bool metMaddizz;
     public bool metTheWarlock;
     public bool metAsmongold;
+    public bool metHeado;
     public bool metTheAuditor;
 
     private void Start()
@@ -34,6 +35,7 @@ public class GameState : MonoBehaviour
         checkpointList.Add(new Vector3Int(83, -7, 0));
         checkpointList.Add(new Vector3Int(185, -7, 0));
         checkpointList.Add(new Vector3Int(308, -7, 0));
+        checkpointList.Add(new Vector3Int(408, 2, 0));
 
         checkpoint = checkpointList[0];
     }

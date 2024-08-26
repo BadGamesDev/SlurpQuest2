@@ -138,23 +138,25 @@ public class CombatFunctions : MonoBehaviour
                 }
             }
             combatUI.combatText.text = skillUser.characterName + " used swipe to hit all enemies.";
+            skillUser.skill2Cooldown = 2;
         }
 
-        else if (skill.skillName == "Just Be Cute")
+        else if (skill.skillName == "Just Be Cute") //DONE
         {
             skillUser.defence += 5 * (skillUser.level + 1);
             skillUser.GetComponent<CharacterFunctions>().GetInflicted("cute", 3);
             combatUI.combatText.text = skillUser.characterName + " is acting like the cute cat that she is. Enemies do not want to hurt her.";
+            skillUser.skill2Cooldown = 6;
         }
 
-        else if (skill.skillName == "Snuggle")
+        else if (skill.skillName == "Snuggle") //DONE
         {
             target.GetComponent<CharacterFunctions>().GetHealed(20 + (10 * (skillUser.level + 1)));
             combatUI.combatText.text = skillUser.characterName + " snuggled " + target.characterName + " helping them heal";
-            skillUser.skill3Cooldown = 6;
+            skillUser.skill3Cooldown = 5;
         }
 
-        else if (skill.skillName == "Ultra Instinct")
+        else if (skill.skillName == "Ultra Instinct") //DONE
         {
             skillUser.damage += 15 + 8 * skillUser.level; //might be the worst case of hardcoding in this whole game
             skillUser.speed += 5 + skillUser.level * 2;
@@ -166,13 +168,48 @@ public class CombatFunctions : MonoBehaviour
         else if (skill.skillName == "EMP Grenade")
         {
             target.GetComponent<CharacterFunctions>().GetInflicted("stun", 2);
+            combatUI.combatText.text = skillUser.characterName + " threw an EMP grenade at " + target.characterName;
+            skillUser.skill1Cooldown = 5;
         }
-        
+
+        else if (skill.skillName == "Silence")
+        {
+            target.GetComponent<CharacterFunctions>().GetInflicted("silence", 3);
+            if (!target.isBoss)
+            {
+                combatUI.combatText.text = skillUser.characterName + " silenced " + target.characterName + " they can not use any skills now!";
+            }
+
+            else
+            {
+                combatUI.combatText.text = "I am sorry Slurp. I know it makes sense to use this skill on bosses but I can not allow it as boss fights can get fucking broken if you use silence on them. That is why it did nothing. You just wasted a turn.";
+            }
+            
+            skillUser.skill1Cooldown = 4;
+        }
+
+        else if (skill.skillName == "Ban Hammer")
+        {
+            if (target.health <= target.maxHealth * 0.3)
+            {
+                target.GetComponent<CharacterFunctions>().Die();
+                combatUI.combatText.text = skillUser.characterName + " has PERMABANNED " + target.characterName;
+            }
+            else
+            {
+                combatUI.combatText.text = target.health + " is more than 30% of " + target.maxHealth + " please close the game and take some fucking math lessons.";
+            }
+
+            skillUser.skill1Cooldown = 0;
+        }
+
         else if (skill.skillName == "Find Bigfoot")
         {
             int roll = UnityEngine.Random.Range(2, 5);
             skillUser.bigFootTurns = roll;
             combatManager.AddToBench(skillUser.gameObject);
+            combatUI.combatText.text = skillUser.characterName + " went searching for something. Who knows when he will be back?";
+            skillUser.skill4Cooldown = 999;
         }
 
         else if (skill.skillName == "Start Your Engines")
@@ -289,6 +326,36 @@ public class CombatFunctions : MonoBehaviour
             combatUI.combatText.text = skillUser.characterName + " used ONE VIOLENCE to deal " + damageText + " damage!";
         }
 
+        else if (skill.skillName == "Rapper")
+        {
+            foreach (CharacterData combatant in combatManager.combatants)
+            {
+                combatant.defence = 0;
+            }
+
+            combatUI.combatText.text = skillUser.characterName + " started rapping! It is so fucking bad that it reduced everyones defence to 0. Because they all want this shit to be over asap.";
+        }
+
+        else if (skill.skillName == "clownmaxxing")
+        {
+            foreach (CharacterData combatant in combatManager.combatants)
+            {
+                combatant.GetComponent<CharacterFunctions>().TakeDamage(30 + skillUser.level * 5, true);
+
+                combatUI.combatText.text = skillUser.characterName + " is trying too hard to be funny. Everyone took damage because of the sheer amount of cringe they were exposed to.";
+            }
+        }
+
+        else if (skill.skillName == "God Complex")
+        {
+            combatUI.combatText.text = skillUser.characterName + " started talking about how fucking great he is. This did absolutely nothing.";
+        }
+
+        else if (skill.skillName == "Extreme Laziness")
+        {
+            combatUI.combatText.text = skillUser.characterName + " was too lazy to implement a cool ultimate ability so he just normal attacked " + target.characterName + " instead.";
+        }
+
         else if (skill.skillName == "Suck Life")
         {
             target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage, true);
@@ -308,7 +375,7 @@ public class CombatFunctions : MonoBehaviour
     {
         if (item == "catFood")
         {
-            if(target.characterName == "FeralCat")
+            if(target.characterName == "Feral Cat")
             {
                 target.characterName = "Honey";
                 target.GetComponent<CharacterFunctions>().ChangeMaxHealth(100);

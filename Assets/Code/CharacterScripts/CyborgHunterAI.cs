@@ -7,6 +7,7 @@ public class CyborgHunterAI : MonoBehaviour
     public GameObject alien;
     public PrefabLoader prefabLoader;
     public CombatManager combatManager;
+    public CombatUI combatUI;
     public CombatFunctions combatFunctions;
     public CharacterData ownData;
     public List<string> moves;
@@ -16,11 +17,10 @@ public class CyborgHunterAI : MonoBehaviour
     {
         combatManager = FindObjectOfType<CombatManager>();
         combatFunctions = FindObjectOfType<CombatFunctions>();
+        combatUI = FindObjectOfType<CombatUI>();
         prefabLoader = FindObjectOfType<PrefabLoader>();
 
-        moves.Add("attack");
         moves.Add("emp grenade");
-        moves.Add("attack");
         moves.Add("summon aliens");
         moves.Add("find bigfoot");
         moves.Add("attack");
@@ -73,6 +73,9 @@ public class CyborgHunterAI : MonoBehaviour
                     combatant6Data.team = 1;
                     combatManager.teamTwo.Add(combatant6Data);
                     combatant6Data.turnCoolDown += Random.Range(100, 1001);
+
+                    combatManager.combatPauseCooldown = 3;
+                    combatUI.combatText.text = "Cyborg Hunter has summoned aliens to help him! What the fuck?";
                 }
                 else if (moves[turnNumber] == "find bigfoot")
                 {

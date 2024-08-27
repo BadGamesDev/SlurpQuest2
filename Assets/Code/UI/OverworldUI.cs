@@ -202,7 +202,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         dodgeText.text = "Dodge: " + statsCompanion.dodge.ToString();
         damageText.text = "Damage: " + statsCompanion.damage.ToString();
         accuracyText.text = "Accuracy: " + statsCompanion.accuracy.ToString();
-        speedText.text = "Health: " + statsCompanion.speed.ToString();
+        speedText.text = "Speed: " + statsCompanion.speed.ToString();
 
         newLevelText.text = null;
         newHealthText.text = null;
@@ -217,6 +217,12 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
             levelUpButton.gameObject.SetActive(true);
         }
 
+        skill0Panel.SetActive(false);
+        skill1Panel.SetActive(false);
+        skill2Panel.SetActive(false);
+        skill3Panel.SetActive(false);
+        skill4Panel.SetActive(false);
+        
         if (statsCompanion.skills.Count > 1)
         {
             skill0Panel.SetActive(true);

@@ -83,6 +83,13 @@ public class ObjectFunctions : MonoBehaviour
                 overworldUI.AddMessage("OH GOD OH FUCK HANK IS ABOUT TO LEAVE! WHAT WILL YOU DO?");
                 overworldUI.hankChoice = true;
             }
+
+            else if (ownData.item == 8)
+            {
+                playerStats.GainXP(100);
+                overworldUI.AddMessage("You have opened the chest and found 100 nolifepoints. Nice!");
+                ownData.item = 0;
+            }
         }
     }
 }

@@ -351,10 +351,28 @@ public class CombatManager : MonoBehaviour
                     turnHaver = combatant;
                     combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
                     
-                    if(combatant.characterName == "Slurp" && slurpPassive < 7) //taking all this space in the main update function because of a shitty passive ability...
-                    {
-                        combatant.defence += 1;
-                        slurpPassive += 1;
+                    if(combatant.characterName == "Slurp") //taking all this space in the main update function because of a shitty passive ability...
+                    { 
+                        if (slurpPassive < 7)
+                        {
+                            combatant.defence += 1;
+                            slurpPassive += 1;
+                        }
+
+                        foreach (CharacterData retard in combatants)
+                        {
+                            StatusEffect raid = new();
+                            foreach (StatusEffect effekt in retard.globalStatusEffects)
+                            {
+                                if (effekt.statusName == "raid target")
+                                {
+                                    raid = effekt;
+                                    Debug.Log("raid detected");
+                                }
+                            }
+                            retard.globalStatusEffects.Remove(raid);
+                            Debug.Log("removed raid");
+                        }
                     }
 
                     List<StatusEffect> selfStatusToRemove = new();
@@ -504,7 +522,7 @@ public class CombatManager : MonoBehaviour
                 {
                     data.bigFootTurns -= 1;
                     combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
-                    //foreach (StatusEffect status in data.selfStatusEffects) NOT TICKING ANY STATUS EFFECTS WHILE THE CHARACTER IS BENCHED BECAUSE OF THE IMMENSE POTENTIAL FOR BUGS. FUCK YOUR REALISM
+                    //foreach (StatusEffect status in data.selfStatusEffects) NOT TICKING ANY STATUS EFFECTS WHILE THE CHARACTER IS BENCHED BECAUSE OF THE IMMENSE POTENTIAL FOR BUGS. FUCK YOUR REALISM!
                     //{
                     //    combatant.GetComponent<CharacterFunctions>().StatusTick(status.statusName);
                     //    status.tickCount -= 1;
@@ -529,6 +547,10 @@ public class CombatManager : MonoBehaviour
                             teamTwo.Add(bigFootData);
                         }
                         bigFootData.team = data.team;
+
+                        CombatUI combatUI = FindObjectOfType<CombatUI>();
+                        combatPauseCooldown = 2;
+                        combatUI.combatText.text = "HOLY SHIT IT IS BIGFOOT!";
                     }
                 }
 

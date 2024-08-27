@@ -18,7 +18,7 @@ public class PlayerStats : MonoBehaviour //I feel like "PlayerData" would have b
 
     private void Start()
     {
-        xpTreshold = 300;
+        xpTreshold = 500;
 
         CompanionData slurp = new() //Yes... Slurp is Slurp's companion...
         {

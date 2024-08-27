@@ -15,17 +15,15 @@ public class CompanionSlotClickHandler : MonoBehaviour, IPointerClickHandler
         if (slotIndex == 1)
         { 
             slot = playerParty.pos2;
-            Debug.Log(slot);
         }
 
         if (slotIndex == 2)
         {
             slot = playerParty.pos3;
-            Debug.Log(slot);
         }
 
         if (!string.IsNullOrEmpty(overWorldUI.pickedCompanion.characterName) && slot == null) //checking name rather tha companion itself to prevent some werid bugs, treating the symptom rather than the disease
-        {
+        { //THERE IS SOME FUCKING BUG HERE AND I DON'T KNOW WHY IT IS HAPPENING
             GameObject prefab = new GameObject();
 
             if (overWorldUI.pickedCompanion.characterName == "Honey")

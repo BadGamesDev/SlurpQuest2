@@ -86,17 +86,17 @@ public class CompanionData
             accuracy += 5;
             speed += 0;
 
-            if (level == 1)
+            if (level == 0)
             {
                 skills.Add(SkillDatabase.silence);
             }
 
-            if (level == 2)
+            if (level == 1)
             {
                 skills.Add(SkillDatabase.banHammer);
             }
 
-            if (level == 3)
+            if (level == 2)
             {
                 skills.Add(SkillDatabase.findBigfoot);
             }
@@ -114,17 +114,17 @@ public class CompanionData
             accuracy += 0;
             speed += 0;
 
-            if (level == 1)
+            if (level == 0)
             {
                 skills.Add(SkillDatabase.burnout);
             }
 
-            if (level == 2)
+            if (level == 1)
             {
                 skills.Add(SkillDatabase.pitStop);
             }
 
-            if (level == 3)
+            if (level == 2)
             {
                 skills.Add(SkillDatabase.dizzOrNoDizz);
             }
@@ -140,17 +140,17 @@ public class CompanionData
             accuracy += 5;
             speed += 1;
 
-            if (level == 1)
+            if (level == 0)
             {
                 skills.Add(SkillDatabase.clownmaxxing);
             }
 
-            if (level == 2)
+            if (level == 1)
             {
                 skills.Add(SkillDatabase.godComplex);
             }
 
-            if (level == 3)
+            if (level == 2)
             {
                 skills.Add(SkillDatabase.extremeLaziness);
             }
@@ -166,17 +166,17 @@ public class CompanionData
             accuracy += 0;
             speed += 0;
 
-            if (level == 1)
+            if (level == 0)
             {
                 skills.Add(SkillDatabase.corpsePaint);
             }
 
-            if (level == 2)
+            if (level == 1)
             {
                 skills.Add(SkillDatabase.onePeace);
             }
 
-            if (level == 3)
+            if (level == 2)
             {
                 skills.Add(SkillDatabase.oneViolence);
             }

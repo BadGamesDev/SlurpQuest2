@@ -206,9 +206,19 @@ public class CombatFunctions : MonoBehaviour
         else if (skill.skillName == "Find Bigfoot")
         {
             int roll = UnityEngine.Random.Range(2, 5);
-            skillUser.bigFootTurns = roll;
+            if (skillUser.characterName == "Cyborg Hunter")
+            {
+                skillUser.bigFootTurns = 2;
+            }
+
+            else
+            {
+                skillUser.bigFootTurns = roll;
+            }
+
             combatManager.AddToBench(skillUser.gameObject);
             combatUI.combatText.text = skillUser.characterName + " went searching for something. Who knows when he will be back?";
+            combatManager.combatPauseCooldown += 1.5f;
             skillUser.skill4Cooldown = 999;
         }
 
@@ -338,12 +348,29 @@ public class CombatFunctions : MonoBehaviour
 
         else if (skill.skillName == "clownmaxxing")
         {
+            List<CharacterData> charactersToKill = new();
             foreach (CharacterData combatant in combatManager.combatants)
             {
-                combatant.GetComponent<CharacterFunctions>().TakeDamage(30 + skillUser.level * 5, true);
+                if (combatant.health <= skillUser.damage - target.defence)
+                {
+                    charactersToKill.Add(combatant);
+                }
 
-                combatUI.combatText.text = skillUser.characterName + " is trying too hard to be funny. Everyone took damage because of the sheer amount of cringe they were exposed to.";
+                else
+                { 
+                    combatant.GetComponent<CharacterFunctions>().TakeDamage(30 + skillUser.level * 5, true); 
+                }
             }
+
+            if (charactersToKill.Count > 0)
+            {
+                foreach (CharacterData yeetCandidate in charactersToKill)
+                {
+                    yeetCandidate.GetComponent<CharacterFunctions>().Die();
+                }
+            }
+
+            combatUI.combatText.text = skillUser.characterName + " is trying too hard to be funny. Everyone took damage because of the sheer amount of cringe they were exposed to.";
         }
 
         else if (skill.skillName == "God Complex")
@@ -354,6 +381,7 @@ public class CombatFunctions : MonoBehaviour
         else if (skill.skillName == "Extreme Laziness")
         {
             combatUI.combatText.text = skillUser.characterName + " was too lazy to implement a cool ultimate ability so he just normal attacked " + target.characterName + " instead.";
+            Attack(skillUser, target);
         }
 
         else if (skill.skillName == "Suck Life")
@@ -433,8 +461,8 @@ public class CombatFunctions : MonoBehaviour
         combatManager.combatPauseCooldown = 1.8f;
     }
 
-    public void EndTurn(CharacterData turnSpender) //truly amazing name
+    public void EndTurn(CharacterData turnSpender) //turnSpender truly is an amazing name
     {
-        //what am I supposed to use this method for lmao
+        //what am I supposed to use this method for lmao, I guess I'll keep it? Not like it does any harm.
     }
 }

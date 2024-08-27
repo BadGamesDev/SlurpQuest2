@@ -50,7 +50,7 @@ public class CharacterUI : MonoBehaviour
         {
             Image statusIcon = Instantiate(prefabLoader.statusIcon);
             statusIcon.transform.SetParent(transform);
-            statusIcon.transform.localPosition = new Vector3(-80 + (statusIcons.Count * 30), -110, 0);
+            statusIcon.transform.localPosition = new Vector3(-80 + (statusIcons.Count * 30), -175, 0);
             statusIcons.Add(statusIcon);
 
             if (globalStatus.statusName == "stun") //There is no need to check this separately for each foreach (hehe) loop, fix it if you have time

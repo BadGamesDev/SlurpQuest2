@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class ImageLoader : MonoBehaviour
 {
-    public Sprite sevenYearsIcon;
+    public Sprite sevenYearsIcon; //slurp
     public Sprite dancingMasterIcon;
     public Sprite tedTalkIcon;
     public Sprite raidIcon;
     public Sprite finalFormIcon;
 
-    public Sprite longClawsIcon;
+    public Sprite longClawsIcon; //honey
     public Sprite swipeIcon;
     public Sprite justBeCuteIcon;
     public Sprite snuggleIcon;
     public Sprite ultraInstinctIcon;
+
+    public Sprite boomerIcon; //digi
+    public Sprite empIcon;
+    public Sprite silenceIcon;
+    public Sprite banhammerIcon;
+    public Sprite bigfootIcon;
+
+    public Sprite positionIcon; //jaydizz
+    public Sprite startenginesIcon;
+    public Sprite burnoutSkillIcon;
+    public Sprite pitstopIcon;
+    public Sprite dizzIcon;
 
     public Sprite bleedIcon;
     public Sprite stunIcon;

@@ -717,6 +717,7 @@ public class CombatManager : MonoBehaviour
                                                               "It is clear that honey doesn't want to fight you anymore. Congratulations you have won!";
         overworldUI.HoneyUnlockedMessage();
         playerStats.unlockedCompanions.Add(honey);
+        playerStats.GainXP(500);
         honey.skills.Add(SkillDatabase.longClaws);
         honey.skills.Add(SkillDatabase.swipe);
 

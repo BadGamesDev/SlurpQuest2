@@ -128,6 +128,8 @@ public class CompanionData
             {
                 skills.Add(SkillDatabase.dizzOrNoDizz);
             }
+
+            level += 1;
         }
 
         else if (characterName == "Cndk99")
@@ -154,6 +156,8 @@ public class CompanionData
             {
                 skills.Add(SkillDatabase.extremeLaziness);
             }
+
+            level += 1;
         }
 
         else if (characterName == "OneViolence")
@@ -180,6 +184,8 @@ public class CompanionData
             {
                 skills.Add(SkillDatabase.oneViolence);
             }
+
+            level += 1;
         }
     }
 }

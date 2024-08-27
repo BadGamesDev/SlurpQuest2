@@ -43,6 +43,10 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Button companionsButton4;
     public Button companionsButton5;
 
+    public Image member1;
+    public Image member2;
+    public Image member3;
+
     public Button dismissCompanion0;
     public Button dismissCompanion1;
 
@@ -135,6 +139,22 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public void PartyButtonPressed()
     {
         partyScreen.SetActive(true);
+        
+        if(playerParty.pos1 != null)
+        {
+            member1.sprite = playerParty.pos1.GetComponent<CharacterData>().avatar;
+        }
+
+        if (playerParty.pos2 != null)
+        {
+            member2.sprite = playerParty.pos2.GetComponent<CharacterData>().avatar;
+        }
+
+        if (playerParty.pos3 != null)
+        {
+            member3.sprite = playerParty.pos3.GetComponent<CharacterData>().avatar;
+        }
+
         CheckSelectableCompanions();
     }
 
@@ -405,6 +425,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         CheckSelectableCompanions();
         statButton0.gameObject.SetActive(false);
         dismissCompanion0.gameObject.SetActive(false);
+
+        member2.sprite = null;
     }
 
     public void DissmissButton1Pressed()
@@ -416,6 +438,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         CheckSelectableCompanions();
         statButton1.gameObject.SetActive(false);
         dismissCompanion1.gameObject.SetActive(false);
+
+        member3.sprite = null;
     }
 
     public void HankChoice1Pressed()

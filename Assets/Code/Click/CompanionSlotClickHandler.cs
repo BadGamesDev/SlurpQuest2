@@ -58,6 +58,8 @@ public class CompanionSlotClickHandler : MonoBehaviour, IPointerClickHandler
                 CopyCharacterData(oldData, overWorldUI.pickedCompanion);
                 overWorldUI.dismissCompanion0.gameObject.SetActive(true);
                 overWorldUI.statButton0.gameObject.SetActive(true);
+
+                overWorldUI.member2.sprite = oldData.avatar;
             }
             else if (slotIndex == 2)
             {
@@ -66,6 +68,8 @@ public class CompanionSlotClickHandler : MonoBehaviour, IPointerClickHandler
                 CopyCharacterData(oldData, overWorldUI.pickedCompanion);
                 overWorldUI.dismissCompanion1.gameObject.SetActive(true);
                 overWorldUI.statButton1.gameObject.SetActive(true);
+
+                overWorldUI.member3.sprite = oldData.avatar;
             }
             playerStats.activeCompanions.Add(overWorldUI.pickedCompanion);
             overWorldUI.pickedCompanion = null;

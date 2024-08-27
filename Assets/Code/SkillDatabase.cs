@@ -28,11 +28,11 @@ public class SkillDatabase : MonoBehaviour //got forced me to put this shit in t
     public static Skill pitStop = new() { skillName = "Pit Stop", hostile = false };
     public static Skill dizzOrNoDizz = new() { skillName = "Dizz Or No Dizz", hostile = true };
     
-    public static Skill washedUpBoyfriend = new() { skillName = "Washed Up Boyfriend", hostile = false };
-    public static Skill rap = new() { skillName = "Rapper", hostile = true };
-    public static Skill clownmaxxing = new() { skillName = "Clownmaxxing", hostile = true };
-    public static Skill godComplex = new() { skillName = "God Complex", hostile = false };
-    public static Skill extremeLaziness = new() { skillName = "Extreme Laziness", hostile = true };
+    public static Skill washedUpBoyfriend = new() { skillName = "Washed Up Boyfriend", skillDesc = "Cndk is the winner of the 2023 Slurpwis boyfriend contest. Unfortunately this has absolutely no effect.", hostile = false };
+    public static Skill rap = new() { skillName = "Rapper", skillDesc = "Cndk99 aka Yano is a famous rapper, he can start rapping in combat to reduce the defence of everyone to 0 including your own team. Because everyone wants this shit to be over as soon as possible.", hostile = true };
+    public static Skill clownmaxxing = new() { skillName = "Clownmaxxing", skillDesc = "Cndk tries too hard to be funny, as a result he deals cringe damage to everyone in combat including your own team.", hostile = true };
+    public static Skill godComplex = new() { skillName = "God Complex", skillDesc = "Cndk has an extremely inflated ego, he can start talking about how good looking smart and funny he is which will have no effect on combat. This is a completely useless skill.", hostile = false };
+    public static Skill extremeLaziness = new() { skillName = "Extreme Laziness", skillDesc = "Cndk started losing his mind while trying to complete this fucking piece of shit game, so this skill just makes him do a normal attack because he couldn't be bothered adding another cool ultimate ability that would fuck up his codebase even more. HOLY SHIT I REALLY NEED THIS WHOLE THING TO BE OVER SOON!", hostile = true };
 
     public static Skill ghouldMaxxing = new() { skillName = "GhoulMaxxing", hostile = false };
     public static Skill herbalMedicine = new() { skillName = "Herbal Medicine", hostile = false };

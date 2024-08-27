@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class ImageLoader : MonoBehaviour
 {
+    public Sprite slurpAvatar;
+    public Sprite honeyAvatar;
+    public Sprite digiAvatar;
+    public Sprite jaydizzAvatar;
+    public Sprite cndkAvatar;
+    public Sprite oneviolenceAvatar;
+
     public Sprite sevenYearsIcon; //slurp
     public Sprite dancingMasterIcon;
     public Sprite tedTalkIcon;

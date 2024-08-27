@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterData : MonoBehaviour
 {
+    public Sprite avatar;
     public PlayerStats playerStats;
     public string characterName;
     public int level;

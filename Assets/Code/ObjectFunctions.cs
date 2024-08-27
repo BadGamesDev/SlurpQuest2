@@ -69,9 +69,25 @@ public class ObjectFunctions : MonoBehaviour
 
             else if (ownData.item == 6)
             {
+                CompanionData cndk99 = new CompanionData
+                {
+                    characterName = "Cndk99",
+                    maxHealth = 80,
+                    health = 80,
+                    defence = 0,
+                    accuracy = 100,
+                    damage = 15,
+                    speed = 12,
+                    turnCoolDown = 3000,
+                };
+
+                cndk99.skills.Add(SkillDatabase.washedUpBoyfriend);
+                cndk99.skills.Add(SkillDatabase.rap);
+
                 overworldUI.AddMessage("Cndk99: Oh, hey Slurp! Nice to see you here. I was just chilling in the snow. I really like this place. The dark lord was going to corrupt me too but he said that I was too annoying so he just left me here.");
                 overworldUI.AddMessage("Cndk99: I guess I should join you if you are going to fight him. You have no chance without my skills!");
                 overworldUI.AddMessage("Damn! This guy looks really strong. I bet he is extremely smart too! The rest of the game will be so easy with him on your side!");
+                playerStats.unlockedCompanions.Add(cndk99);
                 delete = true;
             }
 

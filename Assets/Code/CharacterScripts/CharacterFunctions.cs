@@ -8,6 +8,7 @@ public class CharacterFunctions : MonoBehaviour
     public CharacterData ownData;
     public CharacterUI ownUI;
     public CombatManager combatManager;
+    public CombatUI combatUI;
 
     private void Start()
     {
@@ -16,6 +17,7 @@ public class CharacterFunctions : MonoBehaviour
         ownUI.cooldownBar.maxValue = ownData.turnCoolDown;
         ownUI.healthText.text = ownData.health.ToString();
         combatManager = FindObjectOfType<CombatManager>();
+        combatUI = FindObjectOfType<CombatUI>(); 
     }
 
     public void ChangeMaxHealth(int amount)
@@ -423,24 +425,30 @@ public class CharacterFunctions : MonoBehaviour
             {
                 combatManager.teamOne.Remove(ownData);
             }
-            else if (ownData.team == 1)
+            
+            if (ownData.team == 1)
             {
                 combatManager.teamTwo.Remove(ownData);
             }
 
-            if (combatManager.teamOne.Count == 0)
-            {
-                combatManager.LoseCombat();
-            }
-
-            if (combatManager.teamTwo.Count == 0)
-            {
-                combatManager.WinCombat();
-            }
-
             if (ownData.characterName == "Big Foot")
             {
+                combatManager.combatPauseCooldown = 0.5f;
+                combatUI.combatText.text = "Bigfoot got defeated. But " + combatManager.bench[0].GetComponent<CharacterData>().characterName + " is here to continue the fight!";
                 combatManager.PullFromBench(combatManager.bench[0]); //STEP 1: over engineer a system. STEP 2: make a retarded function like this to completely make the over engineering obsolete.
+            }
+
+            if (ownData.characterName != "Big Foot")
+            {
+                if (combatManager.teamOne.Count == 0)
+                {
+                    combatManager.LoseCombat();
+                }
+
+                if (combatManager.teamTwo.Count == 0)
+                {
+                    combatManager.WinCombat();
+                }
             }
 
             Destroy(gameObject);

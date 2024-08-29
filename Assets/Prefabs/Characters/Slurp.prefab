@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatar: {fileID: 21300000, guid: fe3879ea59aee5246a6660e169e151ec, type: 3}
+  portrait: {fileID: 21300000, guid: 49c7a855a1bed8c45a4c03bf679430c5, type: 3}
   playerStats: {fileID: 0}
   characterName: Slurp
   level: 0
@@ -137,6 +138,7 @@ MonoBehaviour:
   ownData: {fileID: 1357805490268290798}
   ownUI: {fileID: 2105138982174830678}
   combatManager: {fileID: 0}
+  combatUI: {fileID: 0}
 --- !u!114 &2105138982174830678
 MonoBehaviour:
   m_ObjectHideFlags: 0

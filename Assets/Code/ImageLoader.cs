@@ -11,6 +11,13 @@ public class ImageLoader : MonoBehaviour
     public Sprite cndkAvatar;
     public Sprite oneviolenceAvatar;
 
+    public Sprite slurpHead;
+    public Sprite honeyHead;
+    public Sprite digiHead;
+    public Sprite jaydizzHead;
+    public Sprite cndkHead;
+    public Sprite oneviolenceHead;
+
     public Sprite sevenYearsIcon; //slurp
     public Sprite dancingMasterIcon;
     public Sprite tedTalkIcon;
@@ -44,4 +51,8 @@ public class ImageLoader : MonoBehaviour
     public Sprite thotwisIcon;
     public Sprite clownwisIcon;
     public Sprite tradwisIcon;
+
+    public Sprite AsmonScene;
+    public Sprite BDamnedSniperScene;
+    public Sprite BDamnedSniperScene2;
 }

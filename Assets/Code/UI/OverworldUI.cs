@@ -8,6 +8,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 {
     public GameState gameState;
     public PlayerStats playerStats;
+    public ImageLoader imageLoader;
     public PartyData playerParty;
     public GameObject dialoguePanel;
     public GameObject partyScreen;
@@ -42,6 +43,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Button companionsButton3;
     public Button companionsButton4;
     public Button companionsButton5;
+
+    public Image portrait;
 
     public Image member1;
     public Image member2;
@@ -214,6 +217,31 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public void OpenStatScreen() //I can just make this method take a variable instead of having a variable on the script. But I'm too tired to change it right now.
     {
         statsScreen.SetActive(true);
+
+        if (statsCompanion.characterName == "Slurp")
+        {
+            portrait.sprite = imageLoader.slurpHead;
+        }
+        else if (statsCompanion.characterName == "Honey")
+        {
+            portrait.sprite = imageLoader.honeyHead;
+        }
+        else if(statsCompanion.characterName == "Digi63")
+        {
+            portrait.sprite = imageLoader.digiHead;
+        }
+        else if(statsCompanion.characterName == "Jaydizz")
+        {
+            portrait.sprite = imageLoader.jaydizzHead;
+        }
+        else if(statsCompanion.characterName == "Cndk99")
+        {
+            portrait.sprite = imageLoader.cndkHead;
+        }
+        else if(statsCompanion.characterName == "OneViolence")
+        {
+            portrait.sprite = imageLoader.oneviolenceHead;
+        }
 
         nameText.text = "Name: " + statsCompanion.characterName;
         levelText.text = "Level: " + (statsCompanion.level + 1).ToString();
@@ -473,26 +501,31 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         if(FindUnlockedCompanionByName("Honey") != null && FindActiveCompanionByName("Honey") == null)
         {
             companionsButton0.interactable = true;
+            companionsButton0.image.sprite = imageLoader.honeyHead;
         }
 
         if (FindUnlockedCompanionByName("Digi63") != null && FindActiveCompanionByName("Digi63") == null)
         {
             companionsButton1.interactable = true;
+            companionsButton1.image.sprite = imageLoader.digiHead;
         }
 
         if (FindUnlockedCompanionByName("Jaydizz") != null && FindActiveCompanionByName("Jaydizz") == null)
         {
             companionsButton2.interactable = true;
+            companionsButton2.image.sprite = imageLoader.jaydizzHead;
         }
 
         if (FindUnlockedCompanionByName("Cndk99") != null && FindActiveCompanionByName("Cndk99") == null)
         {
             companionsButton3.interactable = true;
+            companionsButton3.image.sprite = imageLoader.cndkHead;
         }
 
         if (FindUnlockedCompanionByName("OneViolence") != null && FindActiveCompanionByName("OneViolence") == null)
         {
             companionsButton4.interactable = true;
+            companionsButton4.image.sprite = imageLoader.oneviolenceHead;
         }
     }
 
@@ -597,6 +630,6 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void OneViolenceUnlockedMessage()
     {
-        AddMessage("A powerful shaman from Daneland, OneViolence and his magical powers will surely be of great help against the lord of pestilence!");
+        AddMessage("A powerful shaman from Daneland, OneViolence and his magical powers will surely be of great help against the lord of decay!");
     }
 }

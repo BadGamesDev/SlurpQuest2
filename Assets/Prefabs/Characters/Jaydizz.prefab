@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatar: {fileID: 21300000, guid: 3d880f62ec8ee0d4fb860286f2138742, type: 3}
+  portrait: {fileID: 21300000, guid: 01790c7fba4ae9a458bab243354a5d17, type: 3}
   playerStats: {fileID: 0}
   characterName: Jaydizz
   level: 0
@@ -137,6 +138,7 @@ MonoBehaviour:
   ownData: {fileID: 1357805490268290798}
   ownUI: {fileID: 2105138982174830678}
   combatManager: {fileID: 0}
+  combatUI: {fileID: 0}
 --- !u!114 &2105138982174830678
 MonoBehaviour:
   m_ObjectHideFlags: 0

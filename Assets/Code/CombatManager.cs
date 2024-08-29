@@ -13,6 +13,7 @@ public class CombatManager : MonoBehaviour
 
     public bool peace;
 
+    public CinematicManager cinematicManager;
     public OverworldUI overworldUI; //I hope referencing this shit here doesn't cause the world to end
     public GameObject combatUI;
     public GameObject bigfoot; //disgusting reference
@@ -813,7 +814,8 @@ public class CombatManager : MonoBehaviour
 
     public void AsmongoldWinEvent()
     {
-        FindAnyObjectByType<CombatUI>().combatFinishMessage = "You did it! Asmongold is no more! You have avenged everyone!";
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "You did it. Asmongold is no more!";
+        cinematicManager.asmonCutscene = true;
     }
 
     public void AsmongoldLoseEvent()

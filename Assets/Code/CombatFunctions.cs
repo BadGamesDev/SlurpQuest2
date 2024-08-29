@@ -17,8 +17,8 @@ public class CombatFunctions : MonoBehaviour
 
         if (attackRoll <= chance)
         {
-            target.GetComponent<CharacterFunctions>().TakeDamage(attacker.damage, false);
             combatUI.combatText.text = (attacker.characterName + " attacked " + target.characterName + ".");
+            target.GetComponent<CharacterFunctions>().TakeDamage(attacker.damage, false);
             
             if(attacker.characterName == "Honey")
             {
@@ -29,7 +29,7 @@ public class CombatFunctions : MonoBehaviour
         {
             combatUI.combatText.text = (attacker.characterName + " attacked " + target.characterName + " but missed.");
         }
-        combatManager.combatPauseCooldown = 1.8f;
+        combatManager.combatPauseCooldown += 1.8f;
     }
 
     public void UseSkill(List<CharacterData> userTeam, CharacterData skillUser, List<CharacterData> enemyTeam, CharacterData target, Skill skill) //I will use if checks for each skill, this is quite bad and it also requires me to write hundreds of ugly lines but it is also quite simple. I want to make a finished game not a pretty codebase.

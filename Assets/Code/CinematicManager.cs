@@ -18,6 +18,7 @@ public class CinematicManager : MonoBehaviour
 
     public bool introCutscene;
     public bool asmonCutscene;
+    public bool auditorCutscene;
 
     private void Start()
     {
@@ -28,13 +29,13 @@ public class CinematicManager : MonoBehaviour
     {
         //StartingScene();
         AsmonScene();
+        AuditorScene();
     }
 
     public void StartingScene()
     {
         if (introCutscene)
         {
-
             gameState.globalPaused = true;
             cinematicScreen.SetActive(true);
 
@@ -183,6 +184,48 @@ public class CinematicManager : MonoBehaviour
             if (wallOfTextNumber == 11 && cooldown <= 0)
             {
                 asmonCutscene = false;
+                gameState.globalPaused = false;
+                cinematicScreen.SetActive(false);
+                wallOfTextNumber = 0;
+            }
+        }
+    }
+
+    public void AuditorScene()
+    {
+        if (auditorCutscene)
+        {
+            gameState.globalPaused = true;
+            cinematicScreen.SetActive(true);
+
+            cooldown -= Time.deltaTime;
+
+            if (wallOfTextNumber == 0 && cooldown <= 0)
+            {
+                cinematicImage.sprite = imageLoader.AuditorScene1;
+                cinematicText.text = null;
+                cooldown = 3;
+                wallOfTextNumber += 1;
+            }
+
+            if (wallOfTextNumber == 1 && cooldown <= 0)
+            {
+                cinematicImage.sprite = imageLoader.AuditorScene2;
+                cooldown = 2;
+                wallOfTextNumber += 1;
+            }
+
+            if (wallOfTextNumber == 2 && cooldown <= 0)
+            {
+                cinematicImage.sprite = imageLoader.AuditorScene3;
+                cinematicText.text =  "Now it's up to you Hank...";
+                cooldown = 6;
+                wallOfTextNumber += 1;
+            }
+
+            if (wallOfTextNumber == 3 && cooldown <= 0)
+            {
+                auditorCutscene = false;
                 gameState.globalPaused = false;
                 cinematicScreen.SetActive(false);
                 wallOfTextNumber = 0;

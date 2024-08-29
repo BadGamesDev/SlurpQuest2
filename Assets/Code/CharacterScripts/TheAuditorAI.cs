@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TheAuditorAI : MonoBehaviour
 {
     public GameObject hank;
     public GameObject postalGuy;
 
+    public ImageLoader imageLoader;
+    public CinematicManager cinematicManager;
     public PrefabLoader prefabLoader;
     public CombatManager combatManager;
     public CombatFunctions combatFunctions;
@@ -24,10 +27,13 @@ public class TheAuditorAI : MonoBehaviour
         combatFunctions = FindObjectOfType<CombatFunctions>();
         combatUI = FindObjectOfType<CombatUI>();
         prefabLoader = FindObjectOfType<PrefabLoader>();
+        cinematicManager = FindObjectOfType<CinematicManager>();
+        imageLoader = FindObjectOfType<ImageLoader>();
 
         moves.Add("attack");
         moves.Add("hank comes to help");
         moves.Add("attack");
+        moves.Add("lose halo");
         moves.Add("attack");
         moves.Add("attack");
         moves.Add("attack");
@@ -55,14 +61,11 @@ public class TheAuditorAI : MonoBehaviour
 
                 else if (moves[turnNumber] == "hank comes to help")
                 {
-                    Debug.Log("stage1");
-
                     if (dialogueCooldown <= 0 && dialoguStage == 0)
                     {
                         combatManager.combatPauseCooldown = 5;
                         dialogueCooldown = 5;
                         combatUI.combatText.text = "The Auditor: Wait... Who the fuck changed my boss music?";
-                        Debug.Log("stage2");
                         dialoguStage += 1;
                     }
 
@@ -122,11 +125,38 @@ public class TheAuditorAI : MonoBehaviour
                         dialoguStage += 1;
                     }
 
-                    if(dialogueCooldown <= 0 && dialoguStage == 6)
+                    if (dialogueCooldown <= 0 && dialoguStage == 6)
                     {
                         CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
                         combatFunctions.Attack(ownData, target);
+                        dialoguStage = 0;
+                    }
+                }
+
+                else if (moves[turnNumber] == "lose halo")
+                {
+                    if (dialogueCooldown <= 0 && dialoguStage == 0)
+                    {
+                        combatManager.combatPauseCooldown = 5;
+                        dialogueCooldown = 5;
+                        combatUI.combatText.text = "The Auditor: You can not harm me! Give up already!";
+                        Debug.Log("stage2");
                         dialoguStage += 1;
+                    }
+
+                    if (dialogueCooldown <= 0 && dialoguStage == 1)
+                    {
+                        cinematicManager.auditorCutscene = true;
+                        combatManager.combatPauseCooldown = 10;
+                        dialogueCooldown = 10;
+                        transform.GetComponent<Image>().sprite = imageLoader.AuditorNoHalo;
+                        combatUI.combatText.text = "The Auditor lost his halo! Now you can murder the fuck out of him!";
+                        dialoguStage += 1;
+                    }
+
+                    if (dialogueCooldown <= 0 && dialoguStage == 2)
+                    {
+                        dialoguStage = 0;
                     }
                 }
             }

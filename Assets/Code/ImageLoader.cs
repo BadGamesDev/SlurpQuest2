@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ImageLoader : MonoBehaviour
 {
+    public Sprite AuditorNoHalo;
+
     public Sprite slurpAvatar;
     public Sprite honeyAvatar;
     public Sprite digiAvatar;
@@ -53,6 +55,7 @@ public class ImageLoader : MonoBehaviour
     public Sprite tradwisIcon;
 
     public Sprite AsmonScene;
-    public Sprite BDamnedSniperScene;
-    public Sprite BDamnedSniperScene2;
+    public Sprite AuditorScene1;
+    public Sprite AuditorScene2;
+    public Sprite AuditorScene3;
 }

@@ -372,7 +372,6 @@ public class CombatManager : MonoBehaviour
                                 }
                             }
                             retard.globalStatusEffects.Remove(raid);
-                            Debug.Log("removed raid");
                         }
                     }
 

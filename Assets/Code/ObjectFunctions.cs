@@ -59,6 +59,14 @@ public class ObjectFunctions : MonoBehaviour
                 overworldUI.AddMessage("Zepper gives his shirt to you. Not only does is negate the effects of the curse you were feeling, but it also gives you a great surge of power. This will surely help you in the fight ahead.");
                 overworldUI.AddMessage("Zepper: Go ahead Slurp, don't worry I'll be fine. Now go and save everyone!");
 
+                CompanionData slurp = overworldUI.FindUnlockedCompanionByName("Slurp");
+                
+                slurp.maxHealth += 1000;
+                slurp.health += 1000;
+                slurp.defence += 50;
+                slurp.speed += 5;
+                slurp.damage += 400;
+
                 ownData.item = 5;
             }
 
@@ -105,6 +113,11 @@ public class ObjectFunctions : MonoBehaviour
                 playerStats.GainXP(100);
                 overworldUI.AddMessage("You have opened the chest and found 100 nolifepoints. Nice!");
                 ownData.item = 0;
+            }
+
+            else if (ownData.item == 9)
+            {
+                overworldUI.AddMessage("The Trickster: I'd love to chat but you should go. The portal is open.");
             }
         }
     }

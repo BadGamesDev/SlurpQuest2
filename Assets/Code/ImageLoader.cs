@@ -58,4 +58,9 @@ public class ImageLoader : MonoBehaviour
     public Sprite AuditorScene1;
     public Sprite AuditorScene2;
     public Sprite AuditorScene3;
+
+    public Sprite Husk;
+    public Sprite Shill;
+    public Sprite Troll;
+    public Sprite Bot;
 }

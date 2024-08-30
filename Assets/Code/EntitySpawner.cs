@@ -126,13 +126,13 @@ public class EntitySpawner : MonoBehaviour
         
         else if (level == 3)
         {
-            int randomX = Random.Range(-9, 9);
-            int randomY = Random.Range(-2, 8);
+            int randomX = Random.Range(180, 220);
+            int randomY = Random.Range(-10, 18);
             Vector2 randomPosition = new Vector2(randomX + 0.5f, randomY + 0.5f);
 
             Vector3Int gridPosition = tilemap.WorldToCell(randomPosition);
             TileBase spawntile = tilemap.GetTile(gridPosition);
-
+            Debug.Log("trying to spawn troll");
             if (spawntile != null && spawntile.name == "snow" && !tileManager.IsTileOccupied(gridPosition))
             {
                 GameObject newParty = Instantiate(npcPartyPrefab, randomPosition, Quaternion.identity);

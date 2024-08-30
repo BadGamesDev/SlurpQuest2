@@ -100,16 +100,16 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   characterName: TheAuditor
   level: 0
-  maxHealth: 100
-  health: 100
+  maxHealth: 6969
+  health: 6969
   defence: 0
   accuracy: 100
   dodge: 0
-  damage: 10
-  speed: 10
+  damage: 400
+  speed: 25
   turnCoolDown: 3000
   team: 0
-  xpReward: 500
+  xpReward: 999999999
   winEvent: auditor win event
   loseEvent: auditor lose event
   skills: []
@@ -123,6 +123,7 @@ MonoBehaviour:
   bigFootSlot: {fileID: 0}
   isBoss: 0
   secondPhase: 0
+  invulnerable: 1
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hank: {fileID: 0}
   postalGuy: {fileID: 0}
+  imageLoader: {fileID: 0}
+  cinematicManager: {fileID: 0}
   prefabLoader: {fileID: 0}
   combatManager: {fileID: 0}
   combatFunctions: {fileID: 0}
@@ -457,7 +460,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -65}
+  m_AnchoredPosition: {x: 0, y: -135}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8514920699937769707
@@ -620,7 +623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -65}
+  m_AnchoredPosition: {x: 0, y: -135}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &503567316382795028
@@ -755,7 +758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -85}
+  m_AnchoredPosition: {x: 0, y: -155}
   m_SizeDelta: {x: 200, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &58474390231390828

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PartyFunctions : MonoBehaviour
 {
     public GameState gameState;
+    public OverworldUI overworldUI;
     public EntityTracker entityTracker;
     public TilemapManager tilemapManager;
     public CombatManager combatManager;
@@ -20,6 +21,7 @@ public class PartyFunctions : MonoBehaviour
         tilemapManager = FindObjectOfType<TilemapManager>();
         entityTracker = FindObjectOfType<EntityTracker>();
         combatManager = FindObjectOfType<CombatManager>();
+        overworldUI = FindObjectOfType<OverworldUI>();
 
         currentGridPosition = tilemapManager.tilemap.WorldToCell(transform.position);
         transform.position = tilemapManager.tilemap.GetCellCenterWorld(currentGridPosition);
@@ -58,13 +60,73 @@ public class PartyFunctions : MonoBehaviour
 
         else if (tilemapManager.IsTilePortal(targetGridPosition)) //I should probably make sure only the player can enter the portal, but if Slurp manages to fuck the game up so hard that an npc enters... Well I guess she deserved it lmao
         {
-            gameState.progress += 1;
-            gameState.checkpoint = gameState.checkpointList[gameState.progress];
+            if (gameState.portalIntroduction)
+            {
+                gameState.progress += 1;
+                gameState.checkpoint = gameState.checkpointList[gameState.progress];
 
-            transform.position = gameState.checkpoint;
-            Vector3Int playerGridPos = tilemapManager.tilemap.WorldToCell(gameState.checkpoint);
-            entityTracker.UpdateEntityPosition(gameObject, playerGridPos);
-            GetComponent<PartyFunctions>().currentGridPosition = playerGridPos;
+                transform.position = gameState.checkpoint;
+                Vector3Int playerGridPos = tilemapManager.tilemap.WorldToCell(gameState.checkpoint);
+                entityTracker.UpdateEntityPosition(gameObject, playerGridPos);
+                GetComponent<PartyFunctions>().currentGridPosition = playerGridPos;
+
+                gameState.portalIntroduction = false;
+            }
+
+            else if (!gameState.portalIntroduction && gameState.portalCount == 0)
+            {
+                gameState.trickster1.SetActive(true);
+
+                overworldUI.AddMessage("This looks like some sort of portal. You try entering it but the magic of the portal refuses to allow you through.");
+                overworldUI.AddMessage("Mysterious voice: Psst! Slurp!");
+                overworldUI.AddMessage("The Trickster: They call me the Trickster, I've been watching you fight and you have some nice moves! Who knows? Maybe you do have a chance against the dark lord!");
+                overworldUI.AddMessage("The Trickster: I used to work for him, I know all about these portals. Here, let me open it up for you! *Trickster says some words in a language you do not know*");
+                overworldUI.AddMessage("The Trickster: Alright it should work now. Try entering the portal again!");
+
+                gameState.portalIntroduction = true;
+                gameState.portalCount += 1;
+            }
+
+            else if (!gameState.portalIntroduction && gameState.portalCount == 1)
+            {
+                gameState.trickster2.SetActive(true);
+
+                overworldUI.AddMessage("The Trickster: That was nice!");
+                overworldUI.AddMessage("The Trickster: Time to opened up this one too. But I must warn you, you might need some warm clothes where you are going.");
+
+                gameState.portalIntroduction = true;
+                gameState.portalCount += 1;
+            }
+
+            else if (!gameState.portalIntroduction && gameState.portalCount == 2)
+            {
+                gameState.trickster3.SetActive(true);
+
+                overworldUI.AddMessage("The Trickster: Nice work! Time to leave this frozen place.");
+                overworldUI.AddMessage("The Trickster: You must be careful, the corruption is getting stronger and stronger as you get closer to the dark lord.");
+
+                gameState.portalIntroduction = true;
+                gameState.portalCount += 1;
+            }
+
+            else if (!gameState.portalIntroduction && gameState.portalCount == 3)
+            {
+                gameState.trickster4.SetActive(true);
+
+                overworldUI.AddMessage("The Trickster: What Asmongold told you was true. There is one more portal you need to go through.");
+                overworldUI.AddMessage("The Trickster: But this time you must do it alone! The corruption is far too strong for your friends to handle.");
+
+                gameState.portalIntroduction = true;
+                gameState.portalCount += 1;
+            }
+
+            else if (!gameState.portalIntroduction && gameState.portalCount == 4)
+            {
+                overworldUI.AddMessage("It looks like you have power over all these portals now. You can go through without anyone elses help.");
+
+                gameState.portalIntroduction = true;
+                gameState.portalCount += 1;
+            }
         }
 
         else if (tilemapManager.IsTileWalkable(targetGridPosition))

@@ -6,6 +6,7 @@ public class BotAI : MonoBehaviour
     public PrefabLoader prefabLoader;
     public CombatManager combatManager;
     public CombatFunctions combatFunctions;
+    public CombatUI combatUI;
     public CharacterData ownData;
 
     void Start()
@@ -13,6 +14,7 @@ public class BotAI : MonoBehaviour
         combatManager = FindObjectOfType<CombatManager>();
         combatFunctions = FindObjectOfType<CombatFunctions>();
         prefabLoader = FindObjectOfType<PrefabLoader>();
+        combatUI = FindObjectOfType<CombatUI>();
 
         bot = prefabLoader.BotPrefab;
     }
@@ -42,6 +44,9 @@ public class BotAI : MonoBehaviour
                 newBotData.team = 1;
                 combatManager.teamTwo.Add(newBotData);
                 newBotData.turnCoolDown = 3000;
+
+                combatManager.combatPauseCooldown += 2;
+                combatUI.combatText.text = "The bot summoned another bot!";
             }
             else
             {

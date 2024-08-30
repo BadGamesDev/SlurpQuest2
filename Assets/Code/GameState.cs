@@ -27,6 +27,13 @@ public class GameState : MonoBehaviour
     public bool metAsmongold;
     public bool metHeado;
     public bool metTheAuditor;
+    public bool portalIntroduction;
+    public int portalCount;
+
+    public GameObject trickster1;
+    public GameObject trickster2;
+    public GameObject trickster3;
+    public GameObject trickster4;
 
     private void Start()
     {

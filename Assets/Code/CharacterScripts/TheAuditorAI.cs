@@ -150,6 +150,7 @@ public class TheAuditorAI : MonoBehaviour
                         combatManager.combatPauseCooldown = 10;
                         dialogueCooldown = 10;
                         transform.GetComponent<Image>().sprite = imageLoader.AuditorNoHalo;
+                        ownData.invulnerable = false;
                         combatUI.combatText.text = "The Auditor lost his halo! Now you can murder the fuck out of him!";
                         dialoguStage += 1;
                     }

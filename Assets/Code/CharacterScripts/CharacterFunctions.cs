@@ -45,38 +45,45 @@ public class CharacterFunctions : MonoBehaviour
 
     public void TakeDamage(int damageAmount, bool trueDamage) //The fact that I don't substract the defence here causes a FUCKTON of problems, I don't even remember why I did it like this but god do I fucking hate that I did it like this.
     {
-        foreach (StatusEffect status in ownData.globalStatusEffects)
+        if (!ownData.invulnerable)
         {
-            if (status.statusName == "raid target")
-            {
-                damageAmount *= 2;
-            }
-        }
-
-        if (!trueDamage)
-        {
-            damageAmount -= ownData.defence;
-
             foreach (StatusEffect status in ownData.globalStatusEffects)
             {
-                if (status.statusName == "ted audience")
+                if (status.statusName == "raid target")
                 {
-                    damageAmount += Convert.ToInt32(ownData.defence / 2);
+                    damageAmount *= 2;
                 }
             }
+
+            if (!trueDamage)
+            {
+                damageAmount -= ownData.defence;
+
+                foreach (StatusEffect status in ownData.globalStatusEffects)
+                {
+                    if (status.statusName == "ted audience")
+                    {
+                        damageAmount += Convert.ToInt32(ownData.defence / 2);
+                    }
+                }
+            }
+
+            if (damageAmount < 0)
+            {
+                damageAmount = 0;
+            }
+
+            ownData.health -= damageAmount;
+            ownUI.UpdateHealthBar(ownData.health);
+
+            if (ownData.health <= 0)
+            {
+                Die();
+            }
         }
-
-        if (damageAmount < 0)
+        else
         {
-            damageAmount = 0;
-        }
-
-        ownData.health -= damageAmount;
-        ownUI.UpdateHealthBar(ownData.health);
-
-        if (ownData.health <= 0)
-        {
-            Die();
+            ownData.health -= 0;
         }
     }
 
@@ -418,6 +425,10 @@ public class CharacterFunctions : MonoBehaviour
 
         else
         {
+            if (ownData.characterName == "OneViolence")
+            {
+                combatManager.peace = false; //Just incase OV manages to die while there is peace. Because if he is dead peace will never run out and combat will never end. 
+            }
             combatManager.xpReward += ownData.xpReward;
             combatManager.combatants.Remove(ownData);
 

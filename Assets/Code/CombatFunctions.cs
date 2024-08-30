@@ -15,7 +15,7 @@ public class CombatFunctions : MonoBehaviour
         int attackRoll = UnityEngine.Random.Range(1, 101);
         int chance = attacker.accuracy - target.dodge;
 
-        if (attackRoll <= chance)
+        if (attackRoll <= chance && combatManager.peace == false)
         {
             combatUI.combatText.text = (attacker.characterName + " attacked " + target.characterName + ".");
             target.GetComponent<CharacterFunctions>().TakeDamage(attacker.damage, false);
@@ -25,16 +25,21 @@ public class CombatFunctions : MonoBehaviour
                 target.GetComponent<CharacterFunctions>().GetInflicted("bleed", 2);
             }
         }
-        else
+        else if (attackRoll > chance && combatManager.peace == false)
         {
             combatUI.combatText.text = (attacker.characterName + " attacked " + target.characterName + " but missed.");
+        }
+
+        else
+        {
+            combatUI.combatText.text = "NO FUCKING FIGHTING!";
         }
         combatManager.combatPauseCooldown += 1.8f;
     }
 
     public void UseSkill(List<CharacterData> userTeam, CharacterData skillUser, List<CharacterData> enemyTeam, CharacterData target, Skill skill) //I will use if checks for each skill, this is quite bad and it also requires me to write hundreds of ugly lines but it is also quite simple. I want to make a finished game not a pretty codebase.
     {
-        if (skill.skillName == "Dancing Master") //DONE
+        if (skill.skillName == "Dancing Master" && combatManager.peace == false) //DONE
         {
             int roll = UnityEngine.Random.Range(0, 10);
 
@@ -53,7 +58,7 @@ public class CombatFunctions : MonoBehaviour
             skillUser.skill1Cooldown = 2;
         }
 
-        else if (skill.skillName == "Ted Talk") //DONE (beware of bugs)
+        else if (skill.skillName == "Ted Talk" && combatManager.peace == false) //DONE (beware of bugs)
         {
             List<CharacterData> charactersToKill = new();
 
@@ -100,7 +105,7 @@ public class CombatFunctions : MonoBehaviour
             skillUser.skill2Cooldown = 5;
         }
         
-        else if(skill.skillName == "Raid") //DONE
+        else if(skill.skillName == "Raid" && combatManager.peace == false) //DONE
         {
             target.GetComponent<CharacterFunctions>().GetInflicted("raid target", 1);
             combatUI.combatText.text = "Slurp told everyone to go and raid " + target.characterName;
@@ -116,7 +121,7 @@ public class CombatFunctions : MonoBehaviour
             skillUser.skill4Cooldown = 999; //bruuuuuh
         }
 
-        else if (skill.skillName == "Swipe") //DONE
+        else if (skill.skillName == "Swipe" && combatManager.peace == false) //DONE
         {
             List<CharacterData> charactersToKill = new ();
             foreach(CharacterData character in enemyTeam)
@@ -165,14 +170,14 @@ public class CombatFunctions : MonoBehaviour
             skillUser.skill4Cooldown = 999;
         }
         
-        else if (skill.skillName == "EMP Grenade")
+        else if (skill.skillName == "EMP Grenade" && combatManager.peace == false)
         {
             target.GetComponent<CharacterFunctions>().GetInflicted("stun", 2);
             combatUI.combatText.text = skillUser.characterName + " threw an EMP grenade at " + target.characterName;
             skillUser.skill1Cooldown = 5;
         }
 
-        else if (skill.skillName == "Silence")
+        else if (skill.skillName == "Silence" && combatManager.peace == false)
         {
             target.GetComponent<CharacterFunctions>().GetInflicted("silence", 3);
             if (!target.isBoss)
@@ -188,7 +193,7 @@ public class CombatFunctions : MonoBehaviour
             skillUser.skill1Cooldown = 4;
         }
 
-        else if (skill.skillName == "Ban Hammer")
+        else if (skill.skillName == "Ban Hammer" && combatManager.peace == false)
         {
             if (target.health <= target.maxHealth * 0.3)
             {
@@ -237,7 +242,7 @@ public class CombatFunctions : MonoBehaviour
             skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.maxHealth - skillUser.health); //heal method already fixes any overhealing but I want to calculate it correctly incase I want to show it in UI or something.
         }
         
-        else if (skill.skillName == "Dizz Or No Dizz")
+        else if (skill.skillName == "Dizz Or No Dizz" && combatManager.peace == false)
         {
             combatUI.ownTeam = userTeam; 
             combatUI.enemyTeam = enemyTeam;
@@ -299,7 +304,7 @@ public class CombatFunctions : MonoBehaviour
             combatUI.combatText.text = skillUser.characterName + " used ONE PEACE! No one can attack or use any harmful abilities for 2 turns!";
         }
 
-        else if (skill.skillName == "One Violence")
+        else if (skill.skillName == "One Violence" && combatManager.peace == false)
         {
             int roll = UnityEngine.Random.Range(0, 4);
             string damageText = 0.ToString();
@@ -336,7 +341,7 @@ public class CombatFunctions : MonoBehaviour
             combatUI.combatText.text = skillUser.characterName + " used ONE VIOLENCE to deal " + damageText + " damage!";
         }
 
-        else if (skill.skillName == "Rapper")
+        else if (skill.skillName == "Rapper" && combatManager.peace == false)
         {
             foreach (CharacterData combatant in combatManager.combatants)
             {
@@ -346,7 +351,7 @@ public class CombatFunctions : MonoBehaviour
             combatUI.combatText.text = skillUser.characterName + " started rapping! It is so fucking bad that it reduced everyones defence to 0. Because they all want this shit to be over asap.";
         }
 
-        else if (skill.skillName == "clownmaxxing")
+        else if (skill.skillName == "clownmaxxing" && combatManager.peace == false)
         {
             List<CharacterData> charactersToKill = new();
             foreach (CharacterData combatant in combatManager.combatants)
@@ -378,22 +383,22 @@ public class CombatFunctions : MonoBehaviour
             combatUI.combatText.text = skillUser.characterName + " started talking about how fucking great he is. This did absolutely nothing.";
         }
 
-        else if (skill.skillName == "Extreme Laziness")
+        else if (skill.skillName == "Extreme Laziness" && combatManager.peace == false)
         {
             combatUI.combatText.text = skillUser.characterName + " was too lazy to implement a cool ultimate ability so he just normal attacked " + target.characterName + " instead.";
             Attack(skillUser, target);
         }
 
-        else if (skill.skillName == "Suck Life")
+        else if (skill.skillName == "Suck Life" && combatManager.peace == false)
         {
             target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage, true);
             skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.damage);
             combatUI.combatText.text = "Shill sucked the life force of " + target.characterName;
         }
 
-        else if (skill.skillName == "Summon Bot")
+        else
         {
-
+            combatUI.combatText.text = "NO FUCKING FIGHTING!";
         }
 
         combatManager.combatPauseCooldown = 2f;

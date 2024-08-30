@@ -25,11 +25,21 @@ public class CharacterUI : MonoBehaviour
         {
             cooldownBar.maxValue = 6000;
         }
+
+        UpdateHealthBar(ownData.health);
     }
     public void UpdateHealthBar(int newHealthValue) //this is quite flexible though there is almost no case where I would need to manually enter a valuer, I'll let this stay for now.
     {
-        healthBar.value = newHealthValue;
-        healthText.text = newHealthValue + "/" + healthBar.maxValue;
+        if (ownData.invulnerable)
+        {
+            healthText.text = "???????";
+        }
+
+        else
+        {
+            healthBar.value = newHealthValue;
+            healthText.text = newHealthValue + "/" + ownData.maxHealth;
+        }
     }
 
     public void UpdateCooldownBar(int newCooldownValue)

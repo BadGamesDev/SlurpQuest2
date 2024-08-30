@@ -73,12 +73,12 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        else if (enemyData.pos1.name == "Snow Troll")
+        else if (enemyData.pos1.name == "Troll")
         {
             overworldUI.AddMessage("Snow Troll: Trold ser dig! Trold smadrer dig! Trold dræber dig!");
             if (gameState.metTroll == false)
             {
-                overworldUI.AddMessage("You might think this is the part where I gave up trying to find funny and thematic enemies and you would be right. But I guess it still kinda works as a southpark reference. Wait until you see the boss.");
+                overworldUI.AddMessage("You might think this is the part where I gave up trying to find funny and thematic enemies and you would be right. But I guess it still kinda works as a reference to online trolls or something.");
                 gameState.metTroll = true;
             }
         }
@@ -175,6 +175,7 @@ public class CombatManager : MonoBehaviour
 
     public void StartCombat(GameObject sideOne, GameObject sideTwo) //this method can be simplified by directly taking in the data script instead of the GameObject
     {
+        peace = false;
         xpReward = 0;
         gameState.overworldPaused = true;
         combatUI.SetActive(true);

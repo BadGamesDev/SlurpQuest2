@@ -35,6 +35,7 @@ public class CharacterData : MonoBehaviour
 
     public bool isBoss;
     public bool secondPhase; //this shit is just for the asmon fight
+    public bool invulnerable;
 
     private void Start()
     {

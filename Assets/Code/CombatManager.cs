@@ -10,6 +10,7 @@ public class CombatManager : MonoBehaviour
     public EntityTracker entityTracker;
     public Camera mainCamera;
     public GameObject playerParty;
+    public CombatUI combatUIScript;
 
     public bool peace;
 
@@ -330,6 +331,8 @@ public class CombatManager : MonoBehaviour
             {
                 if (combatant.turnCoolDown <= 0)
                 {
+                    bool simp = false;
+
                     if (combatant.skill1Cooldown > 0)
                     {
                         combatant.skill1Cooldown -= 1;
@@ -350,7 +353,52 @@ public class CombatManager : MonoBehaviour
                         combatant.skill4Cooldown -= 1;
                     }
 
-                    turnHaver = combatant;
+                    foreach (StatusEffect status in combatant.selfStatusEffects)
+                    { 
+                        if(status.statusName == "simp")
+                        {
+                            simp = true;
+                        }
+                    }
+
+                    if (simp == false)
+                    {
+                        turnHaver = combatant;
+                    }
+
+                    if (simp == true)
+                    {
+                        int tries = 0;
+                        CharacterData target = null;
+
+                        if (teamTwo.Count == 1)
+                        {
+                            FindObjectOfType<CombatManager>().combatPauseCooldown = 2.4f;
+                            combatUIScript.combatText.text = combatant.characterName + " just gave up his turn because he thinks he has a chance with Slurp!";
+                        }
+
+                        else
+                        {
+                            while (target == null && tries < 999)
+                            {
+                                target = teamTwo[Random.Range(0, teamTwo.Count)];
+
+                                if (target == combatant)
+                                {
+                                    target = null;
+                                }
+
+                                else
+                                {
+                                    FindObjectOfType<CombatManager>().combatPauseCooldown = 2.4f;
+                                    target.GetComponent<CharacterFunctions>().TakeDamage(combatant.damage, false);
+                                    combatUIScript.combatText.text = combatant.characterName + " attacked " + target.characterName + " because he thinks he has a chance with Slurp!";
+                                }
+                                tries += 1;
+                            }
+                        }
+                    }
+
                     combatant.GetComponent<CharacterFunctions>().ResetTurnCooldown();
                     
                     if(combatant.characterName == "Slurp") //taking all this space in the main update function because of a shitty passive ability...
@@ -369,10 +417,10 @@ public class CombatManager : MonoBehaviour
                                 if (effekt.statusName == "raid target")
                                 {
                                     raid = effekt;
-                                    Debug.Log("raid detected");
                                 }
                             }
                             retard.globalStatusEffects.Remove(raid);
+                            retard.GetComponent<CharacterUI>().UpdateStatusIcons();
                         }
                     }
 
@@ -394,6 +442,41 @@ public class CombatManager : MonoBehaviour
                                 {
                                     member.GetComponent<CharacterFunctions>().GetHealed(combatant.level * 5);
                                 }
+                            }
+                        }
+
+                        if (status.statusName == "thottery")
+                        {
+                            if (combatant.team == 0) //no one on the enemy team will evet use this skill so there is no need to check it like this but who knpws what the future brings
+                            {
+                                CharacterData target = teamTwo[Random.Range(0, teamTwo.Count)];
+                                target.GetComponent<CharacterFunctions>().GetInflicted("simp", 1);
+                            }
+                            else if (combatant.team == 1)
+                            {
+                                CharacterData target = teamOne[Random.Range(0, teamOne.Count)];
+                                target.GetComponent<CharacterFunctions>().GetInflicted("simp", 1);
+                            }
+                        }
+
+                        if (status.statusName == "clownmaxxing")
+                        {
+                            List<StatusEffect> allStatusEffects = new List<StatusEffect>
+                            {
+                                StatusEffectDatabase.simp,
+                                StatusEffectDatabase.silence,
+                                StatusEffectDatabase.bleed,
+                                StatusEffectDatabase.burnoutSmoke,
+                                StatusEffectDatabase.cute,
+                                StatusEffectDatabase.engineStarted,
+                                StatusEffectDatabase.stun,
+                                StatusEffectDatabase.raidTarget,
+                            };
+                            
+                            foreach (CharacterData member in combatants)
+                            {
+                                StatusEffect randeffect = allStatusEffects[Random.Range(0, allStatusEffects.Count)];
+                                member.GetComponent<CharacterFunctions>().GetInflicted(randeffect.statusName, 1);
                             }
                         }
 

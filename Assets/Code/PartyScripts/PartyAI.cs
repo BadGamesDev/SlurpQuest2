@@ -32,7 +32,7 @@ public class PartyAI : MonoBehaviour
                 partyFunctions.TryToMove(moveDir);
                 if(partyFunctions.isMoving == true)
                 {
-                    moveCooldown = 2;
+                    moveCooldown = Random.Range(1.7f, 2.2f);
                 }
             }
         }

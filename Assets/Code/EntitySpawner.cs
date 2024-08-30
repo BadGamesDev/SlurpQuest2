@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class EntitySpawner : MonoBehaviour
 {
     public GameState gameState;
     public TilemapManager tileManager;
     public EntityTracker entityTracker;
+    public ImageLoader imageLoader;
     public Tilemap tilemap;
     
     public GameObject npcPartyPrefab;
@@ -67,6 +69,8 @@ public class EntitySpawner : MonoBehaviour
             {
                 GameObject newParty = Instantiate(npcPartyPrefab, randomPosition, Quaternion.identity);
                 PartyData newPartyData = newParty.GetComponent<PartyData>();
+                newParty.GetComponent<SpriteRenderer>().sprite = imageLoader.Husk;
+                newParty.transform.localScale = new Vector2(0.17f, 0.17f);
 
                 newPartyData.level = 1;
                 int enemyCount = Random.Range(1, 4);
@@ -132,11 +136,12 @@ public class EntitySpawner : MonoBehaviour
 
             Vector3Int gridPosition = tilemap.WorldToCell(randomPosition);
             TileBase spawntile = tilemap.GetTile(gridPosition);
-            Debug.Log("trying to spawn troll");
+
             if (spawntile != null && spawntile.name == "snow" && !tileManager.IsTileOccupied(gridPosition))
             {
                 GameObject newParty = Instantiate(npcPartyPrefab, randomPosition, Quaternion.identity);
                 PartyData newPartyData = newParty.GetComponent<PartyData>();
+                newParty.GetComponent<SpriteRenderer>().sprite = imageLoader.Troll; 
 
                 newPartyData.level = 3;
                 int enemyCount = Random.Range(1, 4);
@@ -176,6 +181,7 @@ public class EntitySpawner : MonoBehaviour
             {
                 GameObject newParty = Instantiate(npcPartyPrefab, randomPosition, Quaternion.identity);
                 PartyData newPartyData = newParty.GetComponent<PartyData>();
+                newParty.GetComponent<SpriteRenderer>().sprite = imageLoader.Bot;
 
                 newPartyData.level = 4;
                 newPartyData.pos1 = botPrefab;

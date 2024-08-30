@@ -361,6 +361,25 @@ public class CharacterFunctions : MonoBehaviour
             }
         }
 
+        else if (status == "simp")
+        {
+            existingStatus = CheckStatusSelf(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.simp.statusName,
+                    tickCount = duration
+                };
+
+                ownData.selfStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
         ownUI.UpdateStatusIcons();
     }
 

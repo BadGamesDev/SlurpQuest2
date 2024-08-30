@@ -52,6 +52,7 @@ public class CharacterUI : MonoBehaviour
         foreach (Image icon in statusIcons)
         {
             Destroy(icon.gameObject);
+            Debug.Log("uhhhh");
         }
 
         statusIcons.Clear();
@@ -85,7 +86,7 @@ public class CharacterUI : MonoBehaviour
         {
             Image statusIcon = Instantiate(prefabLoader.statusIcon);
             statusIcon.transform.SetParent(transform);
-            statusIcon.transform.localPosition = new Vector3(-80 + (statusIcons.Count * 30), -110, 0);
+            statusIcon.transform.localPosition = new Vector3(-80 + (statusIcons.Count * 30), -175, 0);
             statusIcons.Add(statusIcon);
             
             if (selfStatus.statusName == "stun") 

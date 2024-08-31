@@ -22,11 +22,11 @@ public class SkillDatabase : MonoBehaviour //got forced me to put this shit in t
     public static Skill banHammer = new() { skillName = "Ban Hammer", skillDesc = "Digi tries to execute an enemy by permabanning them. The target needs to be already weakened or this skill doesn't work. The permaban threshold is 30% of their max health.", hostile = true };
     public static Skill findBigfoot = new() { skillName = "Find Bigfoot", skillDesc = "Digi goes on a long and arduous journey to find Bigfoot! This skill has a random wait time which can be quite long and you lose the battle if everyone else dies before Digi comes back. So be careful!", hostile = false };
 
-    public static Skill polePosition = new() { skillName = "Pole Position", hostile = false };
-    public static Skill startYourEngines = new() { skillName = "Start Your Engines", hostile = false };
-    public static Skill burnout = new() { skillName = "Burnout", hostile = false };
-    public static Skill pitStop = new() { skillName = "Pit Stop", hostile = false };
-    public static Skill dizzOrNoDizz = new() { skillName = "Dizz Or No Dizz", hostile = true };
+    public static Skill polePosition = new() { skillName = "Pole Position", skillDesc = "As a famous racer, Jaydizz always makes the first move in combat!", hostile = false };
+    public static Skill startYourEngines = new() { skillName = "Start Your Engines", skillDesc = "Jaydizz starts his engines to double his already high speed! His enemies won't even be able to see what hit them!", hostile = false };
+    public static Skill burnout = new() { skillName = "Burnout", skillDesc = "Jaydizz can use the smoke from his tires to hide himself, giving a massive boost to his dodge rating!", hostile = false };
+    public static Skill pitStop = new() { skillName = "Pit Stop", skillDesc = "Jaydizz can use pitstop to completely heal himself! This is a very powerful ability but has a long cooldown.", hostile = false };
+    public static Skill dizzOrNoDizz = new() { skillName = "Dizz Or No Dizz", skillDesc = "It is dizz or no dizz everybody! Jaydizz presents 3 boxes and you click on them. The last one you click will be your reward. Who knows what it contains?", hostile = true };
     
     public static Skill washedUpBoyfriend = new() { skillName = "Washed Up Boyfriend", skillDesc = "Cndk is the winner of the 2023 Slurpwis boyfriend contest. Unfortunately this has absolutely no effect.", hostile = false };
     public static Skill rap = new() { skillName = "Rapper", skillDesc = "Cndk99 aka Yano is a famous rapper, he can start rapping in combat to reduce the defence of everyone to 0 including your own team. Because everyone wants this shit to be over as soon as possible.", hostile = true };
@@ -34,11 +34,11 @@ public class SkillDatabase : MonoBehaviour //got forced me to put this shit in t
     public static Skill godComplex = new() { skillName = "God Complex", skillDesc = "Cndk has an extremely inflated ego, he can start talking about how good looking smart and funny he is which will have no effect on combat. This is a completely useless skill.", hostile = false };
     public static Skill extremeLaziness = new() { skillName = "Extreme Laziness", skillDesc = "Cndk started losing his mind while trying to complete this fucking piece of shit game, so this skill just makes him do a normal attack because he couldn't be bothered adding another cool ultimate ability that would fuck up his codebase even more. HOLY SHIT I REALLY NEED THIS WHOLE THING TO BE OVER SOON!", hostile = true };
 
-    public static Skill ghouldMaxxing = new() { skillName = "GhoulMaxxing", hostile = false };
-    public static Skill herbalMedicine = new() { skillName = "Herbal Medicine", hostile = false };
-    public static Skill corpsePaint = new() { skillName = "Corpse Paint", hostile = false };
-    public static Skill onePeace = new() { skillName = "One Peace", hostile = false };
-    public static Skill oneViolence = new() { skillName = "One Violence", hostile = true };
+    public static Skill ghouldMaxxing = new() { skillName = "GhoulMaxxing", skillDesc = "OneViolence has mastered the art of ghoulmaxxing. He gains nourishment from the corpses of the fallen. Whenever an enemy dies, it will fully heal OneViolence.", hostile = false };
+    public static Skill herbalMedicine = new() { skillName = "Herbal Medicine", skillDesc = "The dark arts are not the only thing OneViolence excells at. He can also use herbal medicine to heal an all or himself.", hostile = false };
+    public static Skill corpsePaint = new() { skillName = "Corpse Paint", skillDesc = "OneViolence can apply corpse paint on himself or an ally, increasing their attack and speed for the rest of combat by a small amount. It also looks sick as fuck.", hostile = false };
+    public static Skill onePeace = new() { skillName = "One Peace", skillDesc = "Violence is cool! But sometimes peace can be what you need. OneViolence can declare peace, making everyone unable to attack or use any harmful ability for a short while.", hostile = false };
+    public static Skill oneViolence = new() { skillName = "One Violence", skillDesc = "ONCE PER COMBAT ONEVIOLENCE PICKS ONE ENEMY AND DEALS ONE OR ONE ONE OR ONE ONE ONE OR ONE ONE ONE ONE DAMAGE!", hostile = true };
 
     public static Skill suckLifeForce = new() { skillName = "Suck Life", hostile = true };
 
@@ -69,5 +69,23 @@ public class SkillDatabase : MonoBehaviour //got forced me to put this shit in t
         silence.skillIcon = imageLoader.silenceIcon;
         banHammer.skillIcon = imageLoader.banhammerIcon;
         findBigfoot.skillIcon = imageLoader.bigfootIcon;
+
+        polePosition.skillIcon = imageLoader.positionIcon;
+        startYourEngines.skillIcon = imageLoader.startenginesIcon;
+        burnout.skillIcon = imageLoader.burnoutSkillIcon;
+        pitStop.skillIcon = imageLoader.pitstopIcon;
+        dizzOrNoDizz.skillIcon = imageLoader.dizzIcon;
+
+        washedUpBoyfriend.skillIcon = imageLoader.boyfriendIcon;
+        rap.skillIcon = imageLoader.rapIcon;
+        clownmaxxing.skillIcon = imageLoader.clownmaxxIcon;
+        godComplex.skillIcon = imageLoader.godcomplexIcon;
+        extremeLaziness.skillIcon = imageLoader.lazyIcon;
+
+        ghouldMaxxing.skillIcon = imageLoader.ghoulIcon;
+        herbalMedicine.skillIcon = imageLoader.herbalIcon;
+        corpsePaint.skillIcon = imageLoader.corpseIcon;
+        onePeace.skillIcon = imageLoader.peaceIcon;
+        oneViolence.skillIcon = imageLoader.violenceIcon;
     }
 }

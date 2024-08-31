@@ -438,8 +438,9 @@ public class CharacterFunctions : MonoBehaviour
 
             GetHealed(99999);
             GetInflicted("permacloud", 999);
-            //change sprite
-            //activate permanent cloud
+
+            combatManager.combatPauseCooldown = 4;
+            combatUI.combatText.text = "Asmongold: Did you really think it would be so easy? Did you really think that cndk wouldn't add a second phase for the final boss fight? *Asmongold activated permanent cloud of decay*";
         }
 
         else

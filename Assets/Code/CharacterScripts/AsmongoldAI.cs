@@ -8,6 +8,7 @@ public class AsmongoldAI : MonoBehaviour
     public PrefabLoader prefabLoader;
     public CombatManager combatManager;
     public CombatFunctions combatFunctions;
+    public CombatUI combatUI;
     public CharacterData ownData;
     public List<string> moves;
     public int turnNumber;
@@ -16,6 +17,7 @@ public class AsmongoldAI : MonoBehaviour
     {
         combatManager = FindObjectOfType<CombatManager>();
         combatFunctions = FindObjectOfType<CombatFunctions>();
+        combatUI = FindObjectOfType<CombatUI>();
         prefabLoader = FindObjectOfType<PrefabLoader>();
 
         moves.Add("own goal");
@@ -46,16 +48,23 @@ public class AsmongoldAI : MonoBehaviour
 
                     foreach (CharacterData character in combatManager.teamOne)
                     {
-
-                        if (character.health <= 30)
+                        if (character.health <= 50)
                         {
                             charactersToKill.Add(character);
                         }
                         else
                         {
-                            character.GetComponent<CharacterFunctions>().TakeDamage(30, true);
+                            character.GetComponent<CharacterFunctions>().TakeDamage(50, true);
                         }
                     }
+
+                    foreach (CharacterData character in combatManager.teamTwo)
+                    {
+                        character.GetComponent<CharacterFunctions>().GetHealed(50);
+                    }
+
+                    combatManager.combatPauseCooldown = 3;
+                    combatUI.combatText.text = "Asmongold used cloud of decay. The toxic cloud dealt damage to every enemy while healing his team.";
                 }
 
                 else if (moves[turnNumber] == "summon roaches")
@@ -76,6 +85,9 @@ public class AsmongoldAI : MonoBehaviour
                     combatant6Data.team = 1;
                     combatManager.teamTwo.Add(combatant6Data);
                     combatant6Data.turnCoolDown += Random.Range(100, 1001);
+
+                    combatManager.combatPauseCooldown = 3;
+                    combatUI.combatText.text = "Asmongold summoned creatures from his room to fight for him!";
                 }
 
                 else if (moves[turnNumber] == "own goal")
@@ -86,6 +98,9 @@ public class AsmongoldAI : MonoBehaviour
                         Debug.Log("slurp is alive");
                         slurp = combatManager.spawnSlots[0].GetChild(0).GetComponent<CharacterFunctions>();
                         slurp.TakeDamage(slurp.ownData.health - 1, true);
+
+                        combatManager.combatPauseCooldown = 3;
+                        combatUI.combatText.text = "Asmongold told Slurp that this whole streaming thing is a waste of time.";
                     }
                     else
                     {

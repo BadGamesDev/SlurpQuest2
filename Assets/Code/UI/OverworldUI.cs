@@ -111,6 +111,10 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public CompanionData statsCompanion; 
     public CompanionData pickedCompanion; //I guess this is the best place to put this? Oh also, I should probably use standardised variable names right? LMAO CHAOS WILL REIGN SUPREME
 
+    public TMP_Text xpLevelText;
+    public TMP_Text xpBarText;
+    public Slider xpBar;
+
     public bool hankChoice;
 
     public float cooldown;
@@ -546,6 +550,13 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         {
             textQueue.Add(message);
         }
+
+        xpBar.gameObject.SetActive(false);
+        xpBarText.gameObject.SetActive(false);
+        xpLevelText.gameObject.SetActive(false);
+        menuButton.gameObject.SetActive(false);
+        itemsButton.gameObject.SetActive(false);
+        partyButton.gameObject.SetActive(false);
     }
 
     public void CloseMessageButtonPressed()
@@ -557,6 +568,13 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
                 gameState.globalPaused = false;
                 dialoguePanel.SetActive(false);
                 dialogueText.text = null;
+
+                xpBar.gameObject.SetActive(true);
+                xpBarText.gameObject.SetActive(true);
+                xpLevelText.gameObject.SetActive(true);
+                menuButton.gameObject.SetActive(true);
+                itemsButton.gameObject.SetActive(true);
+                partyButton.gameObject.SetActive(true);
 
                 if (gameState.waitingCombat == true)
                 {

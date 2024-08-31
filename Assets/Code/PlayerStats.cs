@@ -35,6 +35,11 @@ public class PlayerStats : MonoBehaviour //I feel like "PlayerData" would have b
         unlockedCompanions.Add(slurp);
         unlockedCompanions[0].skills.Add(SkillDatabase.sevenYears);
         unlockedCompanions[0].skills.Add(SkillDatabase.dancingMaster);
+
+        OverworldUI UI = FindObjectOfType<OverworldUI>();
+        UI.xpBar.minValue = 0;
+        UI.xpBar.maxValue = xpTreshold;
+        UI.xpBar.value = xp;
     }
 
     public void GainXP(int amount)
@@ -46,5 +51,11 @@ public class PlayerStats : MonoBehaviour //I feel like "PlayerData" would have b
             xpTreshold *= 2;
             level += 1;
         }
+
+        OverworldUI UI = FindObjectOfType<OverworldUI>();
+        UI.xpBarText.text = "Nolifepoints: " + xp + "/" + xpTreshold;
+        UI.xpLevelText.text = "Level: " + (level + 1);
+        UI.xpBar.maxValue = xpTreshold;
+        UI.xpBar.value = xp;
     }
 }

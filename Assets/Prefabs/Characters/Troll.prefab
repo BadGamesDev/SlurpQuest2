@@ -100,8 +100,8 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   characterName: Troll
   level: 0
-  maxHealth: 420
-  health: 420
+  maxHealth: 500
+  health: 500
   defence: 15
   accuracy: 80
   dodge: 0

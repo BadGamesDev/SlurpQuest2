@@ -95,16 +95,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd327729ae66a9469eb0f316c6673df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatar: {fileID: 0}
+  portrait: {fileID: 0}
   playerStats: {fileID: 0}
   characterName: MadDizz
   level: 1
-  maxHealth: 280
-  health: 280
-  defence: 8
+  maxHealth: 420
+  health: 420
+  defence: 10
   accuracy: 100
   dodge: 0
-  damage: 20
-  speed: 30
+  damage: 30
+  speed: 40
   turnCoolDown: 3000
   team: 0
   xpReward: 500
@@ -121,6 +123,7 @@ MonoBehaviour:
   bigFootSlot: {fileID: 0}
   isBoss: 0
   secondPhase: 0
+  invulnerable: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +139,7 @@ MonoBehaviour:
   ownData: {fileID: 1357805490268290798}
   ownUI: {fileID: 2105138982174830678}
   combatManager: {fileID: 0}
+  combatUI: {fileID: 0}
 --- !u!114 &2105138982174830678
 MonoBehaviour:
   m_ObjectHideFlags: 0

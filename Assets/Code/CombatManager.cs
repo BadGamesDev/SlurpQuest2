@@ -14,6 +14,7 @@ public class CombatManager : MonoBehaviour
 
     public bool peace;
 
+    public AudioManager audioManager;
     public CinematicManager cinematicManager;
     public OverworldUI overworldUI; //I hope referencing this shit here doesn't cause the world to end
     public GameObject combatUI;
@@ -106,7 +107,7 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "CyborgHunter")
         {
-            overworldUI.AddMessage("CyborgHunter: Seek and destroy!"); // making this binary could be really fun
+            overworldUI.AddMessage("Cyborg Hunter: Streamer detected. Termination protocol activated. Please do not resist. You shall be permanently banned soon."); // making this binary could be really fun
             if (gameState.metCyborgHunter == false)
             {
                 overworldUI.AddMessage("A half man half machine monstrosity!");
@@ -186,6 +187,12 @@ public class CombatManager : MonoBehaviour
 
         PartyData sideOneData = partyOne.GetComponent<PartyData>();
         PartyData sideTwoData = partyTwo.GetComponent<PartyData>();
+
+        if (sideTwoData.pos1.GetComponent<CharacterData>().characterName == "Cyborg Hunter")
+        {
+            audioManager.forestTheme.Stop();
+            audioManager.cyborgTheme.Play();
+        }
 
         GameObject combatant1 = Instantiate(sideOneData.pos1, spawnSlots[0].position, Quaternion.identity);
         combatant1.transform.SetParent(spawnSlots[0]);
@@ -487,19 +494,19 @@ public class CombatManager : MonoBehaviour
                             foreach (CharacterData character in teamOne)
                             {
 
-                                if (character.health <= 30)
+                                if (character.health <= 50)
                                 {
                                     charactersToKill.Add(character);
                                 }
                                 else
                                 {
-                                    character.GetComponent<CharacterFunctions>().TakeDamage(30, true);
+                                    character.GetComponent<CharacterFunctions>().TakeDamage(50, true);
                                 }
                             }
 
                             foreach (CharacterData character in teamTwo)
                             {
-                                character.GetComponent<CharacterFunctions>().GetHealed(30);
+                                character.GetComponent<CharacterFunctions>().GetHealed(50);
                             }
 
                             if (charactersToKill.Count > 0)

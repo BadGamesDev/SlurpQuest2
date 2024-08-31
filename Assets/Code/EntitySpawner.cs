@@ -109,6 +109,8 @@ public class EntitySpawner : MonoBehaviour
             {
                 GameObject newParty = Instantiate(npcPartyPrefab, randomPosition, Quaternion.identity);
                 PartyData newPartyData = newParty.GetComponent<PartyData>();
+                newParty.GetComponent<SpriteRenderer>().sprite = imageLoader.Shill;
+                newParty.transform.localScale = new Vector2(0.40f, 0.35f);
 
                 newPartyData.level = 2;
                 int enemyCount = Random.Range(1, 3);

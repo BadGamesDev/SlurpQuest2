@@ -44,6 +44,18 @@ public class ImageLoader : MonoBehaviour
     public Sprite pitstopIcon;
     public Sprite dizzIcon;
 
+    public Sprite boyfriendIcon; //jaydizz
+    public Sprite rapIcon;
+    public Sprite clownmaxxIcon;
+    public Sprite godcomplexIcon;
+    public Sprite lazyIcon;
+
+    public Sprite ghoulIcon; //jaydizz
+    public Sprite herbalIcon;
+    public Sprite corpseIcon;
+    public Sprite peaceIcon;
+    public Sprite violenceIcon;
+
     public Sprite bleedIcon;
     public Sprite stunIcon;
     public Sprite tedAudienceIcon;

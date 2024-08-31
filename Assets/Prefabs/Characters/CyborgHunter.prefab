@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatar: {fileID: 0}
+  portrait: {fileID: 0}
   playerStats: {fileID: 0}
   characterName: Cyborg Hunter
   level: 0
@@ -104,7 +105,7 @@ MonoBehaviour:
   defence: 10
   accuracy: 100
   dodge: 5
-  damage: 10
+  damage: 20
   speed: 10
   turnCoolDown: 3000
   team: 0
@@ -122,6 +123,7 @@ MonoBehaviour:
   bigFootSlot: {fileID: 0}
   isBoss: 0
   secondPhase: 0
+  invulnerable: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -194,6 +194,30 @@ public class CombatManager : MonoBehaviour
             audioManager.cyborgTheme.Play();
         }
 
+        if (sideTwoData.pos1.GetComponent<CharacterData>().characterName == "MadDizz")
+        {
+            audioManager.desertTheme.Stop();
+            audioManager.maddizTheme.Play();
+        }
+
+        if (sideTwoData.pos1.GetComponent<CharacterData>().characterName == "The Warlock")
+        {
+            audioManager.snowTheme.Stop();
+            audioManager.warlockTheme.Play();
+        }
+
+        if (sideTwoData.pos1.GetComponent<CharacterData>().characterName == "Asmongold")
+        {
+            audioManager.corruptionTheme.Stop();
+            audioManager.asmonTheme.Play();
+        }
+
+        if (sideTwoData.pos1.GetComponent<CharacterData>().characterName == "TheAuditor")
+        {
+            audioManager.corruptionTheme.Stop();
+            audioManager.auditorTheme.Play();
+        }
+
         GameObject combatant1 = Instantiate(sideOneData.pos1, spawnSlots[0].position, Quaternion.identity);
         combatant1.transform.SetParent(spawnSlots[0]);
         CharacterData combatant1Data = combatant1.GetComponent<CharacterData>();
@@ -841,12 +865,18 @@ public class CombatManager : MonoBehaviour
         playerStats.unlockedCompanions.Add(digi63);
         digi63.skills.Add(SkillDatabase.boomer);
         digi63.skills.Add(SkillDatabase.empGrenade);
+
+        audioManager.forestTheme.Play();
+        audioManager.cyborgTheme.Stop();
     }
 
     public void DigiLoseEvent()
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "Well... it seems beating a terminator wasn't as easy as feeding a cat. Who would have guessed? But don't worry, you can just get a level or something and try again! " +
                                                               "Eventually you can get powerful enough to win no matter how bad you are at the game.";
+        
+        audioManager.forestTheme.Play();
+        audioManager.cyborgTheme.Stop();
     }
 
     public void JaydizzWinEvent()
@@ -868,11 +898,17 @@ public class CombatManager : MonoBehaviour
         playerStats.unlockedCompanions.Add(jaydizz);
         jaydizz.skills.Add(SkillDatabase.polePosition);
         jaydizz.skills.Add(SkillDatabase.startYourEngines);
+
+        audioManager.desertTheme.Play();
+        audioManager.maddizTheme.Stop();
     }
 
     public void JaydizzLoseEvent()
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "You got dizzed by the dizz. Time to try again!";
+
+        audioManager.desertTheme.Play();
+        audioManager.maddizTheme.Stop();
     }
 
     public void OneViolenceWinEvent()
@@ -895,22 +931,34 @@ public class CombatManager : MonoBehaviour
         playerStats.unlockedCompanions.Add(oneViolence);
         oneViolence.skills.Add(SkillDatabase.ghouldMaxxing);
         oneViolence.skills.Add(SkillDatabase.herbalMedicine);
+
+        audioManager.snowTheme.Play();
+        audioManager.warlockTheme.Stop();
     }
 
     public void OneViolenceLoseEvent()
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "The demonic powers of the warlock were simply too much for you to handle!";
+
+        audioManager.snowTheme.Play();
+        audioManager.warlockTheme.Stop();
     }
 
     public void AsmongoldWinEvent()
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "You did it. Asmongold is no more!";
         cinematicManager.asmonCutscene = true;
+
+        audioManager.corruptionTheme.Play();
+        audioManager.asmonTheme.Stop();
     }
 
     public void AsmongoldLoseEvent()
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "Damn... maybe you really are just wasting your life huh?";
+
+        audioManager.corruptionTheme.Play();
+        audioManager.asmonTheme.Stop();
     }
 
     public void HeadoWinEvent()
@@ -926,11 +974,17 @@ public class CombatManager : MonoBehaviour
     public void AuditorWinEvent()
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "YOU DID IT! YOU BEAT THE ACTUAL FINAL BOSS! IT IS DONE! YOU GOT HANK BACK! YOU DESTROYED THE CURSE AND SAVED EVERYONE! WE ARE SO FUCKING BACK!";
+
+        audioManager.corruptionTheme.Play();
+        audioManager.auditorTheme.Stop();
     }
 
     public void AuditorLoseEvent()
     {
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "Hey Slurp! I know the fight looks impossible but believe me you can win it. Just focus on surviving until [REDACTED FOR SPOILERS]. Stock up on pizza slices or something.";
+
+        audioManager.corruptionTheme.Play();
+        audioManager.auditorTheme.Stop();
     }
 
     public void RespawnPlayer()

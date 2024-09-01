@@ -8,6 +8,7 @@ public class TheAuditorAI : MonoBehaviour
     public GameObject hank;
     public GameObject postalGuy;
 
+    public AudioManager audioManager;
     public ImageLoader imageLoader;
     public CinematicManager cinematicManager;
     public PrefabLoader prefabLoader;
@@ -29,6 +30,7 @@ public class TheAuditorAI : MonoBehaviour
         prefabLoader = FindObjectOfType<PrefabLoader>();
         cinematicManager = FindObjectOfType<CinematicManager>();
         imageLoader = FindObjectOfType<ImageLoader>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         moves.Add("attack");
         moves.Add("hank comes to help");
@@ -63,6 +65,8 @@ public class TheAuditorAI : MonoBehaviour
                 {
                     if (dialogueCooldown <= 0 && dialoguStage == 0)
                     {
+                        audioManager.auditorTheme.Stop();
+                        audioManager.hankTheme.Play();
                         combatManager.combatPauseCooldown = 5;
                         dialogueCooldown = 5;
                         combatUI.combatText.text = "The Auditor: Wait... Who the fuck changed my boss music?";

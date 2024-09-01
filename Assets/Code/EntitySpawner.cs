@@ -143,7 +143,8 @@ public class EntitySpawner : MonoBehaviour
             {
                 GameObject newParty = Instantiate(npcPartyPrefab, randomPosition, Quaternion.identity);
                 PartyData newPartyData = newParty.GetComponent<PartyData>();
-                newParty.GetComponent<SpriteRenderer>().sprite = imageLoader.Troll; 
+                newParty.GetComponent<SpriteRenderer>().sprite = imageLoader.Troll;
+                newParty.transform.localScale = new Vector2(0.16f, 0.16f);
 
                 newPartyData.level = 3;
                 int enemyCount = Random.Range(1, 4);
@@ -184,6 +185,7 @@ public class EntitySpawner : MonoBehaviour
                 GameObject newParty = Instantiate(npcPartyPrefab, randomPosition, Quaternion.identity);
                 PartyData newPartyData = newParty.GetComponent<PartyData>();
                 newParty.GetComponent<SpriteRenderer>().sprite = imageLoader.Bot;
+                newParty.transform.localScale = new Vector2(0.15f, 0.12f);
 
                 newPartyData.level = 4;
                 newPartyData.pos1 = botPrefab;

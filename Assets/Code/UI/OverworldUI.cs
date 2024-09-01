@@ -9,6 +9,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public GameState gameState;
     public PlayerStats playerStats;
     public ImageLoader imageLoader;
+    public AudioManager audioManager;
     public PartyData playerParty;
     public GameObject dialoguePanel;
     public GameObject partyScreen;
@@ -116,6 +117,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Slider xpBar;
 
     public bool hankChoice;
+    public bool lesbiansTwo;
 
     public float cooldown;
 
@@ -484,6 +486,9 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         dialogueText.text = "You can see that Hank has already made up his mind. He simply starts walking away without saying anything.";
         continueButton.gameObject.SetActive(false);
         dialogueText.gameObject.SetActive(false);
+
+        audioManager.slurpLesbiansOne.Play();
+        lesbiansTwo = true;
     }
 
     public void HankChoice2Pressed()
@@ -565,6 +570,14 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         {
             if (!hankChoice)
             {
+                if (lesbiansTwo)
+                {
+                    audioManager.slurpLesbiansTwo.Play();
+                    lesbiansTwo = false;
+                    GameObject hank = GameObject.Find("HANKJWIMBLETON");
+                    Destroy(hank);
+                }
+
                 gameState.globalPaused = false;
                 dialoguePanel.SetActive(false);
                 dialogueText.text = null;

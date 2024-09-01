@@ -4,6 +4,7 @@ public class PartyFunctions : MonoBehaviour
 {
     public GameState gameState;
     public OverworldUI overworldUI;
+    public AudioManager audioManager;
     public EntityTracker entityTracker;
     public TilemapManager tilemapManager;
     public CombatManager combatManager;
@@ -22,6 +23,7 @@ public class PartyFunctions : MonoBehaviour
         entityTracker = FindObjectOfType<EntityTracker>();
         combatManager = FindObjectOfType<CombatManager>();
         overworldUI = FindObjectOfType<OverworldUI>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         currentGridPosition = tilemapManager.tilemap.WorldToCell(transform.position);
         transform.position = tilemapManager.tilemap.GetCellCenterWorld(currentGridPosition);
@@ -71,6 +73,36 @@ public class PartyFunctions : MonoBehaviour
                 GetComponent<PartyFunctions>().currentGridPosition = playerGridPos;
 
                 gameState.portalIntroduction = false;
+
+                if (gameState.progress == 2)
+                {
+                    audioManager.forestTheme.Stop();
+                    audioManager.desertTheme.Play();
+
+                    overworldUI.AddMessage("This is the content desert. It used to be a lush paradise but now that the dark lord has taken over, it has become a barren and desolate place. Any creature who managed to survive here is sure to be very dangerous!");
+                }
+
+                if (gameState.progress == 3)
+                {
+                    audioManager.desertTheme.Stop();
+                    audioManager.snowTheme.Play();
+
+                    overworldUI.AddMessage("Huh! I don't remember this place. It sure is cold though.");
+                }
+
+                if (gameState.progress == 4)
+                {
+                    audioManager.snowTheme.Stop();
+                    audioManager.corruptionTheme.Play();
+
+                    overworldUI.AddMessage("You have managed to come to the very heart of Twitch! This is where all the great streamers and their viewers come from. The dark lord's presence has completely twisted and corrupted this place.");
+                }
+
+                if (gameState.progress == 5)
+                {
+                    audioManager.forestTheme.Stop();
+                    audioManager.creditTheme.Play();
+                }
             }
 
             else if (!gameState.portalIntroduction && gameState.portalCount == 0)
@@ -123,6 +155,14 @@ public class PartyFunctions : MonoBehaviour
             else if (!gameState.portalIntroduction && gameState.portalCount == 4)
             {
                 overworldUI.AddMessage("It looks like you have power over all these portals now. You can go through without anyone elses help.");
+
+                gameState.portalIntroduction = true;
+                gameState.portalCount += 1;
+            }
+
+            else if (!gameState.portalIntroduction && gameState.portalCount == 5)
+            {
+                overworldUI.AddMessage("Well I guess this is goodbye. Enter the portal when you want to finish the game.");
 
                 gameState.portalIntroduction = true;
                 gameState.portalCount += 1;

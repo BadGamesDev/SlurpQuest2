@@ -25,6 +25,7 @@ public class ImageLoader : MonoBehaviour
     public Sprite tedTalkIcon;
     public Sprite raidIcon;
     public Sprite finalFormIcon;
+    public Sprite simpIcon;
 
     public Sprite longClawsIcon; //honey
     public Sprite swipeIcon;
@@ -61,6 +62,8 @@ public class ImageLoader : MonoBehaviour
     public Sprite tedAudienceIcon;
     public Sprite raidTargetIcon;
     public Sprite burnoutIcon;
+
+    public Sprite permaCloudIcon;
 
     public Sprite thotwisIcon;
     public Sprite clownwisIcon;

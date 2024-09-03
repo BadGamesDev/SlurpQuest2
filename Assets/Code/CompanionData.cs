@@ -25,7 +25,7 @@ public class CompanionData
             maxHealth += 40;
             health += 40;
             defence += 0;
-            dodge += 5;
+            dodge += 1;
             damage += 6;
             accuracy += 5;
             speed += 1;
@@ -50,10 +50,10 @@ public class CompanionData
 
         else if (characterName == "Honey")
         {
-            maxHealth += 30;
-            health += 30;
+            maxHealth += 25;
+            health += 25;
             defence += 0;
-            dodge += 5;
+            dodge += 2;
             damage += 8;
             accuracy += 5;
             speed += 2;
@@ -78,8 +78,8 @@ public class CompanionData
 
         else if (characterName == "Digi63")
         {
-            maxHealth += 35;
-            health += 35;
+            maxHealth += 45;
+            health += 45;
             defence += 2;
             dodge += 0;
             damage += 5;
@@ -109,10 +109,10 @@ public class CompanionData
             maxHealth += 30;
             health += 30;
             defence += 0;
-            dodge += 0;
-            damage += 0;
-            accuracy += 0;
-            speed += 0;
+            dodge += 4;
+            damage += 6;
+            accuracy += 4;
+            speed += 3;
 
             if (level == 0)
             {
@@ -162,12 +162,12 @@ public class CompanionData
 
         else if (characterName == "OneViolence")
         {
-            maxHealth += 30;
-            health += 30;
-            defence += 0;
-            dodge += 0;
-            damage += 0;
-            accuracy += 0;
+            maxHealth += 40;
+            health += 40;
+            defence += 1;
+            dodge += 2;
+            damage += 4;
+            accuracy += 5;
             speed += 0;
 
             if (level == 0)

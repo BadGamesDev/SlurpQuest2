@@ -100,10 +100,10 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   characterName: Husk
   level: 0
-  maxHealth: 80
-  health: 80
+  maxHealth: 60
+  health: 60
   defence: 0
-  accuracy: 75
+  accuracy: 80
   dodge: 0
   damage: 10
   speed: 8

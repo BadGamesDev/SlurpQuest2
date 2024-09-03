@@ -108,7 +108,7 @@ MonoBehaviour:
   speed: 25
   turnCoolDown: 3000
   team: 0
-  xpReward: 500
+  xpReward: 0
   winEvent: digi win event
   loseEvent: digi lose event
   skills: []

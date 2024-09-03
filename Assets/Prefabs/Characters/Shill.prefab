@@ -175,8 +175,8 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   characterName: Shill
   level: 0
-  maxHealth: 200
-  health: 200
+  maxHealth: 210
+  health: 210
   defence: 5
   accuracy: 85
   dodge: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   speed: 14
   turnCoolDown: 3000
   team: 0
-  xpReward: 150
+  xpReward: 250
   winEvent: 
   loseEvent: 
   skills: []
@@ -266,6 +266,7 @@ MonoBehaviour:
   combatFunctions: {fileID: 0}
   ownData: {fileID: 1357805490268290798}
   turnSinceSucc: 0
+  silence: 0
 --- !u!1 &250703231830054667
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,7 +22,7 @@ public class EntitySpawner : MonoBehaviour
     {
         if (gameState.progress == 0 || gameState.progress == 1) //grass level
         {
-            if (entityTracker.partyCounts[0] < 10)
+            if (entityTracker.partyCounts[0] < 8)
             {
                 SpawnHostileParty(1);
             }
@@ -30,7 +30,7 @@ public class EntitySpawner : MonoBehaviour
 
         else if (gameState.progress == 2) //desert level
         {
-            if (entityTracker.partyCounts[1] < 10)
+            if (entityTracker.partyCounts[1] < 12)
             {
                 SpawnHostileParty(2);
             }
@@ -113,16 +113,24 @@ public class EntitySpawner : MonoBehaviour
                 newParty.transform.localScale = new Vector2(0.40f, 0.35f);
 
                 newPartyData.level = 2;
-                int enemyCount = Random.Range(1, 3);
+                int enemyCount = Random.Range(1, 4);
                 
                 if (enemyCount == 1)
                 {
                     newPartyData.pos1 = shillPrefab;
                 }
+                
                 else if (enemyCount == 2)
                 {
                     newPartyData.pos1 = shillPrefab;
                     newPartyData.pos2 = shillPrefab;
+                }
+
+                else if (enemyCount == 3)
+                {
+                    newPartyData.pos1 = shillPrefab;
+                    newPartyData.pos2 = shillPrefab;
+                    newPartyData.pos3 = shillPrefab;
                 }
 
                 entityTracker.partyCounts[1] += 1;

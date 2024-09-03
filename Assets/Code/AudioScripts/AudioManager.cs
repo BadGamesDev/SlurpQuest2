@@ -12,12 +12,16 @@ public class AudioManager : MonoBehaviour
     public AudioSource warlockTheme;
     public AudioSource corruptionTheme;
     public AudioSource asmonTheme;
+    public AudioSource asmonDeathTheme;
     public AudioSource auditorTheme;
     public AudioSource hankTheme;
     public AudioSource creditTheme;
 
     public AudioSource onePeaceTheme;
+    public AudioSource engineTheme;
 
     public AudioSource slurpLesbiansOne;
     public AudioSource slurpLesbiansTwo;
+
+    public AudioSource introTheme;
 }

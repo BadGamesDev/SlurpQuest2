@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using TMPro;
 
 public class CombatManager : MonoBehaviour
@@ -188,6 +189,8 @@ public class CombatManager : MonoBehaviour
         PartyData sideOneData = partyOne.GetComponent<PartyData>();
         PartyData sideTwoData = partyTwo.GetComponent<PartyData>();
 
+        sideOneData.pos1.GetComponent<CharacterData>().skill4Cooldown = 7;
+
         if (sideTwoData.pos1.GetComponent<CharacterData>().characterName == "Cyborg Hunter")
         {
             audioManager.forestTheme.Stop();
@@ -198,6 +201,7 @@ public class CombatManager : MonoBehaviour
         {
             audioManager.desertTheme.Stop();
             audioManager.maddizTheme.Play();
+            audioManager.engineTheme.Play();
         }
 
         if (sideTwoData.pos1.GetComponent<CharacterData>().characterName == "The Warlock")
@@ -348,9 +352,17 @@ public class CombatManager : MonoBehaviour
     {
         foreach (CharacterData combatant in combatants)
         {
-            int rollResult = Random.Range(0, 1501);
-            combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(rollResult);
-            Debug.Log(rollResult + combatant.characterName);
+            if (combatant.characterName == "Jaydizz" || combatant.characterName == "MadDizz")
+            {
+                combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(2990);
+            }
+
+            else
+            {
+                int rollResult = UnityEngine.Random.Range(0, 1501);
+                combatant.GetComponent<CharacterFunctions>().ReduceTurnCooldown(rollResult);
+                Debug.Log(rollResult + combatant.characterName);
+            }
         }
     }
 
@@ -388,7 +400,14 @@ public class CombatManager : MonoBehaviour
                     { 
                         if(status.statusName == "simp")
                         {
-                            simp = true;
+                            if (combatant.isBoss)
+                            {
+                                combatant.damage -= 5 * playerStats.level;
+                            }
+                            else
+                            {
+                                simp = true;
+                            }
                         }
                     }
 
@@ -412,7 +431,7 @@ public class CombatManager : MonoBehaviour
                         {
                             while (target == null && tries < 999)
                             {
-                                target = teamTwo[Random.Range(0, teamTwo.Count)];
+                                target = teamTwo[UnityEngine.Random.Range(0, teamTwo.Count)];
 
                                 if (target == combatant)
                                 {
@@ -480,12 +499,12 @@ public class CombatManager : MonoBehaviour
                         {
                             if (combatant.team == 0) //no one on the enemy team will evet use this skill so there is no need to check it like this but who knpws what the future brings
                             {
-                                CharacterData target = teamTwo[Random.Range(0, teamTwo.Count)];
+                                CharacterData target = teamTwo[UnityEngine.Random.Range(0, teamTwo.Count)];
                                 target.GetComponent<CharacterFunctions>().GetInflicted("simp", 1);
                             }
                             else if (combatant.team == 1)
                             {
-                                CharacterData target = teamOne[Random.Range(0, teamOne.Count)];
+                                CharacterData target = teamOne[UnityEngine.Random.Range(0, teamOne.Count)];
                                 target.GetComponent<CharacterFunctions>().GetInflicted("simp", 1);
                             }
                         }
@@ -506,7 +525,7 @@ public class CombatManager : MonoBehaviour
                             
                             foreach (CharacterData member in combatants)
                             {
-                                StatusEffect randeffect = allStatusEffects[Random.Range(0, allStatusEffects.Count)];
+                                StatusEffect randeffect = allStatusEffects[UnityEngine.Random.Range(0, allStatusEffects.Count)];
                                 member.GetComponent<CharacterFunctions>().GetInflicted(randeffect.statusName, 1);
                             }
                         }
@@ -547,15 +566,25 @@ public class CombatManager : MonoBehaviour
 
                         if (status.tickCount <= 0)
                         {
-                            selfStatusToRemove.Add(status); //I might actually kill myself if I mix up global and self statuses one more time am I retarded? Am I not supposed to do this kind of work?
+                            selfStatusToRemove.Add(status); //I might actually delete the whole project if I mix global and self statuses again, am I retarded? Am I not supposed to do this kind of work?
                         }
                     }
 
                     foreach(StatusEffect statusToYeet in selfStatusToRemove)
                     {
-                        if (statusToYeet.statusName == "one piece")
+                        if (statusToYeet.statusName == "one peace") //I HAVE LOST MY MIND TRYING TO FIX A BUG AND IT WAS ALL BECAUSE I HAVE WRITTEN ONE PIECE INSTEAD OF ONE PEACE HOLY SHIT I WANT TO KILL MYSELF
                         {
                             peace = false;
+                            if(combatant.characterName == "The Warlock")
+                            {
+                                FindObjectOfType<AudioManager>().onePeaceTheme.Stop();
+                                FindObjectOfType<AudioManager>().warlockTheme.Play();
+                            }
+                        }
+
+                        if (statusToYeet.statusName == "simp" && combatant.isBoss)
+                        {
+                            combatant.damage += 5 * playerStats.level;
                         }
 
                         combatant.selfStatusEffects.Remove(statusToYeet);
@@ -566,6 +595,7 @@ public class CombatManager : MonoBehaviour
                 else
                 {
                     List<StatusEffect> globalStatusToRemove = new();
+                    List<CharacterData> combatantsToKill = new();
 
                     foreach (StatusEffect status in combatant.globalStatusEffects)
                     {
@@ -605,11 +635,50 @@ public class CombatManager : MonoBehaviour
                                     combatant.damage += 5 + combatant.level * 2;
                                     combatant.speed += combatant.level * 1;
                                 }
+
+                                if (status.statusName == "bleed") //carried it over here to avoid an enumeration error, bleed damage was normally applied in character functions. The whole "statusTick" function is meaningless now (apart from stun)
+                                {                                 // my fucking god I did all of this shit and yet the errors persist
+                                    int bleedDamage = Convert.ToInt32(combatant.maxHealth / 20);
+
+                                    if (bleedDamage < combatant.health)
+                                    {
+                                        combatant.GetComponent<CharacterFunctions>().TakeDamage(bleedDamage, true);
+                                    }
+
+                                    else
+                                    {
+                                        combatantsToKill.Add(combatant);
+                                    }
+                                }
                             }
                             else
                             {
                                 status.tickCooldown = 3000;
+
+                                if (status.statusName == "bleed")
+                                {
+                                    int bleedDamage = Convert.ToInt32(combatant.maxHealth / 20);
+
+                                    if (bleedDamage < combatant.health)
+                                    {
+                                        combatant.GetComponent<CharacterFunctions>().TakeDamage(bleedDamage, true);
+                                    }
+
+                                    else
+                                    { 
+                                        combatantsToKill.Add(combatant); 
+                                    }
+                                }
                             }
+                        }
+                    }
+
+                    if (combatantsToKill.Count > 0)
+                    {
+                        combatPauseCooldown += 0.5f; //this doesn't do shit, update still gives me enumeration error
+                        foreach (CharacterData dudeToKill in combatantsToKill)
+                        {
+                            dudeToKill.GetComponent<CharacterFunctions>().Die();
                         }
                     }
 
@@ -662,6 +731,16 @@ public class CombatManager : MonoBehaviour
                             teamTwo.Add(bigFootData);
                         }
                         bigFootData.team = data.team;
+
+                        newBigfoot.GetComponent<CharacterFunctions>().ChangeMaxHealth(200 + 25 * playerStats.level);
+                        bigFootData.damage += 5 * playerStats.level;
+
+                        if (bench[0].GetComponent<CharacterData>().characterName == "Cyborg Hunter") 
+                        {
+                            bigFootData.maxHealth = 200;
+                            bigFootData.health = 200;
+                            bigFootData.damage = 20;
+                        }
 
                         CombatUI combatUI = FindObjectOfType<CombatUI>();
                         combatPauseCooldown = 2;
@@ -765,6 +844,7 @@ public class CombatManager : MonoBehaviour
             FindAnyObjectByType<CombatUI>().combatFinishMessage = ("Congratulations! You have defeated the enemy and gained " + xpReward + " nolifepoints!"); 
         }
 
+        overworldUI.LevelUpCheck();
         winEvents.Clear();
         loseEvents.Clear();
     }
@@ -833,6 +913,7 @@ public class CombatManager : MonoBehaviour
         overworldUI.HoneyUnlockedMessage();
         playerStats.unlockedCompanions.Add(honey);
         playerStats.GainXP(500);
+        playerStats.noLifePoints += 500; //gainxp should probably handle this on it's own tbh. There is no case where you only gain money.
         honey.skills.Add(SkillDatabase.longClaws);
         honey.skills.Add(SkillDatabase.swipe);
 
@@ -949,7 +1030,7 @@ public class CombatManager : MonoBehaviour
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "You did it. Asmongold is no more!";
         cinematicManager.asmonCutscene = true;
 
-        audioManager.corruptionTheme.Play();
+        audioManager.asmonDeathTheme.Play();
         audioManager.asmonTheme.Stop();
     }
 
@@ -976,7 +1057,7 @@ public class CombatManager : MonoBehaviour
         FindAnyObjectByType<CombatUI>().combatFinishMessage = "YOU DID IT! YOU BEAT THE ACTUAL FINAL BOSS! IT IS DONE! YOU GOT HANK BACK! YOU DESTROYED THE CURSE AND SAVED EVERYONE! WE ARE SO FUCKING BACK!";
 
         audioManager.corruptionTheme.Play();
-        audioManager.auditorTheme.Stop();
+        audioManager.hankTheme.Stop();
     }
 
     public void AuditorLoseEvent()
@@ -985,6 +1066,7 @@ public class CombatManager : MonoBehaviour
 
         audioManager.corruptionTheme.Play();
         audioManager.auditorTheme.Stop();
+        audioManager.hankTheme.Stop(); //shouldn't be possible to lose with hank but just in case.
     }
 
     public void RespawnPlayer()

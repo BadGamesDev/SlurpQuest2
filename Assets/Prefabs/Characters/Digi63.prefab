@@ -109,7 +109,7 @@ MonoBehaviour:
   speed: 0
   turnCoolDown: 3000
   team: 0
-  xpReward: 100
+  xpReward: 0
   winEvent: 
   loseEvent: 
   skills: []
@@ -123,6 +123,7 @@ MonoBehaviour:
   bigFootSlot: {fileID: 0}
   isBoss: 0
   secondPhase: 0
+  invulnerable: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0

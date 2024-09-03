@@ -100,8 +100,28 @@ public class PartyFunctions : MonoBehaviour
 
                 if (gameState.progress == 5)
                 {
+                    GameObject.Find("PlayerParty").GetComponent<PartyData>().pos2 = null;
+                    GameObject.Find("PlayerParty").GetComponent<PartyData>().pos3 = null;
+
+                    FindObjectOfType<PlayerStats>().activeCompanions.Remove(FindObjectOfType<PlayerStats>().activeCompanions[0]);
+                    FindObjectOfType<PlayerStats>().activeCompanions.Remove(FindObjectOfType<PlayerStats>().activeCompanions[1]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[1]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[2]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[3]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[4]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[5]);
+
+                    overworldUI.member2 = null;
+                    overworldUI.member3 = null;
+                    overworldUI.AddMessage("The curse feels suffocating here. You don't know how much longer you can keep going.");
+                }
+
+                if (gameState.progress == 7)
+                {
                     audioManager.forestTheme.Stop();
                     audioManager.creditTheme.Play();
+
+                    FindObjectOfType<CinematicManager>().creditsScene = true;
                 }
             }
 

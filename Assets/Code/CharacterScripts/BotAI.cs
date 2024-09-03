@@ -9,6 +9,8 @@ public class BotAI : MonoBehaviour
     public CombatUI combatUI;
     public CharacterData ownData;
 
+    public bool silence;
+
     void Start()
     {
         combatManager = FindObjectOfType<CombatManager>();
@@ -23,7 +25,17 @@ public class BotAI : MonoBehaviour
     {
         if (combatManager.turnHaver == ownData && !ownData.selfStatusEffects.Contains(StatusEffectDatabase.stun) && ownData.team == 1 && combatManager.teamOne.Count != 0)
         {
-            if (combatManager.teamTwo.Count < 3)
+            silence = false;
+
+            foreach (StatusEffect statusEffect in ownData.globalStatusEffects) //imagine how easy life would be if I just had a check status method.
+            {
+                if (statusEffect.statusName == "silence")
+                {
+                    silence = true;
+                }
+            }
+
+            if (combatManager.teamTwo.Count < 3 && silence == false)
             {
                 int slotToSpawn = 0;
 

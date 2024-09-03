@@ -52,7 +52,6 @@ public class CharacterUI : MonoBehaviour
         foreach (Image icon in statusIcons)
         {
             Destroy(icon.gameObject);
-            Debug.Log("uhhhh");
         }
 
         statusIcons.Clear();
@@ -80,6 +79,36 @@ public class CharacterUI : MonoBehaviour
             {
                 statusIcon.sprite = imageLoader.raidTargetIcon;
             }
+
+            else if (globalStatus.statusName == "corpse paint")
+            {
+                statusIcon.sprite = imageLoader.corpseIcon;
+            }
+
+            else if (globalStatus.statusName == "engine started")
+            {
+                statusIcon.sprite = imageLoader.startenginesIcon;
+            }
+
+            else if (globalStatus.statusName == "burnout smoke")
+            {
+                statusIcon.sprite = imageLoader.burnoutIcon;
+            }
+
+            else if (globalStatus.statusName == "cute")
+            {
+                statusIcon.sprite = imageLoader.justBeCuteIcon;
+            }
+
+            else if (globalStatus.statusName == "ultra instinct")
+            {
+                statusIcon.sprite = imageLoader.ultraInstinctIcon;
+            }
+
+            else if (globalStatus.statusName == "silence")
+            {
+                statusIcon.sprite = imageLoader.silenceIcon;
+            }
         }
         
         foreach (StatusEffect selfStatus in ownData.selfStatusEffects)
@@ -104,6 +133,31 @@ public class CharacterUI : MonoBehaviour
             else if (selfStatus.statusName == "raid target")
             {
                 statusIcon.sprite = imageLoader.raidTargetIcon;
+            }
+
+            else if (selfStatus.statusName == "one peace")
+            {
+                statusIcon.sprite = imageLoader.peaceIcon;
+            }
+
+            else if (selfStatus.statusName == "thottery")
+            {
+                statusIcon.sprite = imageLoader.thotwisIcon;
+            }
+
+            else if (selfStatus.statusName == "return to trad")
+            {
+                statusIcon.sprite = imageLoader.tradwisIcon;
+            }
+
+            else if (selfStatus.statusName == "permacloud")
+            {
+                statusIcon.sprite = imageLoader.permaCloudIcon;
+            }
+
+            else if (selfStatus.statusName == "simp")
+            {
+                statusIcon.sprite = imageLoader.simpIcon;
             }
         }
     }

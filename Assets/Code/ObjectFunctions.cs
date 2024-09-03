@@ -96,6 +96,7 @@ public class ObjectFunctions : MonoBehaviour
                 overworldUI.AddMessage("Cndk99: I guess I should join you if you are going to fight him. You have no chance without my skills!");
                 overworldUI.AddMessage("Damn! This guy looks really strong. I bet he is extremely smart too! The rest of the game will be so easy with him on your side!");
                 playerStats.unlockedCompanions.Add(cndk99);
+                overworldUI.LevelUpCheck();
                 delete = true;
             }
 
@@ -111,6 +112,7 @@ public class ObjectFunctions : MonoBehaviour
             else if (ownData.item == 8)
             {
                 playerStats.GainXP(100);
+                playerStats.noLifePoints += 100;
                 overworldUI.AddMessage("You have opened the chest and found 100 nolifepoints. Nice!");
                 ownData.item = 0;
             }
@@ -118,6 +120,38 @@ public class ObjectFunctions : MonoBehaviour
             else if (ownData.item == 9)
             {
                 overworldUI.AddMessage("The Trickster: I'd love to chat but you should go. The portal is open.");
+            }
+
+            else if (ownData.item == 10)
+            {
+                playerStats.GainXP(300);
+                playerStats.noLifePoints += 300;
+                overworldUI.AddMessage("You have opened the chest and found 300 nolifepoints. Nice!");
+                ownData.item = 0;
+            }
+
+            else if (ownData.item == 11)
+            {
+                overworldUI.AddMessage("mrinkredible18: Slurp! You did it! You saved everyone! But anyways don't let me keep you, everyone is waiting, just keep moving, you'll see them.");
+                overworldUI.AddMessage("mrinkredible18: Oh also, you might have noticed I don't have legs. That is simply because everyone in Slurp Quest™ universe has evolved beyond the need for legs. We just move by floating. This also explains why there are no walking animations.");
+                overworldUI.AddMessage("mrinkredible18: Yes you heard that right. Things aren't this way because cndk99 is a lazy fuck who can't animate shit. Everything actually has a lore reason!");
+                ownData.item = 12;
+            }
+
+            else if (ownData.item == 12)
+            {
+                overworldUI.AddMessage("mrinkredible18: Come on Slurp hurry up! They are all waiting for you!");
+            }
+
+            else if (ownData.item == 13)
+            {
+                overworldUI.AddMessage("Krye: I guess I should thank you Slurp! Now I can finally go back to my girlfriend. I'd love to stay for the celebration but my 100% real girlfriend goes to another school so I should be on my way.");
+                ownData.item = 14;
+            }
+
+            else if (ownData.item == 14)
+            {
+                overworldUI.AddMessage("Krye: I know you want to hear all about my girlfriend but please, I'm really in a hurry.");
             }
         }
     }

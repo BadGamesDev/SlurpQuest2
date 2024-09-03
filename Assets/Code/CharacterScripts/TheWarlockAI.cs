@@ -54,12 +54,16 @@ public class TheWarlockAI : MonoBehaviour
                 {
                     CharacterData target = ownData;
                     combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.onePeace);
+                    FindObjectOfType<AudioManager>().onePeaceTheme.Play();
+                    FindObjectOfType<AudioManager>().warlockTheme.Stop();
+                    combatManager.combatPauseCooldown += 2;
                 }
 
                 else if (moves[turnNumber] == "one violence")
                 {
                     CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
                     combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.oneViolence);
+                    combatManager.combatPauseCooldown += 1;
                 }
             }
             

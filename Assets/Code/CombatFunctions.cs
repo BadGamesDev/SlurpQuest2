@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 using System;
 //everything should have a separate pause lenght as sometimes it is hard to read shit in time
@@ -102,6 +103,14 @@ public class CombatFunctions : MonoBehaviour
                 combatUI.combatText.text = "Slurp gave a long ass Ted speech and demoralised the enemy, lowering their defence.";
             }
 
+            if(charactersToKill.Count > 0)
+            {
+                foreach(CharacterData character in charactersToKill)
+                {
+                    character.GetComponent<CharacterFunctions>().Die();
+                }
+            }
+
             skillUser.skill2Cooldown = 5;
         }
         
@@ -156,9 +165,16 @@ public class CombatFunctions : MonoBehaviour
 
         else if (skill.skillName == "Snuggle") //DONE
         {
-            target.GetComponent<CharacterFunctions>().GetHealed(20 + (10 * (skillUser.level + 1)));
-            combatUI.combatText.text = skillUser.characterName + " snuggled " + target.characterName + " helping them heal";
-            skillUser.skill3Cooldown = 5;
+            if (target == skillUser)
+            {
+                combatUI.combatText.text = "Can Honey snuggle with herself? THINK SLURP THINK!";
+            }
+            else
+            {
+                target.GetComponent<CharacterFunctions>().GetHealed(20 + (10 * (skillUser.level + 1)));
+                combatUI.combatText.text = skillUser.characterName + " snuggled " + target.characterName + " helping them heal";
+                skillUser.skill3Cooldown = 5;
+            }
         }
 
         else if (skill.skillName == "Ultra Instinct") //DONE
@@ -179,7 +195,7 @@ public class CombatFunctions : MonoBehaviour
 
         else if (skill.skillName == "Silence" && combatManager.peace == false)
         {
-            target.GetComponent<CharacterFunctions>().GetInflicted("silence", 3);
+            target.GetComponent<CharacterFunctions>().GetInflicted("silence", 4);
             if (!target.isBoss)
             {
                 combatUI.combatText.text = skillUser.characterName + " silenced " + target.characterName + " they can not use any skills now!";
@@ -190,7 +206,7 @@ public class CombatFunctions : MonoBehaviour
                 combatUI.combatText.text = "I am sorry Slurp. I know it makes sense to use this skill on bosses but I can not allow it as boss fights can get fucking broken if you use silence on them. That is why it did nothing. You just wasted a turn.";
             }
             
-            skillUser.skill1Cooldown = 4;
+            skillUser.skill2Cooldown = 4;
         }
 
         else if (skill.skillName == "Ban Hammer" && combatManager.peace == false)
@@ -230,16 +246,19 @@ public class CombatFunctions : MonoBehaviour
         else if (skill.skillName == "Start Your Engines")
         {
             skillUser.GetComponent<CharacterFunctions>().GetInflicted("engine started", 4);
+            combatUI.combatText.text = skillUser.characterName + " started his engines! He is fast as fuck!";
         }
         
         else if (skill.skillName == "Burnout")
         {
             skillUser.GetComponent<CharacterFunctions>().GetInflicted("burnout smoke", 2);
+            combatUI.combatText.text = skillUser.characterName + " obscured himself with a cloud of smoke. He is way harder to hit now!";
         }
         
         else if (skill.skillName == "Pit Stop")
         {
             skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.maxHealth - skillUser.health); //heal method already fixes any overhealing but I want to calculate it correctly incase I want to show it in UI or something.
+            combatUI.combatText.text = skillUser.characterName + " used pitstop to completely heal himself!";
         }
         
         else if (skill.skillName == "Dizz Or No Dizz" && combatManager.peace == false)
@@ -278,22 +297,42 @@ public class CombatFunctions : MonoBehaviour
             {
                 combatUI.combatText.text = skillUser.characterName + " used herbal medicine to heal " + target.characterName;
             }
+            skillUser.skill1Cooldown = 2;
         }
 
         else if (skill.skillName == "Corpse Paint")
         {
-            target.GetComponent<CharacterFunctions>().GetInflicted("corpse paint", 999);
-            target.damage += 5 + skillUser.level * 2; //When I'm adding the buff I'm looking at the level of skill user, when I'm removing the buff I'm looking at the level of the character with the buff. This is not a problem since everyone in the same party will have the same level BUT it will be a problem if slurps forgets to level up a character. (Oh also, corpse paint will never be removed anyway but I'm probably going to do this for some other skills too)
-            target.speed += skillUser.level * 1;
+            bool painted = false;
 
-            if (skillUser == target)
+            foreach (StatusEffect effect in target.globalStatusEffects)
             {
-                combatUI.combatText.text = skillUser.characterName + " applied corpse paint on himself. It looks fucking sick!";
+                if(effect.statusName == "corpse paint")
+                {
+                    painted = true;
+                }
             }
-            else
+
+            if (painted == false)
             {
-                combatUI.combatText.text = skillUser.characterName + " applied corpse paint on " + target.characterName + ". It looks fucking sick!";
+                target.GetComponent<CharacterFunctions>().GetInflicted("corpse paint", 999);
+                target.damage += 5 + skillUser.level * 2; //When I'm adding the buff I'm looking at the level of skill user, when I'm removing the buff I'm looking at the level of the character with the buff. This is not a problem since everyone in the same party will have the same level BUT it will be a problem if slurps forgets to level up a character. (Oh also, corpse paint will never be removed anyway but I'm probably going to do this for some other skills too)
+                target.speed += skillUser.level * 1;
+
+                if (skillUser == target)
+                {
+                    combatUI.combatText.text = skillUser.characterName + " applied corpse paint on himself. It looks fucking sick!";
+                }
+                else
+                {
+                    combatUI.combatText.text = skillUser.characterName + " applied corpse paint on " + target.characterName + ". It looks fucking sick!";
+                }
             }
+
+            if (painted == true)
+            {
+                combatUI.combatText.text = target.characterName + " was already painted! You just wasted your turn!";
+            }
+
         }
 
         else if (skill.skillName == "One Peace")
@@ -338,6 +377,8 @@ public class CombatFunctions : MonoBehaviour
                 damageText = 1111.ToString();
             }
 
+            skillUser.skill4Cooldown = 999;
+
             combatUI.combatText.text = skillUser.characterName + " used ONE VIOLENCE to deal " + damageText + " damage!";
         }
 
@@ -351,7 +392,7 @@ public class CombatFunctions : MonoBehaviour
             combatUI.combatText.text = skillUser.characterName + " started rapping! It is so fucking bad that it reduced everyones defence to 0. Because they all want this shit to be over asap.";
         }
 
-        else if (skill.skillName == "clownmaxxing" && combatManager.peace == false)
+        else if (skill.skillName == "Clownmaxxing" && combatManager.peace == false)
         {
             List<CharacterData> charactersToKill = new();
             foreach (CharacterData combatant in combatManager.combatants)
@@ -391,8 +432,8 @@ public class CombatFunctions : MonoBehaviour
 
         else if (skill.skillName == "Suck Life" && combatManager.peace == false)
         {
-            target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage, true);
-            skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.damage);
+            target.GetComponent<CharacterFunctions>().TakeDamage(skillUser.damage * 2, true);
+            skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.damage * 2);
             combatUI.combatText.text = "Shill sucked the life force of " + target.characterName;
         }
 
@@ -401,7 +442,7 @@ public class CombatFunctions : MonoBehaviour
             combatUI.combatText.text = "NO FUCKING FIGHTING!";
         }
 
-        combatManager.combatPauseCooldown = 2f;
+        combatManager.combatPauseCooldown += 2.4f;
     }
 
     public void UseItem(List<CharacterData> userTeam, CharacterData itemUser, List<CharacterData> enemyTeam, CharacterData target, string item)//Once again the if checks are absolutely disgusting
@@ -412,6 +453,8 @@ public class CombatFunctions : MonoBehaviour
             {
                 target.characterName = "Honey";
                 target.GetComponent<CharacterFunctions>().ChangeMaxHealth(100);
+                target.GetComponent<Image>().sprite = FindObjectOfType<ImageLoader>().honeyAvatar;
+
 
                 combatManager.WinCombat();
             }
@@ -463,7 +506,7 @@ public class CombatFunctions : MonoBehaviour
             playerStats.gamblingChip -= 1;
         }
 
-        combatManager.combatPauseCooldown = 1.8f;
+        combatManager.combatPauseCooldown += 1.8f;
     }
 
     public void EndTurn(CharacterData turnSpender) //turnSpender truly is an amazing name

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class CharacterFunctions : MonoBehaviour
 {
@@ -22,10 +23,8 @@ public class CharacterFunctions : MonoBehaviour
 
     public void ChangeMaxHealth(int amount)
     {
-        if(ownData.health > amount)
-        {
-            ownData.health = amount;
-        }
+        ownData.maxHealth = amount;
+        ownData.health = amount;
         ownUI.healthBar.maxValue = amount;
         ownUI.UpdateHealthBar(ownData.health);
     }
@@ -40,6 +39,13 @@ public class CharacterFunctions : MonoBehaviour
         {
             ownData.health += healAmount;
         }
+
+        Transform combatSlot = transform.parent;
+        TMP_Text damageText = combatSlot.Find("damageText").GetComponent<TMP_Text>();
+        damageText.transform.SetAsLastSibling();
+        damageText.text = healAmount.ToString();
+        damageText.color = Color.green;
+
         ownUI.UpdateHealthBar(ownData.health);
     }
 
@@ -75,6 +81,12 @@ public class CharacterFunctions : MonoBehaviour
 
             ownData.health -= damageAmount;
             ownUI.UpdateHealthBar(ownData.health);
+
+            Transform combatSlot = transform.parent;
+            TMP_Text damageText = combatSlot.Find("damageText").GetComponent<TMP_Text>();
+            damageText.transform.SetAsLastSibling();
+            damageText.text = damageAmount.ToString();
+            damageText.color = Color.red;
 
             if (ownData.health <= 0)
             {
@@ -380,6 +392,25 @@ public class CharacterFunctions : MonoBehaviour
             }
         }
 
+        else if (status == "silence")
+        {
+            existingStatus = CheckStatusGlobal(status);
+            if (existingStatus == null)
+            {
+                StatusEffect newEffect = new StatusEffect
+                {
+                    statusName = StatusEffectDatabase.silence.statusName,
+                    tickCount = duration
+                };
+
+                ownData.globalStatusEffects.Add(newEffect);
+            }
+            else
+            {
+                existingStatus.tickCount = duration;
+            }
+        }
+
         ownUI.UpdateStatusIcons();
     }
 
@@ -388,10 +419,6 @@ public class CharacterFunctions : MonoBehaviour
         if (status == "stun")
         {
             combatManager.turnHaver = null;
-        }
-        else if (status == "bleed")
-        {
-            TakeDamage(Convert.ToInt32(ownData.maxHealth / 20), true);
         }
     }
 
@@ -479,6 +506,14 @@ public class CharacterFunctions : MonoBehaviour
                 if (combatManager.teamTwo.Count == 0)
                 {
                     combatManager.WinCombat();
+                }
+            }
+
+            foreach(CharacterData combatant in combatManager.combatants)
+            {
+                if (combatant.characterName == "OneViolence" || combatant.characterName == "The Warlock")
+                {
+                    combatant.GetComponent<CharacterFunctions>().GetHealed(combatant.maxHealth);
                 }
             }
 

@@ -15,6 +15,11 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public GameObject partyScreen;
     public GameObject menuScreen;
     public GameObject itemsScreen;
+    public GameObject cheatScreen;
+
+    public Button cheatON;
+
+    public Button cheatOFF;
 
     public TMP_Text catFoodCount;
     public TMP_Text pizzaCount;
@@ -35,6 +40,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Button menuButton;
     public Button partyButton;
     public Button itemsButton;
+    public Button cheatButton;
 
     public Button continueButton;
 
@@ -105,6 +111,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Button statButton0;
     public Button statButton1;
 
+    public Button levelUpIndicator;
+
     public Button menuScreenDoneButton;
     public Button partyScreenDoneButton;
     public Button itemsScreenDoneBUtton;
@@ -118,6 +126,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public bool hankChoice;
     public bool lesbiansTwo;
+    public bool levelAvailable;
 
     public float cooldown;
 
@@ -135,18 +144,42 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         }
     }
 
+    public void LevelUpCheck()
+    {
+        levelAvailable = false;
+        foreach (CompanionData companion in playerStats.unlockedCompanions)
+        {
+            if (companion.level < playerStats.level)
+            {
+                levelAvailable = true;
+            }
+        }
+
+        if (levelAvailable)
+        { 
+            levelUpIndicator.gameObject.SetActive(true);
+        }
+        else
+        {
+            levelUpIndicator.gameObject.SetActive(false);
+        }
+    }
+
     public void MenuButtonPressed()
     {
+        gameState.globalPaused = true;
         menuScreen.SetActive(true);
     }
 
     public void CloseMenuButtonPressed()
     {
+        gameState.globalPaused = false;
         menuScreen.SetActive(false);
     }
 
     public void PartyButtonPressed()
     {
+        gameState.globalPaused = true;
         partyScreen.SetActive(true);
         
         if(playerParty.pos1 != null)
@@ -169,6 +202,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void PartyScreenDoneButtonPressed() //what a terrible name lmao
     {
+        gameState.globalPaused = false;
         partyScreen.SetActive(false);
     }
 
@@ -249,7 +283,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
             portrait.sprite = imageLoader.oneviolenceHead;
         }
 
-        nameText.text = "Name: " + statsCompanion.characterName;
+        nameText.text = statsCompanion.characterName;
         levelText.text = "Level: " + (statsCompanion.level + 1).ToString();
         healthText.text = "Health: " + statsCompanion.health.ToString();
         defenceText.text = "Defence: " + statsCompanion.defence.ToString();
@@ -317,12 +351,13 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void OpenInventoryScreen() //I can just make this method take a variable instead of having a variable on the script. But I'm too tired to change it right now.
     {
+        gameState.globalPaused = true;
         itemsScreen.SetActive(true);
         CheckMoney();
 
         catFoodCount.text = "Cat Food: " + playerStats.catFood.ToString();
         pizzaCount.text = "5/5 Pizza: " + playerStats.pizza.ToString();
-        gamblingChipCount.text = "Gambling Chips: " + playerStats.gamblingChip.ToString();
+        gamblingChipCount.text = "Gambling Chip: " + playerStats.gamblingChip.ToString();
         noLifePoints.text = "Nolifepoints: " + playerStats.noLifePoints.ToString();
 
         catFoodPrice.text = "Buy(" + (100 + (50 * gameState.progress)).ToString() + " NLP)";
@@ -355,7 +390,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     {
         catFoodCount.text = "Cat Food: " + playerStats.catFood.ToString();
         pizzaCount.text = "5/5 Pizza: " + playerStats.pizza.ToString();
-        gamblingChipCount.text = "Gambling Chips: " + playerStats.gamblingChip.ToString();
+        gamblingChipCount.text = "Gambling Chip: " + playerStats.gamblingChip.ToString();
         noLifePoints.text = "Nolifepoints: " + playerStats.noLifePoints.ToString();
 
         buyCatFoodButton.interactable = true;
@@ -381,13 +416,15 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void CloseInventoryScreen()
     {
+        gameState.globalPaused = false;
         itemsScreen.SetActive(false);
     }
 
     public void LevelUpButtonPressed()
     {
         statsCompanion.LevelUp();
-        
+        LevelUpCheck();
+
         if (statsCompanion.level >= playerStats.level)
         {
             levelUpButton.gameObject.SetActive(false);
@@ -562,6 +599,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         menuButton.gameObject.SetActive(false);
         itemsButton.gameObject.SetActive(false);
         partyButton.gameObject.SetActive(false);
+        cheatButton.gameObject.SetActive(false);
     }
 
     public void CloseMessageButtonPressed()
@@ -588,6 +626,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
                 menuButton.gameObject.SetActive(true);
                 itemsButton.gameObject.SetActive(true);
                 partyButton.gameObject.SetActive(true);
+                cheatButton.gameObject.SetActive(true);
 
                 if (gameState.waitingCombat == true)
                 {
@@ -662,5 +701,45 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public void OneViolenceUnlockedMessage()
     {
         AddMessage("A powerful shaman from Daneland, OneViolence and his magical powers will surely be of great help against the lord of decay!");
+    }
+
+    public void ENDTHEFUCKINGGAMEBUTTONPRESSED()
+    {
+        Application.OpenURL("https://www.youtube.com/watch?v=PNFjLzVKVdk");
+    }
+
+    public void OpenCheat()
+    {
+        gameState.globalPaused = true;
+        cheatScreen.SetActive(true);
+    }
+
+    public void GoBackCheat()
+    {
+        gameState.globalPaused = false;
+        cheatScreen.SetActive(false);
+    }
+
+    public void CheatON()
+    {
+        CompanionData slurp = playerStats.unlockedCompanions[0];
+        slurp.maxHealth += 9999;
+        slurp.health += 9999;
+        slurp.damage += 9999;
+        slurp.speed += 80;
+        cheatOFF.gameObject.SetActive(true);
+        cheatON.gameObject.SetActive(false);
+    }
+
+    public void CheatOFF()
+    {
+        CompanionData slurp = playerStats.unlockedCompanions[0];
+        slurp.maxHealth -= 9999;
+        slurp.health -= 9999;
+        slurp.damage -= 9999;
+        slurp.speed -= 80;
+
+        cheatON.gameObject.SetActive(true);
+        cheatOFF.gameObject.SetActive(false);
     }
 }

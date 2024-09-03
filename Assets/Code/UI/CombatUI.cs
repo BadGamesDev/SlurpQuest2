@@ -291,14 +291,14 @@ public class CombatUI : MonoBehaviour
 
     public void ClownwisButtonPressed()
     {
-        combatManager.turnHaver.GetComponent<CharacterFunctions>().GetInflicted("clownmaxxing", 999);
         slurp0.gameObject.SetActive(false);
         slurp1.gameObject.SetActive(false);
         slurp2.gameObject.SetActive(false);
 
         combatManager.turnHaver = null;
         combatManager.gameState.combatPaused = false;
-        combatText.text = "SLURP HAS ASCENDED INTO THE CLOWN FORM!";
+        combatManager.combatPauseCooldown = 4;
+        combatText.text = "ERROR: CLOWN FORM CAN NOT BE ALLOWED. TURN TERMINATED. (Oh wow! Clown form doesn't work? Why is that? How mysterious?)";
     }
 
     public void TradwisButtonPressed()
@@ -490,6 +490,10 @@ public class CombatUI : MonoBehaviour
         skillButton1.interactable = false;
         skillButton2.interactable = false;
         skillButton3.interactable = false;
+        skillButton0.image.sprite = null;
+        skillButton1.image.sprite = null;
+        skillButton2.image.sprite = null;
+        skillButton3.image.sprite = null;
         skillButton4.gameObject.SetActive(false); //retarded problems require retarded solutions
         skillButton5.gameObject.SetActive(false);
         skillButton6.gameObject.SetActive(false);
@@ -617,19 +621,22 @@ public class CombatUI : MonoBehaviour
         itemButton0.interactable = false;
         itemButton1.interactable = false;
         itemButton2.interactable = false;
-        itemButton3.interactable = false;
-        itemButton4.interactable = false;
-        itemButton5.interactable = false;
-        itemButton6.interactable = false;
-        itemButton7.interactable = false;
-        itemButton8.interactable = false;
-        itemButton9.interactable = false;
+
 
         if (playerStats.catFood != 0)
         {
             itemButton0.interactable = true;
         }
-       
+
+        if (playerStats.pizza != 0)
+        {
+            itemButton1.interactable = true;
+        }
+
+        if (playerStats.gamblingChip != 0)
+        {
+            itemButton2.interactable = true;
+        }
     }
 
     public void ItemSlot0Pressed() //HELL YEAH! LET'S DO THE SAME FUCKING THING FOR THE ITEMS. TRULY A 10X CODER RIGHT HERE
@@ -640,47 +647,14 @@ public class CombatUI : MonoBehaviour
 
     public void ItemSlot1Pressed()
     {
-
+        ChangeState(State.ItemTargetUI);
+        combatManager.selectedItem = "pizza";
     }
 
     public void ItemSlot2Pressed()
     {
-
-    }
-
-    public void ItemSlot3Pressed()
-    {
-
-    }
-    
-    public void ItemSlot4Pressed()
-    {
-
-    }
-    
-    public void ItemSlot5Pressed()
-    {
-
-    }
-    
-    public void ItemSlot6Pressed()
-    {
-
-    }
-    
-    public void ItemSlot7Pressed()
-    {
-
-    }
-
-    public void ItemSlot8Pressed()
-    {
-
-    }
-
-    public void ItemSlot9Pressed()
-    {
-
+        ChangeState(State.ItemTargetUI);
+        combatManager.selectedItem = "gamblingChip";
     }
 
     public void FleeButtonPressed()

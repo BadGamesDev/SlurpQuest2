@@ -50,6 +50,7 @@ public class PlayerStats : MonoBehaviour //I feel like "PlayerData" would have b
             xp -= xpTreshold;
             xpTreshold *= 2;
             level += 1;
+            FindObjectOfType<OverworldUI>().LevelUpCheck();
         }
 
         OverworldUI UI = FindObjectOfType<OverworldUI>();

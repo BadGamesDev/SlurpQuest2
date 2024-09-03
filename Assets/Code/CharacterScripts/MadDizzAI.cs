@@ -24,12 +24,15 @@ public class MadDizzAI : MonoBehaviour
         moves.Add("attack");
         moves.Add("attack");
         moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
         moves.Add("dizzOrNoDizz");
         moves.Add("burnout");
         moves.Add("attack");
         moves.Add("attack");
+        moves.Add("attack");
         moves.Add("pitstop");
-        moves.Add("startEngines");
+        moves.Add("attack");
     }
 
     public void FixedUpdate()//horrible for performance
@@ -47,6 +50,7 @@ public class MadDizzAI : MonoBehaviour
                 {
                     CharacterData target = ownData;
                     combatFunctions.UseSkill(combatManager.teamTwo, ownData, combatManager.teamOne, target, SkillDatabase.startYourEngines);
+                    combatManager.combatPauseCooldown += 2;
                 }
                 else if (moves[turnNumber] == "burnout")
                 {

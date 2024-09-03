@@ -44,6 +44,7 @@ public class GameState : MonoBehaviour
         checkpointList.Add(new Vector3Int(308, -7, 0));
         checkpointList.Add(new Vector3Int(316, 72, 0));
         checkpointList.Add(new Vector3Int(408, 2, 0));
+        checkpointList.Add(new Vector3Int(408, 2, 0));
 
         checkpoint = checkpointList[0];
     }

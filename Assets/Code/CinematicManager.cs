@@ -30,7 +30,7 @@ public class CinematicManager : MonoBehaviour
 
     private void Update()
     {
-        //StartingScene();
+        StartingScene();
         AsmonScene();
         AuditorScene();
         Credits();

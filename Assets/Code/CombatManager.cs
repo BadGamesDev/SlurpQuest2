@@ -98,9 +98,14 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "FeralCat")
         {
-            overworldUI.AddMessage("Feral Cat: REEEEEEEEEEEEEEEEEEEEEE!!!!!");
+            if (gameState.metFeralCat == true)
+            {
+                overworldUI.AddMessage("Feral Cat: REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!! (The cat is even louder this time).");
+            }
+
             if (gameState.metFeralCat == false)
             {
+                overworldUI.AddMessage("Feral Cat: REEEEEEEEEEEEEEEEEEEEE!!!!!");
                 overworldUI.AddMessage("A feral cat, driven mad by the corrupting curse of the dark lord like so many other beings in this realm. For a moment you sense something familiar in it's eyes, but there is no time to think! Get ready for a fight!");
                 gameState.metFeralCat = true;
             }
@@ -108,9 +113,14 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "CyborgHunter")
         {
-            overworldUI.AddMessage("Cyborg Hunter: Streamer detected. Termination protocol activated. Please do not resist. You shall be permanently banned soon."); // making this binary could be really fun
+            if (gameState.metCyborgHunter == true)
+            {
+                overworldUI.AddMessage("Cyborg Hunter: Subject came back with an alt account. IP ban required.");
+            }
+
             if (gameState.metCyborgHunter == false)
             {
+                overworldUI.AddMessage("Cyborg Hunter: Streamer detected. Termination protocol activated. Please do not resist. You shall be permanently banned soon."); // making this binary could be really fun
                 overworldUI.AddMessage("A half man half machine monstrosity!");
                 gameState.metCyborgHunter = true;
             }
@@ -118,12 +128,18 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "MadDizz")
         {
-            overworldUI.AddMessage("MadDizz: There has been too much violence. Too much pain. None here are without sin. But I have an honorable compromise. Just walk away. " +
-                                   "Give me your nolifepoints, your companions, your hat, and the whole twitch channel, and I'll spare your life. " +
-                                   "Just walk away. I will give you safe passage in the wasteland. Just walk away and there will be an end to the horror." +
-                                   "(I can't believe you have been alive for almost 30 years and still haven't watched the road warrior... But it is my game so I'm putting this reference anyway. Fuck you!)");
+            if (gameState.metMaddizz == true)
+            {
+                overworldUI.AddMessage("MadDizz: WHO THE HELL ARE YOU? WHY DO YOU LOOK SO MUCH LIKE THE LAST GUY I BEAT? Doesn't matter... PREPARE TO GET DIZZED!");
+            }
+
             if (gameState.metMaddizz == false)
             {
+                overworldUI.AddMessage("MadDizz: There has been too much violence. Too much pain. None here are without sin. But I have an honorable compromise. Just walk away. " +
+                       "Give me your nolifepoints, your companions, your hat, and the whole twitch channel, and I'll spare your life. " +
+                       "Just walk away. I will give you safe passage in the wasteland. Just walk away and there will be an end to the horror." +
+                       "(I can't believe you have been alive for almost 30 years and still haven't watched the road warrior... But it is my game so I'm putting this reference anyway. Fuck you!)");
+
                 overworldUI.AddMessage("A streamer who has been driven mad by the curse. You should be careful, there is no telling what this guy could do!");
                 gameState.metMaddizz = true;
             }
@@ -131,9 +147,14 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "TheWarlock")
         {
-            overworldUI.AddMessage("The Warlock: Tillykke! Du har fuldstændig spildt din tid ved at oversætte dette! Gå nu tilbage til spillet.");
+            if (gameState.metTheWarlock == true)
+            {
+                overworldUI.AddMessage("The Warlock: Kan du komme tilbage fra døden? Hvilken spektakulær besværgelse. Jeg skal lære det med det samme!");
+            }
+
             if (gameState.metTheWarlock == false)
             {
+                overworldUI.AddMessage("The Warlock: Tillykke! Du har fuldstændig spildt din tid ved at oversætte dette! Gå nu tilbage til spillet.");
                 overworldUI.AddMessage("Yeah I don't have any idea what the fuck is going on this time...");
                 gameState.metTheWarlock = true;
             }
@@ -141,6 +162,11 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "Asmongold")
         {
+            if (gameState.metAsmongold == true)
+            {
+                overworldUI.AddMessage("So it is true after all... You have the ability to come back from death! Come then, let me kill you again and forever!");
+            }
+
             if (gameState.metAsmongold == false)
             {
                 overworldUI.AddMessage("The Lord of Decay: You have managed to make it all the way to me! But this is where your foolish journey ends. I'm a god. How can you kill a god? What a grand and intoxicating innocence. How could you be so naive? " +
@@ -153,9 +179,14 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "Heado")
         {
+            if (gameState.metHeado == true)
+            {
+                overworldUI.AddMessage("Wait what? I was supposed to lose that fight. What did you do?");
+            }
+
             if (gameState.metHeado == false)
             {
-                overworldUI.AddMessage("The Trickster: You fool! You have fallen into my trap, I am more powerful than ever in this realm, and you don't have any of your friends or mods to save you this time! I was Heado all along!");
+                overworldUI.AddMessage("The Trickster: You fool! You have fallen into my trap, I am more powerful than ever in this realm, and you don't have any of your friends or mods to save you this time! It was I, Heado, all along!");
                 overworldUI.AddMessage("Damn, looks like the trickster was just another alt of Heado...");
                 gameState.metHeado = true;
             }
@@ -163,6 +194,11 @@ public class CombatManager : MonoBehaviour
 
         else if (enemyData.pos1.name == "TheAuditor")
         {
+            if (gameState.metTheAuditor == true)
+            {
+                overworldUI.AddMessage("You have lost! You will lose again! Why do you keep trying? What is the point? Don't you see there is no hope!");
+            }
+
             if (gameState.metTheAuditor == false)
             {
                 overworldUI.AddMessage("The Auditor: So you have managed to kill the lord of decay? I must thank you for getting rid of that filth. Asmongold had his uses of course, but I no longer needed him... and now, it is just you and me. Time to end this.");
@@ -801,6 +837,7 @@ public class CombatManager : MonoBehaviour
         bench.Clear();
         combatPauseCooldown = 0;
         slurpPassive = 0;
+        gameState.pizzaEaten = 0;
     }
 
     public void WinEventCheck()
@@ -877,12 +914,12 @@ public class CombatManager : MonoBehaviour
             AsmongoldLoseEvent();
         }
 
-        if (winEvents.Contains("heado lose event"))
+        if (loseEvents.Contains("heado lose event"))
         {
             HeadoLoseEvent();
         }
 
-        if (winEvents.Contains("auditor lose event"))
+        if (loseEvents.Contains("auditor lose event"))
         {
             AuditorLoseEvent();
         }
@@ -1063,7 +1100,7 @@ public class CombatManager : MonoBehaviour
 
     public void AuditorLoseEvent()
     {
-        FindAnyObjectByType<CombatUI>().combatFinishMessage = "Hey Slurp! I know the fight looks impossible but believe me you can win it. Just focus on surviving until [REDACTED FOR SPOILERS]. Stock up on pizza slices or something.";
+        FindAnyObjectByType<CombatUI>().combatFinishMessage = "Hey Slurp! I know the fight looks impossible but just focus on surviving until [REDACTED FOR SPOILERS].";
 
         audioManager.corruptionTheme.Play();
         audioManager.auditorTheme.Stop();

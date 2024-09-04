@@ -100,8 +100,8 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   characterName: The Warlock
   level: 8
-  maxHealth: 850
-  health: 850
+  maxHealth: 900
+  health: 900
   defence: 15
   accuracy: 120
   dodge: 10

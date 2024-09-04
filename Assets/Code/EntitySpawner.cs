@@ -46,7 +46,7 @@ public class EntitySpawner : MonoBehaviour
 
         else if (gameState.progress == 4) //corruption level
         {
-            if (entityTracker.partyCounts[3] < 10)
+            if (entityTracker.partyCounts[3] < 15)
             {
                 SpawnHostileParty(4);
             }
@@ -181,7 +181,7 @@ public class EntitySpawner : MonoBehaviour
         else if (level == 4)
         {
             int randomX = Random.Range(300, 330);
-            int randomY = Random.Range(-2, 20);
+            int randomY = Random.Range(-2, 50);
             Vector2 randomPosition = new Vector2(randomX + 0.5f, randomY + 0.5f); //maybe change some stuff so that you don't have to add 0.5 to everything?
 
             Vector3Int gridPosition = tilemap.WorldToCell(randomPosition); //player map controls already have a method for checking if a tile is walkable and if there is someone at the tile

@@ -534,7 +534,7 @@ public class CharacterFunctions : MonoBehaviour
 
             foreach(CharacterData combatant in combatManager.combatants)
             {
-                if (combatant.characterName == "OneViolence" || combatant.characterName == "The Warlock")
+                if (combatant.characterName == "OneViolence")
                 {
                     combatant.GetComponent<CharacterFunctions>().GetHealed(combatant.maxHealth);
                 }

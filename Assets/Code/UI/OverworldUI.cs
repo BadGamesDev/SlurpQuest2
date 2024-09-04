@@ -130,6 +130,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public float cooldown;
 
+    public TMP_InputField passwordField;
+
     public void Update()
     {
         if (cooldown <= 0)
@@ -606,7 +608,25 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     {
         if (textQueue.Count <= 0)
         {
-            if (!hankChoice)
+            if (passwordField.gameObject.activeSelf)
+            {
+                Debug.Log("good till now");
+                if (passwordField.text == "cndk99" || passwordField.text == "CNDK99" || passwordField.text == "cndk" || passwordField.text == "CNDK")
+                {
+                    AddMessage("CORRECT ANSWER! You have been granted nine hundred ninety-nine million, nine hundred ninety-nine thousand, nine hundred ninety-nine nolifepoints. These points only work as currency and do not increase your level because it would be incredibly broken if you suddenly became level 100. (Sponsored by StopSuicideDon)");
+                    playerStats.noLifePoints += 999999999;
+                }
+
+                else
+                {
+                    AddMessage("Really? " + passwordField.text + "?" + " You disappoint me Slurp.");
+                }
+                passwordField.gameObject.SetActive(false);
+                DisplayMessages(textQueue[0]);
+                textQueue.Remove(textQueue[0]);
+            }
+
+            else if (!hankChoice)
             {
                 if (lesbiansTwo)
                 {

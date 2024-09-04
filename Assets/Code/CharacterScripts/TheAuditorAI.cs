@@ -9,6 +9,7 @@ public class TheAuditorAI : MonoBehaviour
     public GameObject postalGuy;
 
     public AudioManager audioManager;
+    public GameState gameState;
     public ImageLoader imageLoader;
     public CinematicManager cinematicManager;
     public PrefabLoader prefabLoader;
@@ -24,6 +25,7 @@ public class TheAuditorAI : MonoBehaviour
 
     void Start()
     {
+        gameState = FindAnyObjectByType<GameState>();
         combatManager = FindObjectOfType<CombatManager>();
         combatFunctions = FindObjectOfType<CombatFunctions>();
         combatUI = FindObjectOfType<CombatUI>();
@@ -32,6 +34,15 @@ public class TheAuditorAI : MonoBehaviour
         imageLoader = FindObjectOfType<ImageLoader>();
         audioManager = FindObjectOfType<AudioManager>();
 
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
+        moves.Add("attack");
         moves.Add("attack");
         moves.Add("hank comes to help");
         moves.Add("attack");
@@ -57,8 +68,19 @@ public class TheAuditorAI : MonoBehaviour
             {
                 if (moves[turnNumber] == "attack")
                 {
-                    CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
-                    combatFunctions.Attack(ownData, target);
+                    if (gameState.pizzaEaten < 4)
+                    {
+                        CharacterData target = combatManager.teamOne[Random.Range(0, combatManager.teamOne.Count)];
+                        combatFunctions.Attack(ownData, target);
+                    }
+
+                    else
+                    {
+                        combatManager.combatPauseCooldown += 5;
+                        combatUI.combatText.text = "The Auditor: You think pizza can save you? How amusing! What happens when I simply snap my fingers and erase their very existence? Go ahead try eating one more slice!";
+                        FindObjectOfType<PlayerStats>().pizza = 0;
+                        gameState.pizzaEaten = 0;
+                    }
                 }
 
                 else if (moves[turnNumber] == "hank comes to help")

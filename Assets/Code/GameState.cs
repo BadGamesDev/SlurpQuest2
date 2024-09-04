@@ -29,6 +29,7 @@ public class GameState : MonoBehaviour
     public bool metTheAuditor;
     public bool portalIntroduction;
     public int portalCount;
+    public int pizzaEaten;
 
     public GameObject trickster1;
     public GameObject trickster2;

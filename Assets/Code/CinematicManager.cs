@@ -247,10 +247,9 @@ public class CinematicManager : MonoBehaviour
                 cinematicImage.sprite = imageLoader.AuditorScene3;
 
                 RectTransform textRect = cinematicText.GetComponent<RectTransform>();
-                textRect.anchoredPosition += new Vector2(10, -20);  // Move 10 units to the right and 20 units down
+                textRect.anchoredPosition += new Vector2(40, -10);
 
-                // Make text bigger, bold, and red
-                cinematicText.fontSize = 30;  // Adjust the size as needed
+                cinematicText.fontSize = 60;
                 cinematicText.fontStyle = FontStyles.Bold;
                 cinematicText.color = Color.red;
 

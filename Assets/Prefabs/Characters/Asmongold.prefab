@@ -109,7 +109,7 @@ MonoBehaviour:
   speed: 10
   turnCoolDown: 3000
   team: 0
-  xpReward: 3000
+  xpReward: 4000
   winEvent: asmongold win event
   loseEvent: asmongold lose event
   skills: []

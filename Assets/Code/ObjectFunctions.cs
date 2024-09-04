@@ -153,6 +153,17 @@ public class ObjectFunctions : MonoBehaviour
             {
                 overworldUI.AddMessage("Krye: I know you want to hear all about my girlfriend but please, I'm really in a hurry.");
             }
+
+            else if (ownData.item == 15)
+            {
+                overworldUI.AddMessage("Please enter the twitch username of the coolest person ever to get access to super duper chest of infinite riches:");
+                overworldUI.passwordField.gameObject.SetActive(true);
+            }
+
+            else if (ownData.item == 16)
+            {
+                overworldUI.AddMessage("This chest is completely empty. Just like the was majority of online content these days.");
+            }
         }
     }
 }

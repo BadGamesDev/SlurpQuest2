@@ -116,6 +116,12 @@ public class PartyFunctions : MonoBehaviour
                     overworldUI.AddMessage("The curse feels suffocating here. You don't know how much longer you can keep going.");
                 }
 
+                if (gameState.progress == 6)
+                {
+                    audioManager.corruptionTheme.Stop();
+                    audioManager.forestTheme.Play();
+                }
+
                 if (gameState.progress == 7)
                 {
                     audioManager.forestTheme.Stop();
@@ -144,7 +150,7 @@ public class PartyFunctions : MonoBehaviour
                 gameState.trickster2.SetActive(true);
 
                 overworldUI.AddMessage("The Trickster: That was nice!");
-                overworldUI.AddMessage("The Trickster: Time to opened up this one too. But I must warn you, you might need some warm clothes where you are going.");
+                overworldUI.AddMessage("The Trickster: Time to open up this one too. But I must warn you, you might need some warm clothes where you are going.");
 
                 gameState.portalIntroduction = true;
                 gameState.portalCount += 1;

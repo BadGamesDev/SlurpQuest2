@@ -293,7 +293,7 @@ public class CombatFunctions : MonoBehaviour
         {
             if(skillUser.characterName == "The Warlock")
             {
-                target.GetComponent<CharacterFunctions>().GetHealed(250);
+                target.GetComponent<CharacterFunctions>().GetHealed(150);
             }
             if(skillUser.characterName != "The Warlock")
             {
@@ -488,7 +488,7 @@ public class CombatFunctions : MonoBehaviour
 
             else
             {
-                combatUI.combatText.text = "the cat food had absolutely no effect";
+                combatUI.combatText.text = "The cat food had absolutely no effect";
             }
 
             playerStats.catFood -= 1;
@@ -499,6 +499,7 @@ public class CombatFunctions : MonoBehaviour
             target.GetComponent<CharacterFunctions>().GetHealed(Convert.ToInt32(target.maxHealth/2));
             playerStats.pizza -= 1;
             combatUI.combatText.text = "Eating a delicious slice of 5/5 pizza healed " + target.characterName;
+            FindObjectOfType<GameState>().pizzaEaten += 1;
         }
 
         else if (item == "gamblingChip") //gambling chip was supposed to be a much more complicated (and hopefully fun) item but I really didn't want to complicate things further.

@@ -109,6 +109,11 @@ public class CharacterUI : MonoBehaviour
             {
                 statusIcon.sprite = imageLoader.silenceIcon;
             }
+
+            else if (globalStatus.statusName == "rapped")
+            {
+                statusIcon.sprite = imageLoader.rapIcon;
+            }
         }
         
         foreach (StatusEffect selfStatus in ownData.selfStatusEffects)

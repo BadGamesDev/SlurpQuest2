@@ -72,7 +72,7 @@ public class CombatFunctions : MonoBehaviour
                 }
                 else
                 {
-                    character.GetComponent<CharacterFunctions>().TakeDamage(Convert.ToInt32(skillUser.damage / 2), false);
+                    character.GetComponent<CharacterFunctions>().TakeDamage(Convert.ToInt32(skillUser.damage / 2), true);
                     character.GetComponent<CharacterFunctions>().GetInflicted("ted audience", 2);
                 }
             }
@@ -90,7 +90,7 @@ public class CombatFunctions : MonoBehaviour
                     }
                     else
                     {
-                        character.GetComponent<CharacterFunctions>().TakeDamage(Convert.ToInt32(skillUser.damage / 2), false);
+                        character.GetComponent<CharacterFunctions>().TakeDamage(Convert.ToInt32(skillUser.damage / 2), true);
                         character.GetComponent<CharacterFunctions>().GetInflicted("ted audience", 2);
                     }
                 }
@@ -152,7 +152,6 @@ public class CombatFunctions : MonoBehaviour
                 }
             }
             combatUI.combatText.text = skillUser.characterName + " used swipe to hit all enemies.";
-            skillUser.skill2Cooldown = 2;
         }
 
         else if (skill.skillName == "Just Be Cute") //DONE
@@ -247,18 +246,21 @@ public class CombatFunctions : MonoBehaviour
         {
             skillUser.GetComponent<CharacterFunctions>().GetInflicted("engine started", 4);
             combatUI.combatText.text = skillUser.characterName + " started his engines! He is fast as fuck!";
+            skillUser.skill1Cooldown = 12;
         }
         
         else if (skill.skillName == "Burnout")
         {
             skillUser.GetComponent<CharacterFunctions>().GetInflicted("burnout smoke", 2);
             combatUI.combatText.text = skillUser.characterName + " obscured himself with a cloud of smoke. He is way harder to hit now!";
+            skillUser.skill2Cooldown = 10;
         }
         
         else if (skill.skillName == "Pit Stop")
         {
             skillUser.GetComponent<CharacterFunctions>().GetHealed(skillUser.maxHealth - skillUser.health); //heal method already fixes any overhealing but I want to calculate it correctly incase I want to show it in UI or something.
             combatUI.combatText.text = skillUser.characterName + " used pitstop to completely heal himself!";
+            skillUser.skill3Cooldown = 16;
         }
         
         else if (skill.skillName == "Dizz Or No Dizz" && combatManager.peace == false)
@@ -284,11 +286,20 @@ public class CombatFunctions : MonoBehaviour
             combatUI.dizz2.gameObject.SetActive(true);
 
             combatUI.combatText.text = skillUser.characterName + " used dizz or not dizz! Click the boxes one by one. Last one will be your reward!";
+            skillUser.skill4Cooldown = 999;
         }
 
         else if (skill.skillName == "Herbal Medicine")
         {
-            target.GetComponent<CharacterFunctions>().GetHealed(20 + skillUser.level * 10);
+            if(skillUser.characterName == "The Warlock")
+            {
+                target.GetComponent<CharacterFunctions>().GetHealed(250);
+            }
+            if(skillUser.characterName != "The Warlock")
+            {
+                target.GetComponent<CharacterFunctions>().GetHealed(25 + skillUser.level * 10);
+            }
+
             if (skillUser == target)
             {
                 combatUI.combatText.text = skillUser.characterName + " used herbal medicine to heal himself.";
@@ -312,7 +323,7 @@ public class CombatFunctions : MonoBehaviour
                 }
             }
 
-            if (painted == false)
+            if (painted == false && target.characterName != "Digi63")
             {
                 target.GetComponent<CharacterFunctions>().GetInflicted("corpse paint", 999);
                 target.damage += 5 + skillUser.level * 2; //When I'm adding the buff I'm looking at the level of skill user, when I'm removing the buff I'm looking at the level of the character with the buff. This is not a problem since everyone in the same party will have the same level BUT it will be a problem if slurps forgets to level up a character. (Oh also, corpse paint will never be removed anyway but I'm probably going to do this for some other skills too)
@@ -328,6 +339,11 @@ public class CombatFunctions : MonoBehaviour
                 }
             }
 
+            if (target.characterName == "Digi63")
+            {
+                combatUI.combatText.text = "Digi doesn't want your zoomer make-up! Go paint someone else.";
+            }
+
             if (painted == true)
             {
                 combatUI.combatText.text = target.characterName + " was already painted! You just wasted your turn!";
@@ -337,10 +353,11 @@ public class CombatFunctions : MonoBehaviour
 
         else if (skill.skillName == "One Peace")
         {
-            skillUser.GetComponent<CharacterFunctions>().GetInflicted("one peace", 2);
+            skillUser.GetComponent<CharacterFunctions>().GetInflicted("one peace", 3);
             combatManager.peace = true;
 
             combatUI.combatText.text = skillUser.characterName + " used ONE PEACE! No one can attack or use any harmful abilities for 2 turns!";
+            skillUser.skill3Cooldown = 13;
         }
 
         else if (skill.skillName == "One Violence" && combatManager.peace == false)
@@ -386,7 +403,11 @@ public class CombatFunctions : MonoBehaviour
         {
             foreach (CharacterData combatant in combatManager.combatants)
             {
-                combatant.defence = 0;
+                if (combatant.characterName != "Digi63")
+                {
+                    combatant.defence = 0;
+                    combatant.GetComponent<CharacterFunctions>().GetInflicted("rapped", 999);
+                }
             }
 
             combatUI.combatText.text = skillUser.characterName + " started rapping! It is so fucking bad that it reduced everyones defence to 0. Because they all want this shit to be over asap.";
@@ -397,7 +418,7 @@ public class CombatFunctions : MonoBehaviour
             List<CharacterData> charactersToKill = new();
             foreach (CharacterData combatant in combatManager.combatants)
             {
-                if (combatant.health <= skillUser.damage - target.defence)
+                if (combatant.health <= 30 + skillUser.level * 5)
                 {
                     charactersToKill.Add(combatant);
                 }

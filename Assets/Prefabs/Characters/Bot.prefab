@@ -100,16 +100,16 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   characterName: Bot
   level: 0
-  maxHealth: 200
-  health: 200
-  defence: 0
+  maxHealth: 300
+  health: 300
+  defence: 5
   accuracy: 100
   dodge: 0
-  damage: 40
+  damage: 50
   speed: 12
   turnCoolDown: 3000
   team: 0
-  xpReward: 400
+  xpReward: 800
   winEvent: 
   loseEvent: 
   skills: []
@@ -191,7 +191,9 @@ MonoBehaviour:
   prefabLoader: {fileID: 0}
   combatManager: {fileID: 0}
   combatFunctions: {fileID: 0}
+  combatUI: {fileID: 0}
   ownData: {fileID: 1357805490268290798}
+  silence: 0
 --- !u!1 &1544016111594639836
 GameObject:
   m_ObjectHideFlags: 0

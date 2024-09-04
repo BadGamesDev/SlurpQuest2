@@ -12,6 +12,7 @@ public class StatusEffectDatabase : MonoBehaviour
     public static StatusEffect burnoutSmoke = new() { statusName = "burnout smoke", tickCount = 2, tickCooldown = 3000 };
     public static StatusEffect simp = new() { statusName = "simp" };
     public static StatusEffect thottery = new() { statusName = "thottery" };
+    public static StatusEffect rapped = new() { statusName = "rapped" };
     public static StatusEffect clownmaxxing = new() { statusName = "clownmaxxing" };
     public static StatusEffect tradwis = new() { statusName = "return to trad" };
     public static StatusEffect corpsePaint = new() { statusName = "corpse paint" };

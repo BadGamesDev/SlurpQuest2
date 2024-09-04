@@ -109,7 +109,7 @@ MonoBehaviour:
   speed: 40
   turnCoolDown: 3000
   team: 0
-  xpReward: 800
+  xpReward: 1000
   winEvent: jaydizz win event
   loseEvent: jaydizz lose event
   skills: []

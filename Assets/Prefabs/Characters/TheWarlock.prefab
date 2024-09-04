@@ -106,10 +106,10 @@ MonoBehaviour:
   accuracy: 120
   dodge: 10
   damage: 80
-  speed: 14
+  speed: 16
   turnCoolDown: 3000
   team: 0
-  xpReward: 1500
+  xpReward: 1900
   winEvent: oneViolence win event
   loseEvent: oneViolence lose event
   skills: []

@@ -63,6 +63,14 @@ public class AsmongoldAI : MonoBehaviour
                         character.GetComponent<CharacterFunctions>().GetHealed(50);
                     }
 
+                    if (charactersToKill.Count > 0)
+                    {
+                        foreach(CharacterData character in charactersToKill)
+                        {
+                            character.GetComponent<CharacterFunctions>().Die();
+                        }
+                    }
+
                     combatManager.combatPauseCooldown = 3;
                     combatUI.combatText.text = "Asmongold used cloud of decay. The toxic cloud dealt damage to every enemy while healing his team.";
                 }
@@ -92,14 +100,20 @@ public class AsmongoldAI : MonoBehaviour
 
                 else if (moves[turnNumber] == "own goal")
                 {
-                    if (combatManager.spawnSlots[0].childCount != 0)
+                    if (combatManager.spawnSlots[0].childCount > 1)
                     {
-                        CharacterFunctions slurp;
+                        CharacterData slurp = null;
                         Debug.Log("slurp is alive");
-                        slurp = combatManager.spawnSlots[0].GetChild(0).GetComponent<CharacterFunctions>();
-                        slurp.TakeDamage(slurp.ownData.health - 1, true);
+                        foreach (CharacterData person in combatManager.combatants)
+                        {
+                            if (person.characterName == "Slurp")
+                            {
+                                slurp = person; 
+                            }
+                        }
+                        slurp.GetComponent<CharacterFunctions>().TakeDamage(slurp.health - 1, true);
 
-                        combatManager.combatPauseCooldown = 3;
+                        combatManager.combatPauseCooldown += 3.5f;
                         combatUI.combatText.text = "Asmongold told Slurp that this whole streaming thing is a waste of time.";
                     }
                     else

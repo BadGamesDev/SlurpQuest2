@@ -18,11 +18,9 @@ public class TheWarlockAI : MonoBehaviour
         moves.Add("attack");
         moves.Add("corpse paint");
         moves.Add("attack");
-        moves.Add("attack");
-        moves.Add("attack");
         moves.Add("one peace");
         moves.Add("herbal medicine");
-        moves.Add("attack");
+        moves.Add("herbal medicine");
         moves.Add("one violence");
     }
 

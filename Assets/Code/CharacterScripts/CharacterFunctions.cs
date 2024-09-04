@@ -101,317 +101,340 @@ public class CharacterFunctions : MonoBehaviour
 
     public void GetInflicted(string status, int duration) //You know what? I'm actually kinda proud of this system. Even thought the disgusting trend of a billion if checks continues here too.
     {
-        StatusEffect existingStatus;
-        if (status == "stun")
+        if (ownData.characterName != "Digi63")
         {
-            existingStatus = CheckStatusSelf(status); //I can improve the method to remove the need for putting it separately for each skill but why fix something that is not broken?
-            if (existingStatus == null)
+
+            StatusEffect existingStatus;
+            if (status == "stun")
             {
-                StatusEffect newEffect = new StatusEffect //REMINDER TO ALWAYS MAKE SURE YOU ARE CREATING A NEW INSTANCE.... HOLY FUCKING SHIT I HAVE NEVER WANTED TO KILL MYSELF SO FUCKING MUCH, LITERALLY ALMOST GAVE UP ON MAKING THE GAME BECAUSE OF SUCH A SMALL ERROR, Ideally I also need to to a consturctor or copy method or some shit like this but this solution works
+                existingStatus = CheckStatusSelf(status); //I can improve the method to remove the need for putting it separately for each skill but why fix something that is not broken?
+                if (existingStatus == null)
                 {
-                    statusName = StatusEffectDatabase.stun.statusName,
-                    tickCount = duration
-                }; 
+                    StatusEffect newEffect = new StatusEffect //REMINDER TO ALWAYS MAKE SURE YOU ARE CREATING A NEW INSTANCE.... HOLY FUCKING SHIT I HAVE NEVER WANTED TO KILL MYSELF SO FUCKING MUCH, LITERALLY ALMOST GAVE UP ON MAKING THE GAME BECAUSE OF SUCH A SMALL ERROR, Ideally I also need to to a consturctor or copy method or some shit like this but this solution works
+                    {
+                        statusName = StatusEffectDatabase.stun.statusName,
+                        tickCount = duration
+                    };
 
-                ownData.selfStatusEffects.Add(newEffect);
-            }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
-        
-        else if (status == "bleed")
-        {
-            existingStatus = CheckStatusGlobal(status);
-            if (existingStatus == null)
-            {
-                StatusEffect newEffect = new StatusEffect
+                    ownData.selfStatusEffects.Add(newEffect);
+                }
+                else
                 {
-                    statusName = StatusEffectDatabase.bleed.statusName, //oh also, yes, I am writing this shit instead of just writing the name as a string which would be way shorter. Why? because fuck you that's why.
-                    tickCooldown = StatusEffectDatabase.bleed.tickCooldown,
-                    tickCount = duration
-                };
-
-                ownData.globalStatusEffects.Add(newEffect);
+                    existingStatus.tickCount = duration;
+                }
             }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
 
-        else if (status == "ted audience")
-        {
-            existingStatus = CheckStatusGlobal(status);
-            if (existingStatus == null)
+            else if (status == "bleed")
             {
-                StatusEffect newEffect = new StatusEffect
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
                 {
-                    statusName = StatusEffectDatabase.tedAudience.statusName,
-                    tickCooldown = StatusEffectDatabase.tedAudience.tickCooldown,
-                    tickCount = duration
-                };
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.bleed.statusName, //oh also, yes, I am writing this shit instead of just writing the name as a string which would be way shorter. Why? because fuck you that's why.
+                        tickCooldown = StatusEffectDatabase.bleed.tickCooldown,
+                        tickCount = duration
+                    };
 
-                ownData.globalStatusEffects.Add(newEffect);
-            }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
-
-        else if (status == "raid target")
-        {
-            existingStatus = CheckStatusGlobal(status);
-            if (existingStatus == null)
-            {
-                StatusEffect newEffect = new StatusEffect
+                    ownData.globalStatusEffects.Add(newEffect);
+                }
+                else
                 {
-                    statusName = StatusEffectDatabase.raidTarget.statusName,
-                    tickCooldown = StatusEffectDatabase.raidTarget.tickCooldown,
-                    tickCount = duration
-                };
-
-                ownData.globalStatusEffects.Add(newEffect);
+                    existingStatus.tickCount = duration;
+                }
             }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
 
-        else if (status == "engine started")
-        {
-            existingStatus = CheckStatusGlobal(status);
-            if (existingStatus == null)
+            else if (status == "ted audience")
             {
-                StatusEffect newEffect = new StatusEffect
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
                 {
-                    statusName = StatusEffectDatabase.engineStarted.statusName,
-                    tickCount = duration
-                };
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.tedAudience.statusName,
+                        tickCooldown = StatusEffectDatabase.tedAudience.tickCooldown,
+                        tickCount = duration
+                    };
 
-                ownData.globalStatusEffects.Add(newEffect); //not sure if this buff should be self or global tbh, I guess global makes more sense in terms of realism but self feels more balanced (decided on global, I think it is cool that you get even more turns from the buff as your character gets faster by leveling up) 
-                ownData.speed *= 2;
-            }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
-
-        else if (status == "burnout smoke")
-        {
-            existingStatus = CheckStatusGlobal(status);
-            if (existingStatus == null)
-            {
-                StatusEffect newEffect = new StatusEffect
+                    ownData.globalStatusEffects.Add(newEffect);
+                }
+                else
                 {
-                    statusName = StatusEffectDatabase.burnoutSmoke.statusName,
-                    tickCount = duration
-                };
-
-                ownData.globalStatusEffects.Add(newEffect);
-                ownData.dodge += 60;
+                    existingStatus.tickCount = duration;
+                }
             }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
 
-        else if (status == "thottery")
-        {
-            existingStatus = CheckStatusSelf(status);
-            if (existingStatus == null)
+            else if (status == "raid target")
             {
-                StatusEffect newEffect = new StatusEffect
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
                 {
-                    statusName = StatusEffectDatabase.thottery.statusName,
-                    tickCount = duration
-                };
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.raidTarget.statusName,
+                        tickCooldown = StatusEffectDatabase.raidTarget.tickCooldown,
+                        tickCount = duration
+                    };
 
-                ownData.selfStatusEffects.Add(newEffect);
-            }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
-
-        else if (status == "clownmaxxing")
-        {
-            existingStatus = CheckStatusSelf(status);
-            if (existingStatus == null)
-            {
-                StatusEffect newEffect = new StatusEffect
+                    ownData.globalStatusEffects.Add(newEffect);
+                }
+                else
                 {
-                    statusName = StatusEffectDatabase.clownmaxxing.statusName,
-                    tickCount = duration
-                };
-
-                ownData.selfStatusEffects.Add(newEffect);
+                    existingStatus.tickCount = duration;
+                }
             }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
 
-        else if (status == "return to trad")
-        {
-            existingStatus = CheckStatusSelf(status);
-            if (existingStatus == null)
+            else if (status == "engine started")
             {
-                StatusEffect newEffect = new StatusEffect
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
                 {
-                    statusName = StatusEffectDatabase.tradwis.statusName,
-                    tickCount = duration
-                };
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.engineStarted.statusName,
+                        tickCount = duration
+                    };
 
-                ownData.selfStatusEffects.Add(newEffect);
-            }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
-
-        else if (status == "corpse paint")
-        {
-            existingStatus = CheckStatusGlobal(status); //It reallt doesn't matter whether this one is global or self
-            if (existingStatus == null)
-            {
-                StatusEffect newEffect = new StatusEffect
+                    ownData.globalStatusEffects.Add(newEffect); //not sure if this buff should be self or global tbh, I guess global makes more sense in terms of realism but self feels more balanced (decided on global, I think it is cool that you get even more turns from the buff as your character gets faster by leveling up) 
+                    ownData.speed *= 2;
+                }
+                else
                 {
-                    statusName = StatusEffectDatabase.corpsePaint.statusName,
-                    tickCount = duration
-                };
-
-                ownData.globalStatusEffects.Add(newEffect);
+                    existingStatus.tickCount = duration;
+                }
             }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
 
-        else if (status == "one peace")
-        {
-            existingStatus = CheckStatusSelf(status);
-            if (existingStatus == null)
+            else if (status == "burnout smoke")
             {
-                StatusEffect newEffect = new StatusEffect
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
                 {
-                    statusName = StatusEffectDatabase.onePeace.statusName,
-                    tickCount = duration
-                };
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.burnoutSmoke.statusName,
+                        tickCount = duration
+                    };
 
-                ownData.selfStatusEffects.Add(newEffect);
-            }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
-
-        else if (status == "permacloud")
-        {
-            existingStatus = CheckStatusSelf(status);
-            if (existingStatus == null)
-            {
-                StatusEffect newEffect = new StatusEffect
+                    ownData.globalStatusEffects.Add(newEffect);
+                    ownData.dodge += 60;
+                }
+                else
                 {
-                    statusName = StatusEffectDatabase.permacloud.statusName,
-                    tickCount = duration
-                };
-
-                ownData.selfStatusEffects.Add(newEffect);
+                    existingStatus.tickCount = duration;
+                }
             }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
 
-        else if (status == "cute")
-        {
-            existingStatus = CheckStatusGlobal(status);
-            if (existingStatus == null)
+            else if (status == "thottery")
             {
-                StatusEffect newEffect = new StatusEffect
+                existingStatus = CheckStatusSelf(status);
+                if (existingStatus == null)
                 {
-                    statusName = StatusEffectDatabase.cute.statusName,
-                    tickCount = duration
-                };
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.thottery.statusName,
+                        tickCount = duration
+                    };
 
-                ownData.globalStatusEffects.Add(newEffect);
-            }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
-
-        else if (status == "ultra instinct")
-        {
-            existingStatus = CheckStatusGlobal(status);
-            if (existingStatus == null)
-            {
-                StatusEffect newEffect = new StatusEffect
+                    ownData.selfStatusEffects.Add(newEffect);
+                }
+                else
                 {
-                    statusName = StatusEffectDatabase.ultraInstinct.statusName,
-                    tickCount = duration
-                };
-
-                ownData.globalStatusEffects.Add(newEffect);
+                    existingStatus.tickCount = duration;
+                }
             }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
 
-        else if (status == "simp")
-        {
-            existingStatus = CheckStatusSelf(status);
-            if (existingStatus == null)
+            else if (status == "clownmaxxing")
             {
-                StatusEffect newEffect = new StatusEffect
+                existingStatus = CheckStatusSelf(status);
+                if (existingStatus == null)
                 {
-                    statusName = StatusEffectDatabase.simp.statusName,
-                    tickCount = duration
-                };
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.clownmaxxing.statusName,
+                        tickCount = duration
+                    };
 
-                ownData.selfStatusEffects.Add(newEffect);
-            }
-            else
-            {
-                existingStatus.tickCount = duration;
-            }
-        }
-
-        else if (status == "silence")
-        {
-            existingStatus = CheckStatusGlobal(status);
-            if (existingStatus == null)
-            {
-                StatusEffect newEffect = new StatusEffect
+                    ownData.selfStatusEffects.Add(newEffect);
+                }
+                else
                 {
-                    statusName = StatusEffectDatabase.silence.statusName,
-                    tickCount = duration
-                };
-
-                ownData.globalStatusEffects.Add(newEffect);
+                    existingStatus.tickCount = duration;
+                }
             }
-            else
+
+            else if (status == "return to trad")
             {
-                existingStatus.tickCount = duration;
-            }
-        }
+                existingStatus = CheckStatusSelf(status);
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.tradwis.statusName,
+                        tickCount = duration
+                    };
 
-        ownUI.UpdateStatusIcons();
+                    ownData.selfStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            else if (status == "corpse paint")
+            {
+                existingStatus = CheckStatusGlobal(status); //It reallt doesn't matter whether this one is global or self
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.corpsePaint.statusName,
+                        tickCount = duration
+                    };
+
+                    ownData.globalStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            else if (status == "one peace")
+            {
+                existingStatus = CheckStatusSelf(status);
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.onePeace.statusName,
+                        tickCount = duration
+                    };
+
+                    ownData.selfStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            else if (status == "permacloud")
+            {
+                existingStatus = CheckStatusSelf(status);
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.permacloud.statusName,
+                        tickCount = duration
+                    };
+
+                    ownData.selfStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            else if (status == "cute")
+            {
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.cute.statusName,
+                        tickCount = duration
+                    };
+
+                    ownData.globalStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            else if (status == "ultra instinct")
+            {
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.ultraInstinct.statusName,
+                        tickCount = duration
+                    };
+
+                    ownData.globalStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            else if (status == "simp")
+            {
+                existingStatus = CheckStatusSelf(status);
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.simp.statusName,
+                        tickCount = duration
+                    };
+
+                    ownData.selfStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            else if (status == "silence")
+            {
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.silence.statusName,
+                        tickCount = duration
+                    };
+
+                    ownData.globalStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            else if (status == "rapped")
+            {
+                existingStatus = CheckStatusGlobal(status);
+                if (existingStatus == null)
+                {
+                    StatusEffect newEffect = new StatusEffect
+                    {
+                        statusName = StatusEffectDatabase.rapped.statusName,
+                        tickCount = duration
+                    };
+
+                    ownData.globalStatusEffects.Add(newEffect);
+                }
+                else
+                {
+                    existingStatus.tickCount = duration;
+                }
+            }
+
+            ownUI.UpdateStatusIcons();
+        }
     }
 
     public void StatusTick(string status)
@@ -491,7 +514,7 @@ public class CharacterFunctions : MonoBehaviour
 
             if (ownData.characterName == "Big Foot")
             {
-                combatManager.combatPauseCooldown = 0.5f;
+                combatManager.combatPauseCooldown += 2.5f;
                 combatUI.combatText.text = "Bigfoot got defeated. But " + combatManager.bench[0].GetComponent<CharacterData>().characterName + " is here to continue the fight!";
                 combatManager.PullFromBench(combatManager.bench[0]); //STEP 1: over engineer a system. STEP 2: make a retarded function like this to completely make the over engineering obsolete.
             }

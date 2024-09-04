@@ -145,7 +145,8 @@ public class CombatManager : MonoBehaviour
             {
                 overworldUI.AddMessage("The Lord of Decay: You have managed to make it all the way to me! But this is where your foolish journey ends. I'm a god. How can you kill a god? What a grand and intoxicating innocence. How could you be so naive? " +
                                    "Countless insignificant streamers like you tried standing against me and countless streamers like you got defeated, crushed and broken. I am your doom! I am the lord of decay, known by a thousand names in a thousand worlds. But you might call me...");
-                overworldUI.AddMessage("ASMONGOLD");
+                overworldUI.AddMessage("                                                                 " +
+                                       "ASMONGOLD!");
                 gameState.metAsmongold = true;
             }
         }
@@ -739,7 +740,7 @@ public class CombatManager : MonoBehaviour
                         {
                             bigFootData.maxHealth = 200;
                             bigFootData.health = 200;
-                            bigFootData.damage = 20;
+                            bigFootData.damage = 25;
                         }
 
                         CombatUI combatUI = FindObjectOfType<CombatUI>();

@@ -39,12 +39,12 @@ public class BotAI : MonoBehaviour
             {
                 int slotToSpawn = 0;
 
-                if (combatManager.spawnSlots[4].childCount == 0)
+                if (combatManager.spawnSlots[4].childCount == 1)
                 {
                     slotToSpawn = 4;
                 }
 
-                else if (combatManager.spawnSlots[5].childCount == 0) //I can just make this an else statement but better safe than sorry
+                else if (combatManager.spawnSlots[5].childCount == 1) //I can just make this an else statement but better safe than sorry
                 {
                     slotToSpawn = 5;
                 }

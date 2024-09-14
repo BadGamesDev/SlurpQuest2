@@ -437,23 +437,16 @@ public class CombatManager : MonoBehaviour
                     { 
                         if(status.statusName == "simp")
                         {
-                            if (combatant.isBoss)
-                            {
-                                combatant.damage -= 5 * playerStats.level;
-                            }
-                            else
-                            {
-                                simp = true;
-                            }
+                            simp = true;
                         }
                     }
 
-                    if (simp == false)
+                    if (simp == false || combatant.isBoss)
                     {
                         turnHaver = combatant;
                     }
 
-                    if (simp == true)
+                    if (simp == true && !combatant.isBoss)
                     {
                         int tries = 0;
                         CharacterData target = null;
@@ -534,15 +527,32 @@ public class CombatManager : MonoBehaviour
 
                         if (status.statusName == "thottery")
                         {
-                            if (combatant.team == 0) //no one on the enemy team will evet use this skill so there is no need to check it like this but who knpws what the future brings
+                            bool done = false;
+                            int tries = 0;
+                            while (!done && tries < 999)
                             {
-                                CharacterData target = teamTwo[UnityEngine.Random.Range(0, teamTwo.Count)];
-                                target.GetComponent<CharacterFunctions>().GetInflicted("simp", 1);
-                            }
-                            else if (combatant.team == 1)
-                            {
-                                CharacterData target = teamOne[UnityEngine.Random.Range(0, teamOne.Count)];
-                                target.GetComponent<CharacterFunctions>().GetInflicted("simp", 1);
+                                if (combatant.team == 0) //no one on the enemy team will evet use this skill so there is no need to check it like this but who knpws what the future brings
+                                {
+                                    CharacterData target = teamTwo[UnityEngine.Random.Range(0, teamTwo.Count)];
+                                    if (!target.isBoss)
+                                    {
+                                        target.GetComponent<CharacterFunctions>().GetInflicted("simp", 1);
+                                        done = true;
+                                    }
+
+                                    tries += 1;
+                                }
+                                else if (combatant.team == 1)
+                                {
+                                    CharacterData target = teamOne[UnityEngine.Random.Range(0, teamOne.Count)];
+                                    if (!target.isBoss)
+                                    {
+                                        target.GetComponent<CharacterFunctions>().GetInflicted("simp", 1);
+                                        done = true;
+                                    }
+
+                                    tries += 1;
+                                }
                             }
                         }
 
@@ -619,10 +629,10 @@ public class CombatManager : MonoBehaviour
                             }
                         }
 
-                        if (statusToYeet.statusName == "simp" && combatant.isBoss)
-                        {
-                            combatant.damage += 5 * playerStats.level;
-                        }
+                        //if (statusToYeet.statusName == "simp" && combatant.isBoss) FUCK THIS SKILL
+                        //{
+                        //    combatant.damage += 5 * playerStats.level;
+                        //}
 
                         combatant.selfStatusEffects.Remove(statusToYeet);
                         combatant.GetComponent<CharacterUI>().UpdateStatusIcons();

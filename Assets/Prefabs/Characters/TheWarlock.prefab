@@ -105,7 +105,7 @@ MonoBehaviour:
   defence: 15
   accuracy: 120
   dodge: 10
-  damage: 80
+  damage: 75
   speed: 16
   turnCoolDown: 3000
   team: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   globalStatusEffects: []
   bigFootTurns: 0
   bigFootSlot: {fileID: 0}
-  isBoss: 0
+  isBoss: 1
   secondPhase: 0
   invulnerable: 0
 --- !u!114 &8810079466389909678

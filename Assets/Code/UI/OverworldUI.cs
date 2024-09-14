@@ -725,7 +725,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void ENDTHEFUCKINGGAMEBUTTONPRESSED()
     {
-        Application.OpenURL("https://www.youtube.com/watch?v=PNFjLzVKVdk");
+        Application.OpenURL("https://www.youtube.com/watch?v=aYsgsSo1aow");
     }
 
     public void OpenCheat()

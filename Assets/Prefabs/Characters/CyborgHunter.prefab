@@ -121,7 +121,7 @@ MonoBehaviour:
   globalStatusEffects: []
   bigFootTurns: 0
   bigFootSlot: {fileID: 0}
-  isBoss: 0
+  isBoss: 1
   secondPhase: 0
   invulnerable: 0
 --- !u!114 &8810079466389909678

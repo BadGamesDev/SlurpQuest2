@@ -121,7 +121,7 @@ MonoBehaviour:
   globalStatusEffects: []
   bigFootTurns: 0
   bigFootSlot: {fileID: 0}
-  isBoss: 0
+  isBoss: 1
   secondPhase: 0
   invulnerable: 1
 --- !u!114 &8810079466389909678
@@ -189,6 +189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hank: {fileID: 0}
   postalGuy: {fileID: 0}
+  audioManager: {fileID: 0}
+  gameState: {fileID: 0}
   imageLoader: {fileID: 0}
   cinematicManager: {fileID: 0}
   prefabLoader: {fileID: 0}

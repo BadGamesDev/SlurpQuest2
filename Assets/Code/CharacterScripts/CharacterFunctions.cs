@@ -379,6 +379,7 @@ public class CharacterFunctions : MonoBehaviour
             else if (status == "simp")
             {
                 existingStatus = CheckStatusSelf(status);
+                
                 if (existingStatus == null)
                 {
                     StatusEffect newEffect = new StatusEffect

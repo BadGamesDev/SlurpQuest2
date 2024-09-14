@@ -121,8 +121,9 @@ MonoBehaviour:
   globalStatusEffects: []
   bigFootTurns: 0
   bigFootSlot: {fileID: 0}
-  isBoss: 0
+  isBoss: 1
   secondPhase: 0
+  invulnerable: 0
 --- !u!114 &8810079466389909678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,12 +188,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tricky: {fileID: 0}
+  combatUI: {fileID: 0}
   prefabLoader: {fileID: 0}
   combatManager: {fileID: 0}
   combatFunctions: {fileID: 0}
   ownData: {fileID: 1357805490268290798}
   moves: []
   turnNumber: 0
+  dialogueCooldown: 0
+  dialogueStage: 0
 --- !u!1 &407125736455742309
 GameObject:
   m_ObjectHideFlags: 0

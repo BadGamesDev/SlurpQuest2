@@ -188,7 +188,7 @@ public class CombatFunctions : MonoBehaviour
         else if (skill.skillName == "EMP Grenade" && combatManager.peace == false)
         {
             target.GetComponent<CharacterFunctions>().GetInflicted("stun", 2);
-            combatUI.combatText.text = skillUser.characterName + " threw an EMP grenade at " + target.characterName;
+            combatUI.combatText.text = skillUser.characterName + " threw an EMP grenade and stunned " + target.characterName;
             skillUser.skill1Cooldown = 5;
         }
 
@@ -244,7 +244,7 @@ public class CombatFunctions : MonoBehaviour
 
         else if (skill.skillName == "Start Your Engines")
         {
-            skillUser.GetComponent<CharacterFunctions>().GetInflicted("engine started", 4);
+            skillUser.GetComponent<CharacterFunctions>().GetInflicted("engine started", 3);
             combatUI.combatText.text = skillUser.characterName + " started his engines! He is fast as fuck!";
             skillUser.skill1Cooldown = 12;
         }
@@ -504,28 +504,36 @@ public class CombatFunctions : MonoBehaviour
 
         else if (item == "gamblingChip") //gambling chip was supposed to be a much more complicated (and hopefully fun) item but I really didn't want to complicate things further.
         {
-            int roll = UnityEngine.Random.Range(0, 4);
-            if (roll == 0)
+            if (!combatManager.peace)
             {
-                itemUser.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage, false);
-                combatUI.combatText.text = "Bad luck! You damaged yourself.";
+                int roll = UnityEngine.Random.Range(0, 4);
+                if (roll == 0)
+                {
+                    itemUser.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage, false);
+                    combatUI.combatText.text = "Bad luck! You damaged yourself.";
+                }
+                else if (roll == 1)
+                {
+                    target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage, false);
+                    combatUI.combatText.text = "You deal normal damage. Not too good but it could have been worse.";
+                }
+                else if (roll == 2)
+                {
+                    target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage * 2, false);
+                    combatUI.combatText.text = "Nice! You did 2x damage.";
+                }
+                else if (roll == 3)
+                {
+                    target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage * 4, false);
+                    combatUI.combatText.text = "Jackpot! You did 4x damage.";
+                }
+                playerStats.gamblingChip -= 1;
             }
-            else if (roll == 1)
-            {
-                target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage, false);
-                combatUI.combatText.text = "You deal normal damage. Not too good but it could have been worse.";
+
+            else
+            { 
+                combatUI.combatText.text = "NO FUCKING FIGHTING!"; 
             }
-            else if (roll == 2)
-            {
-                target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage * 2, false);
-                combatUI.combatText.text = "Nice! You did 2x damage.";
-            }
-            else if (roll == 3)
-            {
-                target.GetComponent<CharacterFunctions>().TakeDamage(itemUser.damage * 4, false);
-                combatUI.combatText.text = "Jackpot! You did 4x damage.";
-            }
-            playerStats.gamblingChip -= 1;
         }
 
         combatManager.combatPauseCooldown += 1.8f;

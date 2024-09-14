@@ -25,7 +25,6 @@ public class MadDizzAI : MonoBehaviour
         moves.Add("attack");
         moves.Add("attack");
         moves.Add("attack");
-        moves.Add("attack");
         moves.Add("dizzOrNoDizz");
         moves.Add("burnout");
         moves.Add("attack");

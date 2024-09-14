@@ -103,13 +103,42 @@ public class PartyFunctions : MonoBehaviour
                     GameObject.Find("PlayerParty").GetComponent<PartyData>().pos2 = null;
                     GameObject.Find("PlayerParty").GetComponent<PartyData>().pos3 = null;
 
-                    FindObjectOfType<PlayerStats>().activeCompanions.Remove(FindObjectOfType<PlayerStats>().activeCompanions[0]);
-                    FindObjectOfType<PlayerStats>().activeCompanions.Remove(FindObjectOfType<PlayerStats>().activeCompanions[1]);
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[1]);
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[2]);
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[3]);
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[4]);
+                    if (FindObjectOfType<PlayerStats>().activeCompanions.Count == 1)
+                    {
+                        FindObjectOfType<PlayerStats>().activeCompanions.Remove(FindObjectOfType<PlayerStats>().activeCompanions[0]);
+                        overworldUI.CheckSelectableCompanions();
+                        overworldUI.statButton0.gameObject.SetActive(false);
+                        overworldUI.dismissCompanion0.gameObject.SetActive(false);
+
+                        overworldUI.member2.sprite = null;
+                    }
+
+                    if (FindObjectOfType<PlayerStats>().activeCompanions.Count == 2)
+                    {
+                        FindObjectOfType<PlayerStats>().activeCompanions.Remove(FindObjectOfType<PlayerStats>().activeCompanions[1]);
+
+                        overworldUI.CheckSelectableCompanions();
+                        overworldUI.statButton1.gameObject.SetActive(false);
+                        overworldUI.dismissCompanion1.gameObject.SetActive(false);
+
+                        overworldUI.member3.sprite = null;
+
+                        FindObjectOfType<PlayerStats>().activeCompanions.Remove(FindObjectOfType<PlayerStats>().activeCompanions[0]);
+
+                        overworldUI.CheckSelectableCompanions();
+                        overworldUI.statButton0.gameObject.SetActive(false);
+                        overworldUI.dismissCompanion0.gameObject.SetActive(false);
+
+                        overworldUI.member2.sprite = null;
+                    }
+
                     FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[5]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[4]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[3]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[2]);
+                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[1]);
+
+                    overworldUI.CheckSelectableCompanions();
 
                     overworldUI.member2 = null;
                     overworldUI.member3 = null;

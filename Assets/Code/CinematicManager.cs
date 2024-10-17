@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -30,7 +28,7 @@ public class CinematicManager : MonoBehaviour
 
     private void Update()
     {
-        StartingScene();
+        //StartingScene();
         AsmonScene();
         AuditorScene();
         Credits();
@@ -58,7 +56,7 @@ public class CinematicManager : MonoBehaviour
             {
                 cinematicText.text = "So uhh... after the first game you get attacked by a... you get attacked by the Lord of Decay! Yeah that's a cool fucking name! " +
                         "You can not remember what happened after that, but when you woke up Hank was gone. Then your twitch followers decided to face the Lord of Decay and avenge you... ";
-                cooldown = 13;
+                cooldown = 14;
                 wallOfTextNumber += 1;
             }
 
@@ -277,13 +275,13 @@ public class CinematicManager : MonoBehaviour
             if (cooldown <= 0 && wallOfTextNumber == 0)
             {
                 credits.SetActive(true);
-                cooldown = 30;
+                cooldown = 14;
                 wallOfTextNumber += 1;
             }
 
-            if (cooldown <= 0 && wallOfTextNumber == 1 && credits.transform.position.y <= 6340)
+            if (cooldown <= 0 && wallOfTextNumber == 1 && credits.transform.position.y <= 7100)
             {
-                credits.transform.Translate(Vector3.up * 76 * Time.deltaTime);
+                credits.transform.Translate(Vector3.up * 90 * Time.deltaTime);
             }
         }
     }

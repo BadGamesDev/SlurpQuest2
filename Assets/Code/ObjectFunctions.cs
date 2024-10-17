@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class ObjectFunctions : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class ObjectFunctions : MonoBehaviour
 
     public void GetInteracted()
     {
-        if (ownData.objectType == "chest")
+        if (ownData.objectType == "chest" && gameObject.activeSelf)
         {
             if(ownData.item == 0)
             {
@@ -54,10 +55,11 @@ public class ObjectFunctions : MonoBehaviour
             }
             else if (ownData.item == 4)
             {
-                overworldUI.AddMessage("Zepper: Slurp! What are you doing here? The curse is too strong! Everyone else got corrupted by it except me. I think it is because of this... *zepper points at the Pizza 5/5 shirt he is wearing*");
+                overworldUI.AddMessage("Zepper: Slurp! What are you doing here? The curse is too strong! Everyone else got corrupted by it except me. I think it is because of this... *Zepper points at the Pizza 5/5 shirt he is wearing*");
                 overworldUI.AddMessage("Zepper: You know what? If you are going to continue, you should take it, you need it more than I do!");
                 overworldUI.AddMessage("Zepper gives his shirt to you. Not only does is negate the effects of the curse you were feeling, but it also gives you a great surge of power. This will surely help you in the fight ahead.");
                 overworldUI.AddMessage("Zepper: Go ahead Slurp, don't worry I'll be fine. Now go and save everyone!");
+                overworldUI.AddMessage("Developer's note: You might have noticed that Zepper still looks like he is wearing the shirt. Now please stop noticing it.");
 
                 CompanionData slurp = overworldUI.FindUnlockedCompanionByName("Slurp");
                 
@@ -164,6 +166,63 @@ public class ObjectFunctions : MonoBehaviour
             {
                 overworldUI.AddMessage("This chest is completely empty. Just like the was majority of online content these days.");
             }
+
+            else if (ownData.item == 17)
+            {
+                overworldUI.AddMessage("BUFFALO!");
+                overworldUI.AddMessage("Congratulations on not dying for another year. We sent our best efforts, but we were unsuccessful on getting you this time.");
+            }
+
+            else if (ownData.item == 18)
+            {
+                overworldUI.AddMessage("Something something something");
+            }
+
+            else if (ownData.item == 19)
+            {
+                overworldUI.AddMessage("Hey Slurp! Normally I wasn't going to put myself in this section but... I mean at this point I need everyone I can get, Dash was literally the only person who wasn't already in the game.");
+                overworldUI.AddMessage("So yeah I hope you enjoyed my game! Don't know what else to say. Your stream is cool I guess? Yeah I'm gonna miss it if you stop streaming. But as a wise man once said \"It is what it is\".");
+            }
+
+            else if (ownData.item == 20)
+            {
+                overworldUI.AddMessage("I’m not gonna say Aluminium.");
+            }
+
+            else if (ownData.item == 21)
+            {
+                overworldUI.AddMessage("This is like watching the monkey at the zoo.");
+                overworldUI.AddMessage("For the past 3 years I have thought of unfollowing but I just can not miss this train wreck of a stream.");
+            }
+
+            else if (ownData.item == 22)
+            {
+                overworldUI.AddMessage("*rips ass*");
+            }
+
+            else if (ownData.item == 23)
+            {
+                FindObjectOfType<AudioManager>().fuckingBeans.Play();
+                FindObjectOfType<GameState>().globalPaused = true;
+                StartCoroutine(ShowBeanWithDelay(16f));
+            }
+
+            else if (ownData.item == 24)
+            {
+                overworldUI.AddMessage("Silentkidstudio: This is the best Sims 4 DLC I’ve ever seen!");
+                overworldUI.AddMessage("Silentkidstudio: I can’t wait for Slurpwis to finally stop Own Goaling and spend their hard earned casino scam money on more EA content like everyone else and Just. Be. Normal.");
+            }
+
+            else if (ownData.item == 25)
+            {
+                overworldUI.AddMessage("lifegenesis placeholder");
+            }
         }
+    }
+
+    private IEnumerator ShowBeanWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Wait for the specified delay
+        overworldUI.bean.SetActive(true); // Now activate the bean
     }
 }

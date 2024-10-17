@@ -24,4 +24,6 @@ public class AudioManager : MonoBehaviour
     public AudioSource slurpLesbiansTwo;
 
     public AudioSource introTheme;
+
+    public AudioSource fuckingBeans; 
 }

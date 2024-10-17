@@ -16,6 +16,7 @@ public class PartyFunctions : MonoBehaviour
     private Vector3 targetWorldPosition;
 
     public bool isMoving;
+    public bool pillTriggered;
 
     void Start()
     {
@@ -41,6 +42,17 @@ public class PartyFunctions : MonoBehaviour
     {
         targetGridPosition = currentGridPosition + direction;
         GameObject entityOnTile = tilemapManager.IsTileOccupied(targetGridPosition);
+
+        if (targetGridPosition.y >= 22 && targetGridPosition.x >= 406 && pillTriggered == false)
+        {
+            pillTriggered = true;
+            overworldUI.morpheus.gameObject.SetActive(true);
+            overworldUI.AddMessage("STOP! There is one final choice you need to make Slurp!");
+            overworldUI.AddMessage("For the next part of the game was made not once but twice!");
+            overworldUI.AddMessage("First one was when cndk simply added some random ass people to the game without asking, but then he though that asking people whether or not they wanted to be in the game might have been a cool idea especially since he could actually talk to those people and add some custom messages and shit. Thus he made the final section twice.");
+            overworldUI.AddMessage("But did they answer the call? Or did no one turn up? Did anyone care about cndk's shitty project? If you take the blue pill, you will see the first version. If you take the red pill, you will see the second version, no matter how great or disappointing it is!");
+            overworldUI.pillChoice = true;
+        }
 
         if (entityOnTile != null)
         {
@@ -217,7 +229,7 @@ public class PartyFunctions : MonoBehaviour
 
             else if (!gameState.portalIntroduction && gameState.portalCount == 5)
             {
-                overworldUI.AddMessage("Well I guess this is goodbye. Enter the portal when you want to finish the game.");
+                overworldUI.AddMessage("Well I guess this is goodbye then. Every adventure has to end eventually. Enter the portal when you want to finish the game.");
 
                 gameState.portalIntroduction = true;
                 gameState.portalCount += 1;

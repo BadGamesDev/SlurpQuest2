@@ -63,6 +63,9 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Button hankChoice1;
     public Button hankChoice2;
 
+    public Button bluePill;
+    public Button redPill;
+
     public TMP_Text nameText;
     public TMP_Text levelText;
     public TMP_Text healthText;
@@ -125,12 +128,66 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public Slider xpBar;
 
     public bool hankChoice;
+    public bool pillChoice;
     public bool lesbiansTwo;
     public bool levelAvailable;
 
     public float cooldown;
 
     public TMP_InputField passwordField;
+
+    public GameObject chad; //there are ways of doing this with a single fucking line
+    public GameObject chad1;
+    public GameObject chad2;
+    public GameObject chad3;
+    public GameObject chad4;
+    public GameObject chad5;
+    public GameObject chad6;
+    public GameObject chad7;
+    public GameObject chad8;
+    public GameObject chad9;
+    public GameObject chad10;
+    public GameObject chad11;
+    public GameObject chad12;
+    public GameObject chad13;
+    public GameObject chad14;
+    public GameObject chad15;
+    public GameObject chad16;
+    public GameObject chad17;
+    public GameObject chad18;
+    public GameObject chad19;
+    public GameObject chad20;
+    public GameObject chad21;
+    public GameObject chad22;
+    public GameObject chad23;
+    public GameObject chad24;
+    public GameObject chad25;
+    public GameObject chad26;
+    public GameObject chad27;
+
+    public GameObject realChad;
+    public GameObject realChad1;
+    public GameObject realChad3;
+    public GameObject realChad4;
+    public GameObject realChad5;
+    public GameObject realChad6;
+    public GameObject realChad7;
+    public GameObject realChad8;
+    public GameObject realChad9;
+
+    public GameObject fuckingchest1;
+    public GameObject fuckingchest2;
+    public GameObject fuckingchest3;
+    public GameObject fuckingchest4;
+    public GameObject fuckingchest5;
+    public GameObject fuckingchest6;
+    public GameObject fuckingchest7;
+    public GameObject fuckingchest8;
+    public GameObject fuckingchest9;
+
+    public GameObject bean;
+
+    public Image morpheus;
 
     public void Update()
     {
@@ -146,7 +203,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         }
     }
 
-    public void LevelUpCheck()
+    public void LevelUpCheck() // Doesn't level up more than once if you suddenly get a billion xp. Do I care? No.
     {
         levelAvailable = false;
         foreach (CompanionData companion in playerStats.unlockedCompanions)
@@ -231,11 +288,6 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public void CompanionsButton4Pressed()
     {
         pickedCompanion = FindUnlockedCompanionByName("OneViolence");
-    }
-
-    public void CompanionsButton5Pressed()
-    {
-
     }
 
     public void StatButtonSlurpPressed()
@@ -351,7 +403,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         }
     }
 
-    public void OpenInventoryScreen() //I can just make this method take a variable instead of having a variable on the script. But I'm too tired to change it right now.
+    public void OpenInventoryScreen() //same as above
     {
         gameState.globalPaused = true;
         itemsScreen.SetActive(true);
@@ -537,6 +589,77 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         hankChoice2.gameObject.SetActive(false);
     }
 
+    public void BluePillPressed()
+    {
+        pillChoice = false;
+        dialogueText.text = "You have picked the blue pill!";
+        bluePill.gameObject.SetActive(false);
+        redPill.gameObject.SetActive(false);
+
+        morpheus.gameObject.SetActive(false);
+
+        fuckingchest1.gameObject.SetActive(false);
+        fuckingchest2.gameObject.SetActive(false);
+        fuckingchest3.gameObject.SetActive(false);
+        fuckingchest4.gameObject.SetActive(false);
+        fuckingchest5.gameObject.SetActive(false);
+        fuckingchest6.gameObject.SetActive(false);
+        fuckingchest7.gameObject.SetActive(false);
+        fuckingchest8.gameObject.SetActive(false);
+        fuckingchest9.gameObject.SetActive(false);
+
+    }
+
+    public void RedPillPressed()
+    {
+        pillChoice = false;
+        dialogueText.text = "You have picked the red pill!";
+
+        chad.gameObject.SetActive(false);
+        chad1.gameObject.SetActive(false);
+        chad2.gameObject.SetActive(false);
+        chad3.gameObject.SetActive(false);
+        chad4.gameObject.SetActive(false);
+        chad5.gameObject.SetActive(false);
+        chad6.gameObject.SetActive(false);
+        chad7.gameObject.SetActive(false);
+        chad8.gameObject.SetActive(false);
+        chad9.gameObject.SetActive(false);
+        chad10.gameObject.SetActive(false);
+        chad11.gameObject.SetActive(false);
+        chad12.gameObject.SetActive(false);
+        chad13.gameObject.SetActive(false);
+        chad14.gameObject.SetActive(false);
+        chad15.gameObject.SetActive(false);
+        chad16.gameObject.SetActive(false);
+        chad17.gameObject.SetActive(false);
+        chad18.gameObject.SetActive(false);
+        chad19.gameObject.SetActive(false);
+        chad20.gameObject.SetActive(false);
+        chad21.gameObject.SetActive(false);
+        chad22.gameObject.SetActive(false);
+        chad23.gameObject.SetActive(false);
+        chad24.gameObject.SetActive(false);
+        chad25.gameObject.SetActive(false);
+        chad26.gameObject.SetActive(false);
+        chad27.gameObject.SetActive(false);
+
+        realChad.gameObject.SetActive(true);
+        realChad1.gameObject.SetActive(true);
+        realChad3.gameObject.SetActive(true);
+        realChad4.gameObject.SetActive(true);
+        realChad5.gameObject.SetActive(true);
+        realChad6.gameObject.SetActive(true);
+        realChad7.gameObject.SetActive(true);
+        realChad8.gameObject.SetActive(true);
+        realChad9.gameObject.SetActive(true);
+
+        bluePill.gameObject.SetActive(false);
+        redPill.gameObject.SetActive(false);
+
+        morpheus.gameObject.SetActive(false);
+    }
+
     public void CheckSelectableCompanions()
     {
         companionsButton0.interactable = false;
@@ -610,7 +733,6 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         {
             if (passwordField.gameObject.activeSelf)
             {
-                Debug.Log("good till now");
                 if (passwordField.text == "cndk99" || passwordField.text == "CNDK99" || passwordField.text == "cndk" || passwordField.text == "CNDK")
                 {
                     AddMessage("CORRECT ANSWER! You have been granted nine hundred ninety-nine million, nine hundred ninety-nine thousand, nine hundred ninety-nine nolifepoints. These points only work as currency and do not increase your level because it would be incredibly broken if you suddenly became level 100. (Sponsored by StopSuicideDon)");
@@ -626,7 +748,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
                 textQueue.Remove(textQueue[0]);
             }
 
-            else if (!hankChoice)
+            else if (!hankChoice && !pillChoice)
             {
                 if (lesbiansTwo)
                 {
@@ -656,12 +778,20 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
                 }
             }
 
-            else
+            else if (hankChoice)
             {
                 dialogueText.text = null;
 
                 hankChoice1.gameObject.SetActive(true);
                 hankChoice2.gameObject.SetActive(true);
+            }
+
+            else if (pillChoice)
+            {
+                dialogueText.text = null;
+
+                bluePill.gameObject.SetActive(true);
+                redPill.gameObject.SetActive(true);
             }
         }
         else 
@@ -725,7 +855,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void ENDTHEFUCKINGGAMEBUTTONPRESSED()
     {
-        Application.OpenURL("https://www.youtube.com/watch?v=aYsgsSo1aow");
+        Application.OpenURL("https://www.youtube.com/watch?v=PNFjLzVKVdk");
     }
 
     public void OpenCheat()

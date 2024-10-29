@@ -174,6 +174,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public GameObject realChad7;
     public GameObject realChad8;
     public GameObject realChad9;
+    public GameObject realChad10;
+    public GameObject realChad11;
 
     public GameObject fuckingchest1;
     public GameObject fuckingchest2;
@@ -184,10 +186,15 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
     public GameObject fuckingchest7;
     public GameObject fuckingchest8;
     public GameObject fuckingchest9;
+    public GameObject fuckingchest10;
+    public GameObject fuckingchest11;
 
     public GameObject bean;
 
     public Image morpheus;
+
+    public int waitCount;
+    public float waitTime;
 
     public void Update()
     {
@@ -195,6 +202,17 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         {
             dialogueText.gameObject.SetActive(true);
             continueButton.gameObject.SetActive(true);
+        }
+
+        if (waitCount == 1)
+        {
+            waitTime -= Time.deltaTime;
+            continueButton.interactable = false;
+            continueButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = ((int)waitTime).ToString();
+            if(waitTime <= 0)
+            {
+                continueButton.interactable = true;
+            }
         }
 
         else
@@ -607,6 +625,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         fuckingchest7.gameObject.SetActive(false);
         fuckingchest8.gameObject.SetActive(false);
         fuckingchest9.gameObject.SetActive(false);
+        fuckingchest10.gameObject.SetActive(false);
+        fuckingchest11.gameObject.SetActive(false);
 
     }
 
@@ -653,6 +673,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
         realChad7.gameObject.SetActive(true);
         realChad8.gameObject.SetActive(true);
         realChad9.gameObject.SetActive(true);
+        realChad10.gameObject.SetActive(true);
+        realChad11.gameObject.SetActive(true);
 
         bluePill.gameObject.SetActive(false);
         redPill.gameObject.SetActive(false);
@@ -729,6 +751,8 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
 
     public void CloseMessageButtonPressed()
     {
+        waitCount -= 1;
+
         if (textQueue.Count <= 0)
         {
             if (passwordField.gameObject.activeSelf)

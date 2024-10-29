@@ -134,15 +134,15 @@ public class ObjectFunctions : MonoBehaviour
 
             else if (ownData.item == 11)
             {
-                overworldUI.AddMessage("mrinkredible18: Slurp! You did it! You saved everyone! But anyways don't let me keep you, everyone is waiting, just keep moving, you'll see them.");
-                overworldUI.AddMessage("mrinkredible18: Oh also, you might have noticed I don't have legs. That is simply because everyone in Slurp Quest™ universe has evolved beyond the need for legs. We just move by floating. This also explains why there are no walking animations.");
-                overworldUI.AddMessage("mrinkredible18: Yes you heard that right. Things aren't this way because cndk99 is a lazy fuck who can't animate shit. Everything actually has a lore reason!");
+                overworldUI.AddMessage("mrinkredible: Slurp! You did it! You saved everyone! But anyways don't let me keep you, everyone is waiting, just keep moving, you'll see them.");
+                overworldUI.AddMessage("mrinkredible: Oh also, you might have noticed I don't have legs. That is simply because everyone in Slurp Quest™ universe has evolved beyond the need for legs. We just move by floating. This also explains why there are no walking animations.");
+                overworldUI.AddMessage("mrinkredible: Yes you heard that right. Things aren't this way because cndk99 is a lazy fuck who can't animate shit. Everything actually has a lore reason!");
                 ownData.item = 12;
             }
 
             else if (ownData.item == 12)
             {
-                overworldUI.AddMessage("mrinkredible18: Come on Slurp hurry up! They are all waiting for you!");
+                overworldUI.AddMessage("mrinkredible: Come on Slurp hurry up! They are all waiting for you!");
             }
 
             else if (ownData.item == 13)
@@ -169,35 +169,36 @@ public class ObjectFunctions : MonoBehaviour
 
             else if (ownData.item == 17)
             {
-                overworldUI.AddMessage("BUFFALO!");
-                overworldUI.AddMessage("Congratulations on not dying for another year. We sent our best efforts, but we were unsuccessful on getting you this time.");
+                overworldUI.AddMessage("Jaydizz: BUFFALO!");
+                overworldUI.AddMessage("Jaydizz: Congratulations on not dying for another year. We sent our best efforts, but we were unsuccessful on getting you this time.");
             }
 
             else if (ownData.item == 18)
             {
-                overworldUI.AddMessage("Something something something");
+                overworldUI.AddMessage("mrinkredible: Take it easy fam!");
             }
 
             else if (ownData.item == 19)
             {
-                overworldUI.AddMessage("Hey Slurp! Normally I wasn't going to put myself in this section but... I mean at this point I need everyone I can get, Dash was literally the only person who wasn't already in the game.");
-                overworldUI.AddMessage("So yeah I hope you enjoyed my game! Don't know what else to say. Your stream is cool I guess? Yeah I'm gonna miss it if you stop streaming. But as a wise man once said \"It is what it is\".");
+                overworldUI.AddMessage("Cndk99: Hey Slurp! I named myself punished Cndk because when I first made this part it was really depressing, I had only 2 people. Then I started getting some more, but I kept the name because I had to update the damn game every time someone sent me a message.");
+                overworldUI.AddMessage("Cndk99: Nah just joking, I actually want to thank everyone who took their time to message me.");
+                overworldUI.AddMessage("Cndk99: So yeah I hope you enjoyed my game! Don't know what else to say. Your stream is cool I guess? Yeah I'm gonna miss it if you stop streaming. But as a wise man once said \"It is what it is\".");
             }
 
             else if (ownData.item == 20)
             {
-                overworldUI.AddMessage("I’m not gonna say Aluminium.");
+                overworldUI.AddMessage("Zepper: I’m not gonna say Aluminium.");
             }
 
             else if (ownData.item == 21)
             {
-                overworldUI.AddMessage("This is like watching the monkey at the zoo.");
-                overworldUI.AddMessage("For the past 3 years I have thought of unfollowing but I just can not miss this train wreck of a stream.");
+                overworldUI.AddMessage("Digi: This is like watching the monkey at the zoo.");
+                overworldUI.AddMessage("Digi: For the past 3 years I have thought of unfollowing but I just can not miss this train wreck of a stream.");
             }
 
             else if (ownData.item == 22)
             {
-                overworldUI.AddMessage("*rips ass*");
+                overworldUI.AddMessage("*Rips ass*");
             }
 
             else if (ownData.item == 23)
@@ -216,6 +217,27 @@ public class ObjectFunctions : MonoBehaviour
             else if (ownData.item == 25)
             {
                 overworldUI.AddMessage("lifegenesis placeholder");
+            }
+            
+            else if (ownData.item == 27)
+            {
+                overworldUI.waitCount = 5;
+                overworldUI.waitTime = 60;
+                overworldUI.AddMessage("Super: Oh shit!");
+                overworldUI.AddMessage("Super: Finally, you're here! hello!");
+                overworldUI.AddMessage("Super: You look sweaty.");
+                overworldUI.AddMessage("Super: HEY, wait.");
+                overworldUI.AddMessage("*An intense, almost aggressive stare happens for close to a minute.*") ;
+                overworldUI.AddMessage("Super: ... im proud of you, just so you know. you've done a lot for others around you and yourself, you've made massive growth to things around you over the years and its beautiful to see. And now look at you! you're growing too!! So much!!");
+                overworldUI.AddMessage("Super: You've been through a lot of hardships, situations and tidal waves that tried to bring you or your career down. But you prevailed, even through heartbreak or exhaustion. That's a tough quality to have and keep all these years.");
+                overworldUI.AddMessage("Super: If you need anything we've got your back. Even if it means on youtube.");
+                overworldUI.AddMessage("Super: Okay. thats all. :)");
+                overworldUI.AddMessage("Developers note: Oh my god someone actually wrote something serious for once!");
+            }
+
+            else if (ownData.item == 26)
+            {
+                overworldUI.AddMessage("OneViolence: I would like the message to be: \"I would like the message to be: \"I would like the message to be: \"I would like the message to be:\"\"\"");
             }
         }
     }

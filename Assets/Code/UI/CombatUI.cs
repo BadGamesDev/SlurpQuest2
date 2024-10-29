@@ -12,6 +12,7 @@ public class CombatUI : MonoBehaviour
     public PlayerStats playerStats;
 
     public GameObject combatUI; //parent of all the UI stuff for combat
+    public GameObject asmonCloud;
 
     public GameObject attackButton;
     public GameObject skillButton;

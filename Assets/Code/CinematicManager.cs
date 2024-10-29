@@ -101,6 +101,7 @@ public class CinematicManager : MonoBehaviour
     {
         if (asmonCutscene)
         {
+            FindObjectOfType<CombatUI>().asmonCloud.SetActive(false);
             gameState.globalPaused = true;
             cinematicScreen.SetActive(true);
 

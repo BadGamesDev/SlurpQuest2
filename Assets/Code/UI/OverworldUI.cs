@@ -211,6 +211,7 @@ public class OverworldUI : MonoBehaviour //just combining the UI scripts might s
             continueButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = ((int)waitTime).ToString();
             if(waitTime <= 0)
             {
+                continueButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Continue";
                 continueButton.interactable = true;
             }
         }

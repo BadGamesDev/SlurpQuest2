@@ -180,9 +180,9 @@ public class ObjectFunctions : MonoBehaviour
 
             else if (ownData.item == 19)
             {
-                overworldUI.AddMessage("Cndk99: Hey Slurp! I named myself punished Cndk because when I first made this part it was really depressing, I had only 2 people. Then I started getting some more, but I kept the name because I had to update the damn game every time someone sent me a message.");
+                overworldUI.AddMessage("Cndk99: Hey Slurp! I named myself punished Cndk because when I first made this part it was really depressing, I had only 2 people. Then I started getting some more, but I kept the name because I had to update the damn game every time someone sent me a message, so I was actually even more punished.");
                 overworldUI.AddMessage("Cndk99: Nah just joking, I actually want to thank everyone who took their time to message me.");
-                overworldUI.AddMessage("Cndk99: So yeah I hope you enjoyed my game! Don't know what else to say. Your stream is cool I guess? Yeah I'm gonna miss it if you stop streaming. But as a wise man once said \"It is what it is\".");
+                overworldUI.AddMessage("Cndk99: So yeah I hope you enjoyed my game! Don't know what else to say. Your stream is cool I guess? Yeah I'm gonna really miss it if you stop streaming. Twitch is boring without you. But as a wise man once said \"It is what it is\".");
             }
 
             else if (ownData.item == 20)
@@ -216,7 +216,10 @@ public class ObjectFunctions : MonoBehaviour
 
             else if (ownData.item == 25)
             {
-                overworldUI.AddMessage("lifegenesis placeholder");
+                overworldUI.AddMessage("lifegenesis: Why do you hate me?");
+                overworldUI.AddMessage("Developer's note: Hello Slurp! Did you know that this message is the last thing I have added to this game?");
+                overworldUI.AddMessage("Developer's note: lifegenesis was supposed to puke on you, but after 2 months of not touching this project I kinda forgot how anything works, I don't want to break shit. That is why once again you just need to imagine it happened.");
+                overworldUI.AddMessage("Developer's note: I mean it took me some time to even find where the fuck I was supposed to write the message you are reading right now. (It was \"ObjectFunctions.cs\" because all these people are actually just chests with a chad image on them lmao. I am using the function that is supposed to display things like \"Hey you found 200 nolifepoints in the chest\" to display messages from people instead)");
             }
             
             else if (ownData.item == 27)

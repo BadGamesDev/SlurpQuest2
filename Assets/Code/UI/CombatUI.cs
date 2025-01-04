@@ -676,6 +676,14 @@ public class CombatUI : MonoBehaviour
         combatFinishMessage = null;
         combatUI.SetActive(false);
         combatManager.ClearCombat();
+
+        if (gameState.trickyPlaying)
+        {
+            FindObjectOfType<AudioManager>().trickyTheme.Stop();
+            FindObjectOfType<AudioManager>().corruptionTheme.Play();
+
+            gameState.trickyPlaying = false;
+        }
     }
 
     public void BackButtonPressed()

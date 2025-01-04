@@ -10,6 +10,7 @@ public class GameState : MonoBehaviour
     public bool inCombat;
     public bool combatFinished;
     public bool waitingCombat;
+    public bool trickyPlaying;
     public List<GameObject> partiesWaitingCombat;
     public int deathCount;
     public int progress;

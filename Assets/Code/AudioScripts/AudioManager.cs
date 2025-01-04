@@ -25,5 +25,6 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource introTheme;
 
-    public AudioSource fuckingBeans; 
+    public AudioSource fuckingBeans;
+    public AudioSource trickyTheme;
 }

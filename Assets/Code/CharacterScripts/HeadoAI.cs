@@ -48,6 +48,9 @@ public class HeadoAI : MonoBehaviour
                 {
                     if (dialogueCooldown <= 0 && dialogueStage == 0)
                     {
+                        FindObjectOfType<GameState>().trickyPlaying = true; 
+                        FindObjectOfType<AudioManager>().trickyTheme.Play();
+                        FindObjectOfType<AudioManager>().corruptionTheme.Stop();
                         combatManager.combatPauseCooldown = 5;
                         dialogueCooldown = 4;
                         combatUI.combatText.text = "<b>WARNING: REALITY BREACH DETECTED</b>";

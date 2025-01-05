@@ -144,11 +144,11 @@ public class PartyFunctions : MonoBehaviour
                         overworldUI.member2.sprite = null;
                     }
 
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[5]);
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[4]);
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[3]);
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[2]);
-                    FindObjectOfType<PlayerStats>().unlockedCompanions.Remove(FindObjectOfType<PlayerStats>().unlockedCompanions[1]);
+                    var playerStats = FindObjectOfType<PlayerStats>();
+                    for (int i = playerStats.unlockedCompanions.Count - 1; i >= 1; i--)
+                    {
+                        playerStats.unlockedCompanions.RemoveAt(i);
+                    }
 
                     overworldUI.CheckSelectableCompanions();
 

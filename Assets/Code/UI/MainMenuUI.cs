@@ -12,7 +12,16 @@ public class MainMenuUI : MonoBehaviour
 
     public void StartButton()
     {
-        SceneManager.LoadScene("GameScene");
+        StartCoroutine(LoadGameSceneAsync());
+    }
+
+    private IEnumerator LoadGameSceneAsync()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Wait until the next frame
+        }
     }
 
     public void TutorialButton()

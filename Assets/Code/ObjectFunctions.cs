@@ -57,7 +57,7 @@ public class ObjectFunctions : MonoBehaviour
             {
                 overworldUI.AddMessage("Zepper: Slurp! What are you doing here? The curse is too strong! Everyone else got corrupted by it except me. I think it is because of this... *Zepper points at the Pizza 5/5 shirt he is wearing*");
                 overworldUI.AddMessage("Zepper: You know what? If you are going to continue, you should take it, you need it more than I do!");
-                overworldUI.AddMessage("Zepper gives his shirt to you. Not only does is negate the effects of the curse you were feeling, but it also gives you a great surge of power. This will surely help you in the fight ahead.");
+                overworldUI.AddMessage("*Zepper gives his shirt to you. Not only does it negate the effects of the curse you were feeling, but it also gives you a great surge of power. This will surely help you in the fight ahead.*");
                 overworldUI.AddMessage("Zepper: Go ahead Slurp, don't worry I'll be fine. Now go and save everyone!");
                 overworldUI.AddMessage("Developer's note: You might have noticed that Zepper still looks like he is wearing the shirt. Now please stop noticing it.");
 
